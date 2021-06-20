@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>ajouter des Fleurs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="logForm(form)" novalidate>
+    <ion-item>
+      <ion-label>Todo</ion-label>
+      <ion-input type="text" required [(ngModel)]="todo.title" ngControl="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-textarea [(ngModel)]="todo.description" ngControl="description"></ion-textarea>
+    </ion-item>
+    <button ion-button type="submit" block>Add Todo</button>
+  </form>
+</ion-content>

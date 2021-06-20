@@ -4,21 +4,31 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Accueil</ion-title>
+    <ion-buttons slot="end"><ion-button (click)="ajouter()" ><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card id="fleurs">
-      <ion-card-title>Fleurs</ion-card-title>
-  </ion-card>
-  
-  <ion-card  id="fruits">
-      <ion-card-title>Fruits</ion-card-title>
-  </ion-card>
-  
 
-  <ion-card id="legumes">
-      <ion-card-title>Légumes</ion-card-title>
-  </ion-card>
-  
+
+  <div id="groupe">
+    <div id="fleurs" (click)="alertRadioFleurs()">
+      <div id="fond_fleurs">
+        <ion-label>fleurs</ion-label>
+      </div>
+    </div>
+    <div id="fruits" (click)="alertRadioFruitLegumes('fruits')">
+      <div id="fond_fleurs">
+        <ion-label>fruits</ion-label>
+      </div>
+    </div>
+    <div id="legumes" (click)="alertRadioFruitLegumes('legumes')">
+      <div id="fond_fleurs">
+        <ion-label>legumes</ion-label>
+      </div>
+    </div>
+  </div>
+
 </ion-content>
