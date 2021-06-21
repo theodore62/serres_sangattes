@@ -13,6 +13,11 @@ export class MenuPage implements OnInit {
       url: '/menu/accueil',
       icon: 'home'
     },
+    {
+      title: 'Ajouter des plantes',
+      url: '/menu/accueil',
+      icon: 'add-circle-outline'
+    },
       {
         title: 'Fleurs',
         children:[
