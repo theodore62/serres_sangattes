@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -9,23 +8,46 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
   styleUrls: ['./ajouter-fleur.page.scss'],
 })
 export class AjouterFleurPage implements OnInit {
-  private todo: FormGroup;
+  private annonce: FormGroup;
+  private isSubmitted = false;
+
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private afDB: AngularFireDatabase
   ) { }
 
+  get errorControl() {
+    return this.annonce.controls;
+  }
+
   ngOnInit() {
-    this.todo =  this.formBuilder.group({
-      title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
+    this.annonce = this.formBuilder.group({
+      titre: ['', [Validators.required, Validators.minLength(2)]],
+      description: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      info: ['', Validators.minLength(2)],
     });
   }
 
 
-  logForm(form) {
-    console.log('ici');
-    console.log(form);
+  addAnnonce() {
+
+    console.log(this.annonce);
+    if (!this.annonce.valid) {
+      console.log('Please provide all the required values!');
+      return false;
+    } else {
+      console.log('ici');
+      this.afDB.list('Plantes/').push({
+        pseudo: 'drissas'
+      });
+    }
+
+
+
   }
+
+
 
 }

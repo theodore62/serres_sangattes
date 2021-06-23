@@ -9,10 +9,31 @@ import { AppRoutingModule } from './app-routing.module';
 
 import {ReactiveFormsModule,FormsModule } from '@angular/forms';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyC6M9FeUa5BavwZorenCX_dq6mPFLJvH4Y",
+  authDomain: "serres-sangatte.firebaseapp.com",
+  databaseURL: "https://serres-sangatte-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "serres-sangatte",
+  storageBucket: "serres-sangatte.appspot.com",
+  messagingSenderId: "844932799354",
+  appId: "1:844932799354:web:f468a96ec971f9357a94c3",
+  measurementId: "G-8LZGJY7CX3"
+};
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

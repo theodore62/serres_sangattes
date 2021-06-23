@@ -139,7 +139,7 @@ export class AccueilPage implements OnInit {
           text: 'Ok',
           handler: () => {
             console.log('Confirm Ok');
-            if(data == 'fruits'){
+            if(data === 'fruits'){
               this.fruits();
             }else{
               this.legumes();

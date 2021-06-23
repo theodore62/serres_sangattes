@@ -8,15 +8,44 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="logForm(form)" novalidate>
-    <ion-item>
-      <ion-label>Todo</ion-label>
-      <ion-input type="text" required [(ngModel)]="todo.title" ngControl="title"  [ngModelOptions]="{standalone: true}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Description</ion-label>
-      <ion-textarea [(ngModel)]="todo.description" ngControl="description"  [ngModelOptions]="{standalone: true}"></ion-textarea>
-    </ion-item>
-    <button ion-button type="submit" block>Add Todo</button>
+  <ion-list>
+    <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
+      <ion-item>
+        <ion-label color="light">titre de annonce:</ion-label>
+        <ion-input color="light" type="text" placeholder="titre" formControlName="titre" ></ion-input>
+         <!-- Error messages -->
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.titre.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.titre.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+      <ion-item>
+        <ion-label color="light">description de l'annonce:</ion-label>
+        <ion-input color="light" type="text" placeholder="description"  required formControlName="description"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+      <ion-item>
+        <ion-label>type d'adresse</ion-label>
+        <ion-select  color="light" placeholder="Select One" required formControlName="type" >
+          <ion-select-option value="reception">adresse de reception</ion-select-option>
+          <ion-select-option value="livraison">adresse de livraison</ion-select-option>
+        </ion-select>
+      </ion-item>  
+      <ion-item>
+        <ion-label color="light">information complémentaire</ion-label>
+        <ion-input color="light" type="text" placeholder="information complémentaire" formControlName="info" ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.info.errors?.pattern">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+  <ion-button color="light" type="submit" expand="block">Valider</ion-button>
   </form>
+</ion-list>
 </ion-content>
