@@ -48,4 +48,8 @@
   <ion-button color="light" type="submit" expand="block">Valider</ion-button>
   </form>
 </ion-list>
+
+<ion-item *ngFor="let item of items | async">
+  <ion-label>{{ item.name }}</ion-label>
+</ion-item>
 </ion-content>

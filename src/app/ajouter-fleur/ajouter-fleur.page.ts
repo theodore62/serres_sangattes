@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+
+// formulaire
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+
+// base de données
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ajouter-fleur',
@@ -11,10 +17,13 @@ export class AjouterFleurPage implements OnInit {
   private annonce: FormGroup;
   private isSubmitted = false;
 
+  private items: Observable<any[]>;
+
 
   constructor(
     private formBuilder: FormBuilder,
-    private afDB: AngularFireDatabase
+    private afDB: AngularFireDatabase,
+    private firestore: AngularFirestore
   ) { }
 
   get errorControl() {
@@ -22,6 +31,9 @@ export class AjouterFleurPage implements OnInit {
   }
 
   ngOnInit() {
+    this.items = this.firestore.collection('Items').valueChanges();
+    console.log('items:'+ this.items );
+
     this.annonce = this.formBuilder.group({
       titre: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required]],
@@ -39,8 +51,11 @@ export class AjouterFleurPage implements OnInit {
       return false;
     } else {
       console.log('ici');
-      this.afDB.list('Plantes/').push({
-        pseudo: 'drissas'
+      // this.afDB.list('Plantes/').push({
+      //   pseudo: 'drissas'
+      // });
+      this.firestore.collection('Plantes').add({
+        nom: this.annonce.value.titre
       });
     }
 

@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/firestore/';
 
 
 export const firebaseConfig = {
@@ -31,6 +32,7 @@ export const firebaseConfig = {
   entryComponents: [],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
