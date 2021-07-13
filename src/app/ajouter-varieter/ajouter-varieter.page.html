@@ -7,21 +7,19 @@
   </ion-toolbar>
 </ion-header>
   <ion-content > 
-    <ion-list>
-      <form (ngSubmit)="addVarieter()" [formGroup]="varieter" >
-        <ion-item  > 
+      <form (ngSubmit)="addVarieter()" color="light" [formGroup]="varieter" >
+        <ion-item > 
           <ion-label color="light">nom de la fleur:</ion-label>
           <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
            <!-- Error messages -->
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required"  class="color">
+          <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.nom.errors?.required"  class="color">
             champ obligatoire 
           </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength"  class="color">
+          <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.nom.errors?.minlength"  class="color">
             minimun 2 caractéres
           </span>
         </ion-item>  
 
     <ion-button color="light" type="submit" expand="block">Valider</ion-button>
     </form>
-  </ion-list>
 </ion-content>

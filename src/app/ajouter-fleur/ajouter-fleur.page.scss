@@ -1,18 +1,9 @@
-ion-toolbar {
-    --background:green  !important;
-    --color: white;
+ion-header{
+    --ion-background-color: #f5af19;
 }
-ion-content{
-    --background:green  !important;
-  }
-ion-list{
-    --background:green !important;
-    padding-bottom: 0px;
-    padding-top: 0px;
+ion-content {
+    --ion-background-color: linear-gradient(#f5af19, #f12711);
 }
 ion-item {
-    --background:green !important;
-}
-.color{
-    --background-color:green;
+    --ion-background-color: transparent !important;
 }
