@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
-export class MenuPage implements OnInit {
+export class MenuPage {
 
   public appPages = [
     {
@@ -24,22 +24,22 @@ export class MenuPage implements OnInit {
           {
             title: 'Annuelles',
             url: '/menu/fleurs',
-            icon: 'mail'
+            icon: ''
           },
           {
             title: 'Bisannuelles',
             url: '/menu/fleurs',
-            icon: 'mail'
+            icon: ''
           },
           {
             title: 'Vivaces',
             url: '/menu/fleurs',
-            icon: 'mail'
+            icon: ''
           },
           {
             title: 'Aromatiques',
             url: '/menu/fleurs',
-            icon: 'mail'
+            icon: ''
           }
         ]
       },
@@ -49,12 +49,12 @@ export class MenuPage implements OnInit {
           {
             title: 'Ete',
             url: '/menu/fruits',
-            icon: 'mail'
+            icon: ''
           },
           {
             title: 'Hiver',
             url: '/menu/fruits',
-            icon: 'mail'
+            icon: ''
           }
         ]
       },
@@ -64,12 +64,12 @@ export class MenuPage implements OnInit {
           {
             title: 'Ete',
             url: '/menu/legumes',
-            icon: 'mail'
+            icon: ''
           },
           {
             title: 'Hiver',
             url: '/menu/legumes',
-            icon: 'mail'
+            icon: ''
           }
         ]
       }
@@ -77,13 +77,9 @@ export class MenuPage implements OnInit {
 
 
 
-  constructor() { 
-
+  constructor() {
   }
 
-  ngOnInit() {
 
-
-  }
 
 }

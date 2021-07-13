@@ -3,26 +3,89 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>ajouter des Fleurs</ion-title>
+    <ion-title>ajouter une plante</ion-title>
+    <ion-buttons slot="end" (click)="ajouter()" >
+      <ion-icon  size="large" name="add-circle-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content >
+  <ion-list style="background-color: silver;">
     <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
       <ion-item>
-        <ion-label color="light">titre de annonce:</ion-label>
-        <ion-input color="light" type="text" placeholder="titre" formControlName="titre" ></ion-input>
+        <ion-label color="light">nom de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
          <!-- Error messages -->
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.titre.errors?.required">
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
           champ obligatoire 
         </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.titre.errors?.minlength">
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
           minimun 2 caractéres
         </span>
       </ion-item>  
       <ion-item>
-        <ion-label color="light">description de l'annonce:</ion-label>
+        <ion-label color="light">variete de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="variete"  required formControlName="variete"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.variete.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.variete.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+      <ion-item>
+        <ion-label color="light">couleur de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="couleur"  required formControlName="couleur"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+      <ion-item>
+        <ion-label color="light">depotage de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="depotage"  required formControlName="depotage"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.depotage.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.depotage.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item>  
+      <ion-item>
+        <ion-label color="light">fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="fleur"  required formControlName="fleur"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleur.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleur.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item> 
+
+      <ion-item>
+        <ion-label color="light">hauteur de la fleur:</ion-label>
+        <ion-select  color="light" placeholder="Select One" required formControlName="hauteur" >
+          <ion-select-option value="basse">basse</ion-select-option>
+          <ion-select-option value="moyenne">moyenne</ion-select-option>
+          <ion-select-option value="haute">haute</ion-select-option>
+        </ion-select>
+      </ion-item> 
+
+      <ion-item>
+        <ion-label color="light">ramification de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="ramification"  required formControlName="ramification"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.ramification.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.ramification.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item> 
+      <ion-item>
+        <ion-label color="light">description de la fleur:</ion-label>
         <ion-input color="light" type="text" placeholder="description"  required formControlName="description"  ></ion-input>
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.required">
           champ obligatoire 
@@ -30,21 +93,24 @@
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.minlength">
           minimun 2 caractéres
         </span>
-      </ion-item>  
+      </ion-item> 
       <ion-item>
-        <ion-label>type d'adresse</ion-label>
+        <ion-label>type de plante</ion-label>
         <ion-select  color="light" placeholder="Select One" required formControlName="type" >
           <ion-select-option value="reception">adresse de reception</ion-select-option>
           <ion-select-option value="livraison">adresse de livraison</ion-select-option>
         </ion-select>
       </ion-item>  
       <ion-item>
-        <ion-label color="light">information complémentaire</ion-label>
-        <ion-input color="light" type="text" placeholder="information complémentaire" formControlName="info" ></ion-input>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.info.errors?.pattern">
+        <ion-label color="light">caract de la fleur:</ion-label>
+        <ion-input color="light" type="text" placeholder="caract"  required formControlName="caract"  ></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.caract.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.caract.errors?.minlength">
           minimun 2 caractéres
         </span>
-      </ion-item>  
+      </ion-item> 
   <ion-button color="light" type="submit" expand="block">Valider</ion-button>
   </form>
 </ion-list>
