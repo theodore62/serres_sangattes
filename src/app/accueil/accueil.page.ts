@@ -1,38 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
+import { DataService } from '../services/data.service';
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.page.html',
   styleUrls: ['./accueil.page.scss'],
 })
 export class AccueilPage implements OnInit {
-
   constructor(
     private router: Router,
+    private dataService: DataService,
     private alertController: AlertController
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  fleurs(){
-    // this.dataService.setData( 'idAnnonce',idAnnonce);
+  fleurs(data) {
+    this.dataService.setData('data', data);
     this.router.navigateByUrl('/fleurs');
   }
 
-  fruits(){
-    // this.dataService.setData( 'idAnnonce',idAnnonce);
+  fruits(data) {
+    this.dataService.setData('data', data);
     this.router.navigateByUrl('/fruits');
   }
 
-  legumes(){
-    // this.dataService.setData( 'idAnnonce',idAnnonce);
+  legumes(data) {
+    this.dataService.setData('data', data);
     this.router.navigateByUrl('/legumes');
   }
 
-  ajouter(){
+  ajouter() {
     // this.dataService.setData( 'idAnnonce',idAnnonce);
     this.router.navigateByUrl('/ajouter-fleur');
   }
@@ -46,58 +45,58 @@ export class AccueilPage implements OnInit {
           name: 'radio1',
           type: 'radio',
           label: 'Annuelles',
-          value: 'value1',
+          value: 'Annuelles',
           handler: () => {
             console.log('Radio 1 selected');
           },
-          checked: true
+          checked: true,
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'Bisannuelles',
-          value: 'value2',
+          value: 'Bisannuelles',
           handler: () => {
             console.log('Radio 2 selected');
-          }
+          },
         },
         {
           name: 'radio3',
           type: 'radio',
           label: 'Vivaces',
-          value: 'value3',
+          value: 'Vivaces',
           handler: () => {
             console.log('Radio 3 selected');
-        }
+          },
         },
         {
-            name: 'radio4',
-            type: 'radio',
-            label: 'Aromatiques',
-            value: 'value4',
-            handler: () => {
-              console.log('Radio 3 selected');
-            },
-        }
+          name: 'radio4',
+          type: 'radio',
+          label: 'Aromatiques',
+          value: 'Aromatiques',
+          handler: () => {
+            console.log('Radio 3 selected');
+          },
+        },
       ],
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
+          handler: (value) => {
             console.log('Confirm Cancel');
-          }
-        }, {
+          },
+        },
+        {
           text: 'Ok',
-          handler: () => {
+          handler: (data1) => {
             console.log('Confirm Ok');
-            this.fleurs();
-          }
-        }
-      ]
+            this.fleurs(data1);
+          },
+        },
+      ],
     });
-
     await alert.present();
   }
 
@@ -110,22 +109,22 @@ export class AccueilPage implements OnInit {
           name: 'radio1',
           type: 'radio',
           label: 'Ete',
-          value: 'value1',
+          value: 'Ete',
           handler: () => {
             console.log(data);
             console.log('Radio 1 selected');
           },
-          checked: true
+          checked: true,
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'Hiver',
-          value: 'value2',
+          value: 'Hiver',
           handler: () => {
             console.log('Radio 2 selected');
-          }
-        }
+          },
+        },
       ],
       buttons: [
         {
@@ -134,27 +133,21 @@ export class AccueilPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
-          }
-        }, {
+          },
+        },
+        {
           text: 'Ok',
-          handler: () => {
+          handler: (data2) => {
             console.log('Confirm Ok');
-            if(data === 'fruits'){
-              this.fruits();
-            }else{
-              this.legumes();
+            if (data === 'fruits') {
+              this.fruits(data2);
+            } else {
+              this.legumes(data2);
             }
-    
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
-
     await alert.present();
   }
-
-
-
-
-
 }
