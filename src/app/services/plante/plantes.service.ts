@@ -25,4 +25,10 @@ export class PlantesService {
     return this.planteList.add(plante);
   }
 
+  getDetailPlante(id: Plante){
+    const url = '/'+id;
+    console.log(url);
+    return this.planteList.doc(url).valueChanges().pipe(first()).toPromise();
+  }
+
 }

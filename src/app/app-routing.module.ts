@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'ajouter-varieter',
     loadChildren: () => import('./ajouter-varieter/ajouter-varieter.module').then( m => m.AjouterVarieterPageModule)
+  },
+  {
+    path: 'details',
+    loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
   }
 ];
 

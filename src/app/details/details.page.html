@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>details de la plante</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card  *ngFor ="let plante of (planteDetail)">
+    <img src="./madison.jpg" />
+    <ion-card-header>
+      <ion-card-subtitle>{{ plante.variete }}</ion-card-subtitle>
+      <ion-card-title>{{ plante.nom }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+   {{ plante.description }}
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

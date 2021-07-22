@@ -70,7 +70,9 @@ export class FleursPage implements OnInit {
       }
     });
   }
-  detail(){
-
+  detail(idPlante){
+    console.log(idPlante);
+    this.dataService.setData('id', idPlante);
+    this.router.navigateByUrl('/details');
   }
 }
