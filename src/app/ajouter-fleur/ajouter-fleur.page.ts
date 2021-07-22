@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentRef, OnInit } from '@angular/core';
 
+import { first } from 'rxjs/Operators';
 // formulaire
 import {
   Validators,
@@ -33,6 +34,7 @@ export class AjouterFleurPage implements OnInit {
   private epoque: string;
 
   private plante: Plante = {
+    id: '',
     nom: '',
     variete: '',
     couleur: '',
@@ -95,6 +97,16 @@ export class AjouterFleurPage implements OnInit {
           this.message = "la plante n'a pas pu être enregistré ";
           this.toastCtrl.showToast(this.message);
         } else {
+          this.firestore.doc(`Plantes/${retour.id}`).set({
+            id: retour.id,
+            nom:  this.plante.nom ,
+            variete:  this.plante.variete,
+            couleur: this.plante.couleur,
+            fleuraison: this.plante.fleuraison,
+            hauteur:  this.plante.hauteur,
+            description:   this.plante.description,
+            type:  this.plante.type ,
+          });
           this.message ='la plante à était enregistré vous pouvez en saisir une autre';
           this.toastCtrl.showToast(this.message);
         }

@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Plante } from '../../models/plante.model';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/Operators';
 @Injectable({
   providedIn: 'root',
 })
 export class PlantesService {
-  private planteList = this.firestore.collection<Plante>('Plantes');
+
+  public planteList = this.firestore.collection<Plante>('Plantes');
 
   constructor(
     private db: AngularFireDatabase,
@@ -16,7 +18,7 @@ export class PlantesService {
   ) {}
 
   getPlanteList() {
-    return this.planteList;
+    return  this.planteList.valueChanges().pipe(first()).toPromise();
   }
 
   postPlanteList(plante: Plante) {

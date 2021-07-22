@@ -5,19 +5,17 @@
     </ion-buttons>
     <ion-title>fleurs</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="filterList($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-searchbar ></ion-searchbar>
-  <div *ngFor ="let item of listeItems"> 
-    <ion-card *ngIf="item.fleuraison == datas">
-      <ion-card-header>
-        <ion-card-title>{{ item.nom }}</ion-card-title>
-      </ion-card-header>  
-      <ion-card-content>
-        <p>variete : {{ item.variete }}</p>
-      </ion-card-content>
-    </ion-card> 
-  </div >
- 
+    <ion-list *ngFor ="let plante of (planteList)">
+      <ion-item  *ngIf="datas === plante.fleuraison" (onclick)="detail()" >
+        <ion-thumbnail slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-thumbnail>
+        <ion-label >{{plante.nom }}</ion-label>
+      </ion-item>
+    </ion-list>
 </ion-content>

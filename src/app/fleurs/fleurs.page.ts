@@ -7,21 +7,23 @@ import { Observable } from 'rxjs';
 import { IonicToastService } from '../services/ionic-toast.service';
 import { DataService } from '../services/data.service';
 
+import { first } from 'rxjs/Operators';
+
 // service
 import { PlantesService } from '../services/plante/plantes.service';
 //model
 import { Plante } from '../models/plante.model';
+import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-fleurs',
   templateUrl: './fleurs.page.html',
   styleUrls: ['./fleurs.page.scss'],
 })
 export class FleursPage implements OnInit {
-  private listeItems: any[];
-  private plante: any;
-  private listeCard = Array.from(document.querySelector('div').children);
+  public datas: any;
+  public planteList: any;
+  public tableauPlante: any = [];
 
-  private datas: any;
   constructor(
     private firestore: AngularFirestore,
     private dataService: DataService,
@@ -29,45 +31,46 @@ export class FleursPage implements OnInit {
     private plantesService: PlantesService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.datas = this.dataService.getData('data');
-    const searchbar = document.querySelector('ion-searchbar');
-    if (this.dataService.getData('data')) {
-      this.datas = this.dataService.getData('data');
-      this.plante = this.plantesService
-        .getPlanteList()
-        .valueChanges()
-        .subscribe(
-          (res) => {
-            console.log(res);
-            this.listeItems = res;
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-      // console.log(this.listeItems);
-    
-      const value  = searchbar.addEventListener('ionInput', this.handleInput);
-      console.log(value);
+    this.planteList = await this.initializeItems();
+  }
 
+  async initializeItems(): Promise<any> {
+    if(this.tableauPlante.length <= 0){
+      const planteListe = await this.plantesService.getPlanteList();
+      planteListe.forEach(resulta =>{
+        if(resulta.fleuraison === this.datas  ){
+          this.tableauPlante.push(resulta);
+        }
+    });
     }
-  }
-  handleInput(event) {
-    const query = event.target.value.toLowerCase();
-    return query;
-  }
-  // teste(){
-  //   requestAnimationFrame(() => {
-  //     console.log(this.listeCard);
-  //     this.listeCard.forEach((item) => {
-  //       console.log(item);
-  //       const shouldShow = item.textContent.toLowerCase().indexOf(query) > -1;
-  //       console.log(shouldShow);
-  //       // shouldShow.style.display = shouldShow ? 'block' : 'none';
-  //     });
-  //   });
-  // }
 
+    return this.tableauPlante;
 
+  }
+  async filterList(ev: any) {
+    this.planteList = await this.initializeItems();
+    const searchTerm = ev.srcElement.value;
+
+    if (!searchTerm) {
+      return;
+    }
+    this.planteList = this.planteList.filter((currentPlant) => {
+      if (currentPlant.nom && searchTerm) {
+        return (
+          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) >-1 
+          ||
+          currentPlant.variete.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+          ||
+          currentPlant.couleur.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+          ||
+          currentPlant.hauteur.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+        );
+      }
+    });
+  }
+  detail(){
+
+  }
 }
