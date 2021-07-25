@@ -7,3 +7,15 @@ ion-content {
 ion-item {
     --ion-background-color: transparent !important;
 }
+.flex {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  .img-box {
+    height: 200px;
+    overflow: hidden;
+  }
+  img {
+    height: 200px;
+  }

@@ -7,4 +7,5 @@ export interface Plante {
   hauteur: string;
   description: string;
   type: string;
+  image: string;
 }

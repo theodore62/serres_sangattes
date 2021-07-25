@@ -9,10 +9,11 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController,LoadingController } from '@ionic/angular';
 // base de données
 
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { IonicToastService } from '../services/ionic-toast.service';
@@ -21,6 +22,9 @@ import { IonicToastService } from '../services/ionic-toast.service';
 import { PlantesService } from '../services/plante/plantes.service';
 //model
 import { Plante } from '../models/plante.model';
+
+//camera
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 @Component({
   selector: 'app-ajouter-fleur',
   templateUrl: './ajouter-fleur.page.html',
@@ -33,6 +37,11 @@ export class AjouterFleurPage implements OnInit {
   private message: string;
   private epoque: string;
 
+ private image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
+ private imagePath: string;
+ private upload: any;
+
+
   private plante: Plante = {
     id: '',
     nom: '',
@@ -42,6 +51,7 @@ export class AjouterFleurPage implements OnInit {
     hauteur: '',
     description: '',
     type: '',
+    image: '',
   };
 
   constructor(
@@ -51,7 +61,10 @@ export class AjouterFleurPage implements OnInit {
     private afDB: AngularFireDatabase,
     private firestore: AngularFirestore,
     private toastCtrl: IonicToastService,
-    private planteList: PlantesService
+    private planteList: PlantesService,
+    private camera: Camera,
+    private afSG: AngularFireStorage,
+    private loadingController: LoadingController,
   ) {
     this.items = this.firestore.collection('Variete').valueChanges();
   }
@@ -91,7 +104,7 @@ export class AjouterFleurPage implements OnInit {
       this.plante.hauteur = this.annonce.value.hauteur;
       this.plante.description = this.annonce.value.description;
       this.plante.type = this.annonce.value.type;
-
+      this.imagePath = new Date().getTime() + '.jpg';
       this.planteList.postPlanteList(this.plante).then((retour) => {
         if (retour.id == null) {
           this.message = "la plante n'a pas pu être enregistré ";
@@ -105,8 +118,10 @@ export class AjouterFleurPage implements OnInit {
             fleuraison: this.plante.fleuraison,
             hauteur:  this.plante.hauteur,
             description:   this.plante.description,
-            type:  this.plante.type ,
+            type:  this.plante.type,
+            image: this.imagePath,
           });
+          this.uploadFirebase();
           this.message ='la plante à était enregistré vous pouvez en saisir une autre';
           this.toastCtrl.showToast(this.message);
         }
@@ -168,4 +183,42 @@ export class AjouterFleurPage implements OnInit {
     });
     await alert.present();
   }
+
+  async addPhoto() {
+    const libraryImage = await this.openLibrary();
+    this.image = 'data:image/jpg;base64,' + libraryImage;
+}
+async openLibrary() {
+  const options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    targetWidth: 1000,
+    targetHeight: 1000,
+    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+  };
+  return await this.camera.getPicture(options);
+}
+
+async uploadFirebase() {
+	const loading = await this.loadingController.create({
+		duration: 2000
+	});
+	await loading.present();
+	this.upload = this.afSG.ref(this.imagePath).putString(this.image, 'data_url');
+	this.upload.then(async () => {
+		await loading.onDidDismiss();
+		this.image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
+		const alert = await this.alertController.create({
+			header: 'Félicitation',
+			message: 'L\'envoi de la photo dans Firebase est terminé!',
+			buttons: ['OK']
+		});
+		await alert.present();
+	});
+}
+
+
+
 }

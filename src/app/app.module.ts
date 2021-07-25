@@ -16,11 +16,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore/';
 import { PlantesService } from './services/plante/plantes.service';
 
+
+import { Camera } from '@ionic-native/camera/ngx';
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyC6M9FeUa5BavwZorenCX_dq6mPFLJvH4Y',
   authDomain: 'serres-sangatte.firebaseapp.com',
-  databaseURL:
-    'https://serres-sangatte-default-rtdb.europe-west1.firebasedatabase.app',
+  databaseURL:'https://serres-sangatte-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'serres-sangatte',
   storageBucket: 'serres-sangatte.appspot.com',
   messagingSenderId: '844932799354',
@@ -48,7 +50,8 @@ export const firebaseConfig = {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy,
     },
-    PlantesService
+    PlantesService,
+    Camera,
   ],
   bootstrap: [AppComponent],
 })

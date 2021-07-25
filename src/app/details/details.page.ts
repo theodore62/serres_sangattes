@@ -5,6 +5,7 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject }  from '@angul
 import { PlantesService } from '../services/plante/plantes.service';
 import { Plante } from '../models/plante.model';
 
+import { AngularFireStorage } from '@angular/fire/storage';
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
@@ -16,7 +17,8 @@ export class DetailsPage implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private plantesService: PlantesService
+    private plantesService: PlantesService,
+    public afSG: AngularFireStorage
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,10 @@ export class DetailsPage implements OnInit {
     this.plantesService.getDetailPlante(this.id).then(detailPlante =>{
       this.planteDetail.push(detailPlante);
       console.log(this.planteDetail);
+      this.afSG.ref('/'+detailPlante.image).getDownloadURL().subscribe(imgUrl => {
+        this.planteDetail[0].image = imgUrl;
+        console.log(this.planteDetail);
+      });
     });
   }
 
