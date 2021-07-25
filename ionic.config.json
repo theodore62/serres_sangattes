@@ -1,5 +1,7 @@
 {
   "name": "serres_sangatte",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
