@@ -105,6 +105,7 @@ export class AjouterFleurPage implements OnInit {
       this.plante.description = this.annonce.value.description;
       this.plante.type = this.annonce.value.type;
       this.imagePath = new Date().getTime() + '.jpg';
+      this.uploadFirebase();
       this.planteList.postPlanteList(this.plante).then((retour) => {
         if (retour.id == null) {
           this.message = "la plante n'a pas pu être enregistré ";
@@ -120,8 +121,7 @@ export class AjouterFleurPage implements OnInit {
             description:   this.plante.description,
             type:  this.plante.type,
             image: this.imagePath,
-          });
-          this.uploadFirebase();
+          });      
           this.message ='la plante à était enregistré vous pouvez en saisir une autre';
           this.toastCtrl.showToast(this.message);
         }

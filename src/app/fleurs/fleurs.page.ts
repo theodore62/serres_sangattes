@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // base de données
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { IonicToastService } from '../services/ionic-toast.service';
@@ -28,7 +29,8 @@ export class FleursPage implements OnInit {
     private firestore: AngularFirestore,
     private dataService: DataService,
     private router: Router,
-    private plantesService: PlantesService
+    private plantesService: PlantesService,
+    private afSG: AngularFireStorage
   ) {}
 
   async ngOnInit() {
@@ -41,9 +43,14 @@ export class FleursPage implements OnInit {
       const planteListe = await this.plantesService.getPlanteList();
       planteListe.forEach(resulta =>{
         if(resulta.fleuraison === this.datas  ){
-          this.tableauPlante.push(resulta);
+          console.log(resulta.image);
+          this.afSG.ref('/'+resulta.image).getDownloadURL().subscribe(imgUrl => {
+            resulta.image = imgUrl;
+            this.tableauPlante.push(resulta);
+          });
         }
     });
+    console.log(this.tableauPlante);
     }
 
     return this.tableauPlante;
