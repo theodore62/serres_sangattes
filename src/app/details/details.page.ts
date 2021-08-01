@@ -18,7 +18,7 @@ export class DetailsPage implements OnInit {
   constructor(
     private dataService: DataService,
     private plantesService: PlantesService,
-    public afSG: AngularFireStorage
+    private afSG: AngularFireStorage
   ) { }
 
   ngOnInit() {

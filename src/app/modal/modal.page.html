@@ -1,22 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button  color="light" ></ion-back-button>
-    </ion-buttons>
-    <ion-title  color="light">ajouter une plante</ion-title>
-    <ion-buttons slot="end" (click)="ajouter()" >
-      <ion-icon  size="large" name="add-circle-outline"></ion-icon>
+    <ion-title>modifier la plante</ion-title>
+    <ion-buttons slot="end" (click)="closeModal()" >
+      <ion-icon  size="large" name="close-circle-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <ion-list style="background-color: silver;">
     <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
-      <!-- <ion-item>
+      <ion-item>
         <ion-label color="light">Nom commun :</ion-label>
         <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
-        
+         <!-- Error messages -->
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
           champ obligatoire 
         </span>
@@ -24,12 +21,12 @@
           minimun 2 caractéres
         </span>
       </ion-item>  
-      <ion-item>
+      <!-- <ion-item>
         <ion-label color="light">Variété:</ion-label>
         <ion-select  color="light" placeholder="Select One" required formControlName="variete"  >
           <ion-select-option   *ngFor ="let item of items |async" value="{{ item.nom  }}" >{{ item.nom }}</ion-select-option >
         </ion-select>
-      </ion-item> 
+      </ion-item>  -->
       <ion-item>
         <ion-label color="light">Couleur:</ion-label>
         <ion-input color="light" type="text" placeholder="couleur"  required formControlName="couleur"  ></ion-input>
@@ -42,9 +39,9 @@
       </ion-item>  
       <ion-item>
         <ion-label color="light" >Epoque de fleuraison:</ion-label>
-    
+        <!-- <ion-input color="light" type="text" placeholder= "fleuraison" (click)="epoqueFleuraison()" required formControlName="fleuraison"></ion-input> -->
 
-        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fleur' ">
+        <!-- <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fleur' ">
           <ion-select-option value="Annuelles">Annuelles</ion-select-option>
           <ion-select-option value="Bisannuelles">Bisannuelles</ion-select-option>
           <ion-select-option value="Vivaces">Vivaces</ion-select-option>
@@ -53,7 +50,7 @@
         <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fruit' ">
           <ion-select-option value="Ete">Ete</ion-select-option>
           <ion-select-option value="Hiver">Hiver</ion-select-option>
-        </ion-select>
+        </ion-select> -->
 
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
           champ obligatoire 
@@ -88,7 +85,7 @@
           <ion-select-option value="Fruit">Fruit</ion-select-option>
           <ion-select-option value="Legume">Légume</ion-select-option>
         </ion-select>
-      </ion-item>   -->
+      </ion-item>  
       <ion-button (click)="addPhoto()" color="tertiary" expand="block">
         <ion-icon name="image" slot="start"></ion-icon>
         Ouvrir la bibliothèque

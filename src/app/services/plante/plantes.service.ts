@@ -30,5 +30,9 @@ export class PlantesService {
     console.log(url);
     return this.planteList.doc(url).valueChanges().pipe(first()).toPromise();
   }
+  deletePlante(id: Plante){
+    const url = '/'+id;
+    return this.planteList.doc(url).delete();
+  }
 
 }
