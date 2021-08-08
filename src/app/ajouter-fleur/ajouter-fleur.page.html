@@ -13,7 +13,7 @@
 <ion-content >
   <ion-list style="background-color: silver;">
     <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
-      <!-- <ion-item>
+      <ion-item>
         <ion-label color="light">Nom commun :</ion-label>
         <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
         
@@ -88,7 +88,7 @@
           <ion-select-option value="Fruit">Fruit</ion-select-option>
           <ion-select-option value="Legume">Légume</ion-select-option>
         </ion-select>
-      </ion-item>   -->
+      </ion-item>  
       <ion-button (click)="addPhoto()" color="tertiary" expand="block">
         <ion-icon name="image" slot="start"></ion-icon>
         Ouvrir la bibliothèque

@@ -108,11 +108,11 @@ export class FleursPage implements OnInit {
     window.location.assign('/fleurs');
   }
 
-  async update(idPlante) {
+  async update(idPlante,anneeFleuraison) {
     const modal = await this.modalController.create({
       component: ModalPage,
       cssClass: 'my-custom-class',
-      componentProps: { id: idPlante },
+      componentProps: { id: idPlante,fleuraison: anneeFleuraison },
     });
     return await modal.present();
   }

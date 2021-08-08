@@ -10,4 +10,4 @@ lancer le serveur :
 
     - ionic serve
     - 
-    - ionic cordova run android -l (avoir installer java et les variable environnement)
+    - ionic cordova run android -l     (avoir installer java et les variable environnement)

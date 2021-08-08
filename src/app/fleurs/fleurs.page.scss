@@ -11,3 +11,9 @@ ion-content {
 ion-item,ion-list,ion-item-options,ion-item-option {
   --ion-background-color: transparent !important;
 }
+.my-custom-modal .modal-wrapper {
+  height: 20%;
+  top: 80%;
+  position: absolute; 
+  display: block;  
+}
