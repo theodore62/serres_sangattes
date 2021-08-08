@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 // model
 import { Plante } from '../../models/plante.model';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/Operators';
@@ -10,10 +9,10 @@ import { first } from 'rxjs/Operators';
 })
 export class PlantesService {
 
+  private ref = 'Plantes';
   public planteList = this.firestore.collection<Plante>('Plantes');
 
   constructor(
-    private db: AngularFireDatabase,
     private firestore: AngularFirestore
   ) {}
 
@@ -33,6 +32,13 @@ export class PlantesService {
   deletePlante(id: Plante){
     const url = '/'+id;
     return this.planteList.doc(url).delete();
+  }
+  updatePlante(id: Plante, values: Plante){ 
+    const message ='les ou l\' élément(s) on bien était mondifier ';
+    const url = '/' +id;
+    console.log(url);
+     this.planteList.doc(url).update(values);
+     return message;
   }
 
 }
