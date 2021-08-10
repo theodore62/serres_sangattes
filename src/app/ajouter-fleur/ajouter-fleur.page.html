@@ -50,7 +50,7 @@
           <ion-select-option value="Vivaces">Vivaces</ion-select-option>
           <ion-select-option value="Aromatiques">Aromatiques</ion-select-option>
         </ion-select>
-        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fruit' ">
+        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fruit' || epoque == 'Legumes' ">
           <ion-select-option value="Ete">Ete</ion-select-option>
           <ion-select-option value="Hiver">Hiver</ion-select-option>
         </ion-select>

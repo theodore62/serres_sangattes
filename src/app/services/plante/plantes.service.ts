@@ -36,7 +36,6 @@ export class PlantesService {
   updatePlante(id: Plante, urlImage, values: Plante) {
     const url = '/' + id;
     this.planteList.doc(url).update(values);
-    this.afSG.refFromURL(urlImage).delete();
     return;
   }
 }

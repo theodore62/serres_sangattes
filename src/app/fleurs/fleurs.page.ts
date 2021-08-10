@@ -7,9 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { IonicToastService } from '../services/ionic-toast.service';
 import { DataService } from '../services/data.service';
-
 import { first } from 'rxjs/Operators';
-
 // service
 import { PlantesService } from '../services/plante/plantes.service';
 //model
@@ -77,7 +75,7 @@ export class FleursPage implements OnInit {
     return this.tableauPlante;
   }
   async filterList(ev: any) {
-    // this.planteList = await this.initializeItems();
+    this.planteList = await this.initializeItems();
     const searchTerm = ev.srcElement.value;
 
     if (!searchTerm) {
@@ -108,11 +106,11 @@ export class FleursPage implements OnInit {
     window.location.assign('/fleurs');
   }
 
-  async update(idPlante,anneeFleuraison) {
+  async update(idPlante, anneeFleuraison) {
     const modal = await this.modalController.create({
       component: ModalPage,
       cssClass: 'my-custom-class',
-      componentProps: { id: idPlante,fleuraison: anneeFleuraison },
+      componentProps: { id: idPlante, fleuraison: anneeFleuraison },
     });
     return await modal.present();
   }

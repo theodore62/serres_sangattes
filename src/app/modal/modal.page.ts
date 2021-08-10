@@ -1,17 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {  AlertController,  IonRouterOutlet,  ModalController,  LoadingController} from '@ionic/angular';
+import {
+  AlertController,
+  IonRouterOutlet,
+  ModalController,
+  LoadingController,
+} from '@ionic/angular';
 // service
 import { PlantesService } from '../services/plante/plantes.service';
 //model
 import { Plante } from '../models/plante.model';
 import { AngularFireStorage } from '@angular/fire/storage';
-import {  Validators,  FormBuilder,  FormGroup,  FormControl,} from '@angular/forms';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 //camera
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IonicToastService } from '../services/ionic-toast.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.page.html',
@@ -27,7 +38,8 @@ export class ModalPage implements OnInit {
   private varieters: Observable<any[]>;
   private message: string;
   private upload: any;
- private urlImage: any;
+  private urlImage: any;
+  private urlImageUpdate: any;
 
   private plante: Plante = {
     id: '',
@@ -41,8 +53,6 @@ export class ModalPage implements OnInit {
     image: '',
   };
 
-
-
   constructor(
     private alertController: AlertController,
     private afSG: AngularFireStorage,
@@ -53,7 +63,7 @@ export class ModalPage implements OnInit {
     private firestore: AngularFirestore,
     private loadingController: LoadingController,
     private toastCtrl: IonicToastService,
-    
+    private router: Router
   ) {}
 
   get errorControl() {
@@ -71,10 +81,11 @@ export class ModalPage implements OnInit {
       hauteur: ['', [Validators.required]],
       description: ['', [Validators.required]],
       type: ['', [Validators.required]],
-      image: ['']
+      image: [''],
     });
     this.plantesService.getDetailPlante(this.id).then((detailPlante) => {
       this.planteDetail.push(detailPlante);
+      this.urlImageUpdate = this.planteDetail[0].image;
       this.afSG
         .ref('/' + detailPlante.image)
         .getDownloadURL()
@@ -155,39 +166,45 @@ export class ModalPage implements OnInit {
     };
     return await this.camera.getPicture(options);
   }
-  addAnnonce() {
-    console.log(this.urlImage);
+  async addAnnonce() {
     if (!this.annonce.valid) {
       this.message = 'enter une valeur dans le champ';
-      console.log('Please provide all the required values!');
       return false;
     } else {
-      this.imagePath = new Date().getTime() + '.jpg';
-      this.annonce.value.image = this.imagePath;
-      this.uploadFirebase();
-      console.log(this.urlImage);
-      this.plantesService.updatePlante(this.id,this.urlImage,this.annonce.value);
+      console.log(this.image);
+      if (this.image !== '') {
+        this.imagePath = new Date().getTime() + '.jpg';
+        this.uploadFirebase();
+        this.afSG.refFromURL(this.urlImage).delete();
+        this.annonce.value.image = this.imagePath;
+      } else {
+        this.annonce.value.image = this.urlImageUpdate;
+      }
+      const loading = await this.loadingController.create({
+        duration: 2000,
+      });
+      await loading.present();
+      this.plantesService.updatePlante(
+        this.id,
+        this.urlImage,
+        this.annonce.value
+      );
+      await loading.onDidDismiss();
+      const alert = await this.alertController.create({
+        header: 'Félicitation',
+        message: 'La ou les modification(s) on ou à bien était éffectuer',
+        buttons: ['OK'],
+      });
+      await alert.present();
       this.modalController.dismiss({
         dismissed: true,
       });
-
     }
   }
 
   async uploadFirebase() {
-    const loading = await this.loadingController.create({
-      duration: 2000,
-    });
-    await loading.present();
-    this.upload = this.afSG.ref(this.imagePath).putString(this.image, 'data_url');
-    this.upload.then(async () => {
-      await loading.onDidDismiss();
-      const alert = await this.alertController.create({
-        header: 'Félicitation',
-        message: "La modification à bien était éffectuer",
-        buttons: ['OK'],
-      });
-      await alert.present();
-    });
+    this.upload = this.afSG
+      .ref(this.imagePath)
+      .putString(this.image, 'data_url');
   }
 }

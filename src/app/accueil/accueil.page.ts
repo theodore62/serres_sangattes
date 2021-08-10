@@ -27,7 +27,7 @@ export class AccueilPage implements OnInit {
   }
 
   legumes(data) {
-    this.dataService.setData('data', data);
+    this.dataService.setData('data',data);
     this.router.navigateByUrl('/legumes');
   }
 
@@ -135,10 +135,10 @@ export class AccueilPage implements OnInit {
             console.log('Confirm Cancel');
           },
         },
-        {
+        { 
           text: 'Ok',
           handler: (data2) => {
-            console.log('Confirm Ok');
+            console.log(data2);
             if (data === 'fruits') {
               this.fruits(data2);
             } else {
