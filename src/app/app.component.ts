@@ -29,22 +29,22 @@ export class AppComponent {
         {
           title: 'Annuelles',
           data: 'Annuelles',
-          url: './fleurs',
+          url: '/fleurs',
         },
         {
           title: 'Bisannuelles',
           data: 'Bisannuelles',
-          url: './fleurs',
+          url: '/fleurs',
         },
         {
           title: 'Vivaces',
           data: 'Vivaces',
-          url: './fleurs',
+          url: '/fleurs',
         },
         {
           title: 'Aromatiques',
           data: 'Vivaces',
-          url: './fleurs',
+          url: '/fleurs',
         },
       ],
     },
@@ -54,12 +54,12 @@ export class AppComponent {
         {
           title: 'Ete',
           data: 'Ete',
-          url: './fruits',
+          url: '/fruits',
         },
         {
           title: 'Hiver',
           data: 'hiver',
-          url: './fruits',
+          url: '/fruits',
         },
       ],
     },
@@ -69,12 +69,12 @@ export class AppComponent {
         {
           title: 'Ete',
           data: 'Ete',
-          url: './legumes',
+          url: '/legumes',
         },
         {
           title: 'Hiver',
           data: 'hiver',
-          url: './legumes',
+          url: '/legumes',
         },
       ],
     },
@@ -83,6 +83,7 @@ export class AppComponent {
   constructor(private dataService: DataService, private router: Router) {}
 
   page(data, url) {
+    console.log(url);
     this.dataService.setData('data', data);
     this.router.navigateByUrl(url);
   }
