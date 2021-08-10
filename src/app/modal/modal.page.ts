@@ -1,25 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AlertController,
-  IonRouterOutlet,
-  ModalController,
-} from '@ionic/angular';
+import {  AlertController,  IonRouterOutlet,  ModalController,  LoadingController} from '@ionic/angular';
 // service
 import { PlantesService } from '../services/plante/plantes.service';
 //model
 import { Plante } from '../models/plante.model';
 import { AngularFireStorage } from '@angular/fire/storage';
-import {
-  Validators,
-  FormBuilder,
-  FormGroup,
-  FormControl,
-} from '@angular/forms';
+import {  Validators,  FormBuilder,  FormGroup,  FormControl,} from '@angular/forms';
 //camera
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { IonicToastService } from '../services/ionic-toast.service';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.page.html',
@@ -34,6 +26,9 @@ export class ModalPage implements OnInit {
   private epoque: string;
   private varieters: Observable<any[]>;
   private message: string;
+  private upload: any;
+ private urlImage: any;
+
   private plante: Plante = {
     id: '',
     nom: '',
@@ -46,6 +41,8 @@ export class ModalPage implements OnInit {
     image: '',
   };
 
+
+
   constructor(
     private alertController: AlertController,
     private afSG: AngularFireStorage,
@@ -53,7 +50,10 @@ export class ModalPage implements OnInit {
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private loadingController: LoadingController,
+    private toastCtrl: IonicToastService,
+    
   ) {}
 
   get errorControl() {
@@ -71,6 +71,7 @@ export class ModalPage implements OnInit {
       hauteur: ['', [Validators.required]],
       description: ['', [Validators.required]],
       type: ['', [Validators.required]],
+      image: ['']
     });
     this.plantesService.getDetailPlante(this.id).then((detailPlante) => {
       this.planteDetail.push(detailPlante);
@@ -80,6 +81,7 @@ export class ModalPage implements OnInit {
         .subscribe((imgUrl) => {
           this.planteDetail[0].image = imgUrl;
           this.planteDetail.forEach((items) => {
+            this.urlImage = items.image;
             this.epoque = items.type;
             if (this.epoque !== 'Fleur') {
               document.getElementById('fleuraisonLF').style.display = 'block';
@@ -154,26 +156,38 @@ export class ModalPage implements OnInit {
     return await this.camera.getPicture(options);
   }
   addAnnonce() {
-    console.log(this.annonce);
+    console.log(this.urlImage);
     if (!this.annonce.valid) {
       this.message = 'enter une valeur dans le champ';
       console.log('Please provide all the required values!');
       return false;
     } else {
-      // this.plante.nom = this.annonce.value.nom;
-      // this.plante.variete = this.annonce.value.variete;
-      // this.plante.couleur = this.annonce.value.couleur;
-      // this.plante.fleuraison = this.annonce.value.fleuraison;
-      // this.plante.hauteur = this.annonce.value.hauteur;
-      // this.plante.description = this.annonce.value.description;
-      // this.plante.type = this.annonce.value.type;
-      // this.imagePath = new Date().getTime() + '.jpg';
-      // this.uploadFirebase();
-      this.plantesService.updatePlante(this.id, this.annonce.value);
-      console.log(this.message);
+      this.imagePath = new Date().getTime() + '.jpg';
+      this.annonce.value.image = this.imagePath;
+      this.uploadFirebase();
+      console.log(this.urlImage);
+      this.plantesService.updatePlante(this.id,this.urlImage,this.annonce.value);
+      this.modalController.dismiss({
+        dismissed: true,
+      });
 
-      // this.message ='la plante à était enregistré vous pouvez en saisir une autre';
-      // this.toastCtrl.showToast(this.message);
     }
+  }
+
+  async uploadFirebase() {
+    const loading = await this.loadingController.create({
+      duration: 2000,
+    });
+    await loading.present();
+    this.upload = this.afSG.ref(this.imagePath).putString(this.image, 'data_url');
+    this.upload.then(async () => {
+      await loading.onDidDismiss();
+      const alert = await this.alertController.create({
+        header: 'Félicitation',
+        message: "La modification à bien était éffectuer",
+        buttons: ['OK'],
+      });
+      await alert.present();
+    });
   }
 }
