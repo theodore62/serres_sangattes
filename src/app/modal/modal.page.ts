@@ -29,19 +29,21 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./modal.page.scss'],
 })
 export class ModalPage implements OnInit {
-  private id: Plante;
-  private planteDetail: any = [];
-  private annonce: FormGroup;
-  private image = '';
-  private imagePath: string;
-  private epoque: string;
-  private varieters: Observable<any[]>;
-  private message: string;
-  private upload: any;
-  private urlImage: any;
-  private urlImageUpdate: any;
+  public id: Plante;
+  public planteDetail: any = [];
+  public annonce: FormGroup;
+  public image = '';
+  public imagePath: string;
+  public epoque: string;
+  public varieters: Observable<any[]>;
+  public message: string;
+  public upload: any;
+  public urlImage: any;
+  public urlImageUpdate: any;
+  public isSubmitted = false;
+  public texte: any = '';
 
-  private plante: Plante = {
+  public plante: Plante = {
     id: '',
     nom: '',
     variete: '',
@@ -95,6 +97,7 @@ export class ModalPage implements OnInit {
             this.urlImage = items.image;
             this.epoque = items.type;
             if (this.epoque !== 'Fleur') {
+              this.texte = 'Epoque de récolte:';
               document.getElementById('fleuraisonLF').style.display = 'block';
               document.getElementById('nom').setAttribute('value', items.nom);
               document
@@ -117,6 +120,7 @@ export class ModalPage implements OnInit {
                 .getElementById('variete')
                 .setAttribute('value', items.variete);
             } else {
+              this.texte = 'Epoque de fleuraison:';
               document.getElementById('fleuraison').style.display = 'block';
               document.getElementById('nom').setAttribute('value', items.nom);
               document

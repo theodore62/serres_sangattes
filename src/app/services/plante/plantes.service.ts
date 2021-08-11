@@ -9,7 +9,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
   providedIn: 'root',
 })
 export class PlantesService {
-  private ref = 'Plantes';
+  public ref = 'Plantes';
   public planteList = this.firestore.collection<Plante>('Plantes');
 
   constructor(

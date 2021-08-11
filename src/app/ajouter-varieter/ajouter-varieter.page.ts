@@ -20,10 +20,10 @@ import { IonicToastService } from '../services/ionic-toast.service';
   styleUrls: ['./ajouter-varieter.page.scss'],
 })
 export class AjouterVarieterPage implements OnInit {
-  private varieter: FormGroup;
-  private isSubmitted = false;
-  private items: Observable<any[]>;
-  private message: string;
+  public varieter: FormGroup;
+  public isSubmitted = false;
+  public items: Observable<any[]>;
+  public message: string;
 
   constructor(
     private router: Router,
@@ -40,8 +40,11 @@ export class AjouterVarieterPage implements OnInit {
     });
   }
 
+  get errorControl() {
+    return this.varieter.controls;
+  }
+
   addVarieter() {
-    console.log(this.varieter);
     if (!this.varieter.valid) {
       this.message = 'enter une valeur dans le champ';
       return false;

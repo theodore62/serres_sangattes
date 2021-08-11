@@ -12,8 +12,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
   styleUrls: ['./details.page.scss'],
 })
 export class DetailsPage implements OnInit {
-  private id: any;
-  private planteDetail: any = [];
+  public id: any;
+  public planteDetail: any = [];
 
   constructor(
     private dataService: DataService,

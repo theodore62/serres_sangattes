@@ -40,21 +40,27 @@
           minimun 2 caractéres
         </span>
       </ion-item>  
-      <ion-item>
-        <ion-label color="light" >Epoque de fleuraison:</ion-label>
-    
-
-        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fleur' ">
+      <ion-item *ngIf="epoque === 'Fleur' ">
+        <ion-label color="light" >Epoque de fleuraison:</ion-label>   
+        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque === 'Fleur' ">
           <ion-select-option value="Annuelles">Annuelles</ion-select-option>
           <ion-select-option value="Bisannuelles">Bisannuelles</ion-select-option>
           <ion-select-option value="Vivaces">Vivaces</ion-select-option>
           <ion-select-option value="Aromatiques">Aromatiques</ion-select-option>
         </ion-select>
-        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque == 'Fruit' || epoque == 'Legumes' ">
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
+          champ obligatoire 
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+      </ion-item> 
+      <ion-item *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
+        <ion-label color="light" >Epoque de récolte:</ion-label>   
+        <ion-select  color="light" placeholder="Select One" required formControlName="fleuraison" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
           <ion-select-option value="Ete">Ete</ion-select-option>
           <ion-select-option value="Hiver">Hiver</ion-select-option>
         </ion-select>
-
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
           champ obligatoire 
         </span>

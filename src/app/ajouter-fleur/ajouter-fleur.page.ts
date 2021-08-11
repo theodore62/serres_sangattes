@@ -31,18 +31,18 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
   styleUrls: ['./ajouter-fleur.page.scss'],
 })
 export class AjouterFleurPage implements OnInit {
-  private annonce: FormGroup;
-  private isSubmitted = false;
-  private items: Observable<any[]>;
-  private message: string;
-  private epoque: string;
+  public annonce: FormGroup;
+  public isSubmitted = false;
+  public items: Observable<any[]>;
+  public message: string;
+  public epoque: string;
 
- private image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
- private imagePath: string;
- private upload: any;
+  public image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
+  public imagePath: string;
+  public upload: any;
 
 
-  private plante: Plante = {
+  public plante: Plante = {
     id: '',
     nom: '',
     variete: '',
