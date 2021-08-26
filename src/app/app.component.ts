@@ -25,6 +25,7 @@ export class AppComponent {
     },
     {
       title: 'Fleurs',
+      open: false,
       children: [
         {
           title: 'Annuelles',
