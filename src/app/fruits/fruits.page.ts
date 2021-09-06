@@ -92,6 +92,8 @@ export class FruitsPage implements OnInit {
           currentPlant.couleur.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1 ||
           currentPlant.hauteur.toLowerCase().indexOf(searchTerm.toLowerCase()) >
+            -1 ||
+          currentPlant.de.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1
         );
       }

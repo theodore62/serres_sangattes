@@ -59,6 +59,23 @@
           minimun 2 caractéres
         </span>
       </ion-item> 
+      <ion-item >
+        <ion-label color="light" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' " >période de récolte:</ion-label>   
+        <ion-label color="light" *ngIf="epoque === 'Fleur' " >Mois de fleuraison:</ion-label>  
+        <ion-item>
+          <ion-select  color="light" placeholder="de" required formControlName="de" id="de">
+            <ion-select-option  *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
+          </ion-select>      
+      </ion-item>
+      <ion-item>
+        <ion-label color="light" style="width: 2em;" >à</ion-label>   
+      </ion-item>
+      <ion-item>
+        <ion-select  color="light" placeholder="a" required formControlName="a" id="a">
+          <ion-select-option  *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-item>
 
       <ion-item>
         <ion-label color="light">Hauteur:</ion-label>

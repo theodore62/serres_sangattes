@@ -25,6 +25,10 @@ import { Plante } from '../models/plante.model';
 
 //camera
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+import {IonSelect} from '@ionic/angular';
+import { ViewChild } from '@angular/core';
+
 @Component({
   selector: 'app-ajouter-fleur',
   templateUrl: './ajouter-fleur.page.html',
@@ -37,10 +41,10 @@ export class AjouterFleurPage implements OnInit {
   public message: string;
   public epoque: string;
 
-  public image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
+  public image = '../../assets/images/img.png';
   public imagePath: string;
   public upload: any;
-
+  public listMois: any;
 
   public plante: Plante = {
     id: '',
@@ -51,8 +55,13 @@ export class AjouterFleurPage implements OnInit {
     hauteur: '',
     description: '',
     type: '',
+    de: '',
+    a: '',
     image: '',
   };
+
+  @ViewChild('type') theSelectObject: IonSelect;
+
 
   constructor(
     private router: Router,
@@ -67,6 +76,7 @@ export class AjouterFleurPage implements OnInit {
     private loadingController: LoadingController,
   ) {
     this.items = this.firestore.collection('Variete').valueChanges();
+    this.listMois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'décembre' ]; 
   }
 
   get errorControl() {
@@ -74,6 +84,9 @@ export class AjouterFleurPage implements OnInit {
   }
 
   ngOnInit() {
+    if(this.epoque == null){
+      this.epoqueFleuraison();
+    }
     this.annonce = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.minLength(2)]],
       variete: ['', [Validators.required]],
@@ -82,51 +95,17 @@ export class AjouterFleurPage implements OnInit {
       hauteur: ['', [Validators.required]],
       description: ['', [Validators.required]],
       type: ['', [Validators.required]],
+      de: ['', [Validators.required]],
+      a: ['', [Validators.required]],
     });
-    this.epoqueFleuraison();
+
   }
 
   ajouter() {
     this.router.navigateByUrl('/ajouter-varieter');
   }
-
-  addAnnonce() {
-    console.log(this.annonce);
-    if (!this.annonce.valid) {
-      this.message = 'enter une valeur dans le champ';
-      console.log('Please provide all the required values!');
-      return false;
-    } else {
-      this.plante.nom = this.annonce.value.nom;
-      this.plante.variete = this.annonce.value.variete;
-      this.plante.couleur = this.annonce.value.couleur;
-      this.plante.fleuraison = this.annonce.value.fleuraison;
-      this.plante.hauteur = this.annonce.value.hauteur;
-      this.plante.description = this.annonce.value.description;
-      this.plante.type = this.annonce.value.type;
-      this.imagePath = new Date().getTime() + '.jpg';
-      this.uploadFirebase();
-      this.planteList.postPlanteList(this.plante).then((retour) => {
-        if (retour.id == null) {
-          this.message = "la plante n'a pas pu être enregistré ";
-          this.toastCtrl.showToast(this.message);
-        } else {
-          this.firestore.doc(`Plantes/${retour.id}`).set({
-            id: retour.id,
-            nom:  this.plante.nom ,
-            variete:  this.plante.variete,
-            couleur: this.plante.couleur,
-            fleuraison: this.plante.fleuraison,
-            hauteur:  this.plante.hauteur,
-            description:   this.plante.description,
-            type:  this.plante.type,
-            image: this.imagePath,
-          });
-          this.message ='la plante à était enregistré vous pouvez en saisir une autre';
-          this.toastCtrl.showToast(this.message);
-        }
-      });
-    }
+  optionsfn(){
+    this.epoque = this.theSelectObject.value;
   }
 
   async epoqueFleuraison() {
@@ -183,6 +162,50 @@ export class AjouterFleurPage implements OnInit {
     });
     await alert.present();
   }
+  addAnnonce() {
+    console.log(this.annonce);
+    if (!this.annonce.valid) {
+      this.message = 'enter une valeur dans le champ';
+      console.log('Please provide all the required values!');
+      return false;
+    } else {
+      this.plante.nom = this.annonce.value.nom;
+      this.plante.variete = this.annonce.value.variete;
+      this.plante.couleur = this.annonce.value.couleur;
+      this.plante.fleuraison = this.annonce.value.fleuraison;
+      this.plante.hauteur = this.annonce.value.hauteur;
+      this.plante.description = this.annonce.value.description;
+      this.plante.type = this.annonce.value.type;
+      this.plante.de = this.annonce.value.de;
+      this.plante.a = this.annonce.value.a;
+      this.imagePath = new Date().getTime() + '.jpg';
+      this.uploadFirebase();
+      this.planteList.postPlanteList(this.plante).then((retour) => {
+        if (retour.id == null) {
+          this.message = "la plante n'a pas pu être enregistré ";
+          this.toastCtrl.showToast(this.message);
+        } else {
+          this.firestore.doc(`Plantes/${retour.id}`).set({
+            id: retour.id,
+            nom:  this.plante.nom ,
+            variete:  this.plante.variete,
+            couleur: this.plante.couleur,
+            fleuraison: this.plante.fleuraison,
+            hauteur:  this.plante.hauteur,
+            description:   this.plante.description,
+            type:  this.plante.type,
+            de:  this.plante.de,
+            a:  this.plante.a,
+            image: this.imagePath,
+          });
+          this.message ='la plante à était enregistré vous pouvez en saisir une autre';
+          this.toastCtrl.showToast(this.message);
+        }
+      });
+    }
+  }
+
+
 
   async addPhoto() {
     const libraryImage = await this.openLibrary();
@@ -218,7 +241,5 @@ async uploadFirebase() {
 		await alert.present();
 	});
 }
-
-
 
 }

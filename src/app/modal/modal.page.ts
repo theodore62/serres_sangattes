@@ -42,7 +42,7 @@ export class ModalPage implements OnInit {
   public urlImageUpdate: any;
   public isSubmitted = false;
   public texte: any = '';
-
+  public listMois: any;
   public plante: Plante = {
     id: '',
     nom: '',
@@ -52,6 +52,8 @@ export class ModalPage implements OnInit {
     hauteur: '',
     description: '',
     type: '',
+    de: '',
+    a: '',
     image: '',
   };
 
@@ -74,7 +76,7 @@ export class ModalPage implements OnInit {
 
   ngOnInit() {
     this.varieters = this.firestore.collection('Variete').valueChanges();
-
+    this.listMois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'décembre' ];
     this.annonce = this.formBuilder.group({
       nom: ['', [Validators.required]],
       variete: ['', [Validators.required]],
@@ -83,6 +85,8 @@ export class ModalPage implements OnInit {
       hauteur: ['', [Validators.required]],
       description: ['', [Validators.required]],
       type: ['', [Validators.required]],
+      de: ['', [Validators.required]],
+      a: ['', [Validators.required]],
       image: [''],
     });
     this.plantesService.getDetailPlante(this.id).then((detailPlante) => {
@@ -119,6 +123,7 @@ export class ModalPage implements OnInit {
               document
                 .getElementById('variete')
                 .setAttribute('value', items.variete);
+  
             } else {
               this.texte = 'Epoque de fleuraison:';
               document.getElementById('fleuraison').style.display = 'block';
@@ -143,6 +148,13 @@ export class ModalPage implements OnInit {
                 .getElementById('variete')
                 .setAttribute('value', items.variete);
             }
+          document
+            .getElementById('de')
+            .setAttribute('value', items.de);
+          document
+            .getElementById('a')
+            .setAttribute('value', items.a);
+
           });
         });
     });
