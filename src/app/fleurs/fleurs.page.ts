@@ -48,12 +48,10 @@ export class FleursPage implements OnInit {
   }
 
   async doRefresh(event) {
-    console.log(event);
     const teste = await this.initializeItems();
     console.log('Begin async operation');
     setTimeout(() => {
       this.planteList = teste;
-      console.log(this.planteList);
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);

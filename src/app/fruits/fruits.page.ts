@@ -41,37 +41,34 @@ export class FruitsPage implements OnInit {
 
   async ngOnInit() {
     this.datas = this.dataService.getData('data');
-    console.log(this.datas);
     this.planteList = await this.initializeItems();
   }
 
-  doRefresh(event) {
+  async doRefresh(event) {
+    const teste = await this.initializeItems();
     console.log('Begin async operation');
     setTimeout(() => {
-      this.planteList = this.initializeItems();
+      this.planteList = teste;
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
 
   async initializeItems(): Promise<any> {
-    if (this.tableauPlante.length <= 0) {
-      const planteListe = await this.plantesService.getPlanteList();
-      planteListe.forEach((resulta) => {
-        if (resulta.fleuraison === this.datas &&  resulta.type === 'Fruit') {
-          console.log(resulta.image);
-          this.afSG
-            .ref('/' + resulta.image)
-            .getDownloadURL()
-            .subscribe((imgUrl) => {
-              resulta.image = imgUrl;
-              this.tableauPlante.push(resulta);
-            });
-        }
-      });
-      console.log(this.tableauPlante);
-    }
-
+    this.tableauPlante = [];
+    const planteListe = await this.plantesService.getPlanteList();
+    planteListe.forEach((resulta) => {
+      if (resulta.fleuraison === this.datas && resulta.type === 'Fruit') {
+        console.log(resulta.image);
+        this.afSG
+          .ref('/' + resulta.image)
+          .getDownloadURL()
+          .subscribe((imgUrl) => {
+            resulta.image = imgUrl;
+            this.tableauPlante.push(resulta);
+          });
+      }
+    });
     return this.tableauPlante;
   }
 
@@ -93,8 +90,7 @@ export class FruitsPage implements OnInit {
             -1 ||
           currentPlant.hauteur.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1 ||
-          currentPlant.de.toLowerCase().indexOf(searchTerm.toLowerCase()) >
-            -1
+          currentPlant.de.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
         );
       }
     });
@@ -103,10 +99,12 @@ export class FruitsPage implements OnInit {
     this.dataService.setData('id', idPlante);
     this.router.navigateByUrl('/details');
   }
-  delete(idPlante, url) {
+  async delete(idPlante, url) {
     this.afSG.refFromURL(url).delete();
     this.plantesService.deletePlante(idPlante);
-    window.location.assign('/fleurs');
+    this.tableauPlante = [];
+    this.planteList = await this.initializeItems();
+    console.log(this.planteList);
   }
 
   async update(idPlante, anneeFleuraison) {
