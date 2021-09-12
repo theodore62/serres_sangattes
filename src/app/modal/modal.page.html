@@ -103,7 +103,7 @@
           <ion-select-option value="Legume">Légume</ion-select-option>
         </ion-select>
       </ion-item>  
-      <ion-button (click)="addPhoto()" color="tertiary" expand="block">
+      <ion-button (click)="addPhoto()"  expand="block" id="imageB">
         <ion-icon name="image" slot="start"></ion-icon>
         Ouvrir la bibliothèque
       </ion-button>
@@ -112,7 +112,7 @@
           <img id='urlimage' [src]="image">
         </div>
       </div>
-  <ion-button color="light" type="submit" expand="block">Valider</ion-button>
+  <ion-button  type="submit" expand="block">Valider</ion-button>
   </form>
 </ion-list>
 </ion-content>

@@ -60,6 +60,8 @@ export class AjouterFleurPage implements OnInit {
     image: '',
   };
 
+ public buttonColor: string;
+
   @ViewChild('type') theSelectObject: IonSelect;
 
 
@@ -76,6 +78,9 @@ export class AjouterFleurPage implements OnInit {
     private loadingController: LoadingController,
   ) {
     this.items = this.firestore.collection('Variete').valueChanges();
+    this.buttonColor ='#9eb7d2';
+    
+
     this.listMois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'décembre' ]; 
   }
 

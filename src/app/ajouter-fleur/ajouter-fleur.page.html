@@ -106,13 +106,13 @@
       </ion-item> 
       <ion-item>
         <ion-label  color="light" >Type de plante</ion-label>
-        <ion-select  color="light"  placeholder="Selectioner le Type" required formControlName="type" value="{{ epoque }}" (ionChange)="optionsfn();" #type >
-          <ion-select-option value="Fleur">Fleur</ion-select-option>
-          <ion-select-option value="Fruit">Fruit</ion-select-option>
-          <ion-select-option value="Legumes">Légume</ion-select-option>
+        <ion-select placeholder="Selectioner le Type" required formControlName="type" value="{{ epoque }}" (ionChange)="optionsfn();" #type  class="custom-options">
+          <ion-select-option value="Fleur" color="light" >Fleur</ion-select-option>
+          <ion-select-option value="Fruit" color="light" >Fruit</ion-select-option>
+          <ion-select-option value="Legumes" color="light" >Légume</ion-select-option>
         </ion-select>
       </ion-item>  
-      <ion-button (click)="addPhoto()" color="tertiary" expand="block">
+      <ion-button (click)="addPhoto()" expand="block" id="imageB">
         <ion-icon name="image" slot="start"></ion-icon>
         Ouvrir la bibliothèque
       </ion-button>
@@ -121,7 +121,7 @@
           <img [src]="image">
         </div>
       </div>
-  <ion-button color="light" type="submit" expand="block">Valider</ion-button>
+  <ion-button   type="submit" expand="block">Valider</ion-button>
   </form>
 </ion-list>
 </ion-content>

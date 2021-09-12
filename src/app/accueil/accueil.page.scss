@@ -1,20 +1,99 @@
-ion-header{
-    --ion-background-color: #f5af19;
+ion-header {
+  //v2
+  --ion-background-color: #3366a0;
+  //v1
+  // --ion-background-color: #f5af19;
 }
 ion-content {
-    --ion-background-color: linear-gradient(#f5af19, #f12711);
-  }
-#fleurs{
-    background-image: url('../../assets/images/roses.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center ;
+  //v2
+  color: #fff;
+  --ion-background-color: linear-gradient(#3366a0, #9eb7d2);
+  //v1
+  // --ion-background-color: linear-gradient(#f5af19, #f12711);
+}
+//--------------//
+//v2
+ion-title,
+ion-icon,
+ion-buttons {
+  color: #fff;
 }
 
-#fond_fleurs{
+//--------------//
+#fleurs {
+  background-image: url("../../assets/images/roses.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#fond_fleurs {
+    
+  background-color: silver;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 1em;
+  width: 100%;
+  height: 20%;
+  opacity: 0.8;
+  color: black;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#fruits {
+  background-image: url("../../assets/images/117981_w1024h1024c1cx2652cy2652.webp");
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+#fond_fruits {
+  background-color: silver;
+}
+
+#legumes {
+  background-image: url("../../assets/images/content_lg.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+#fond_legumes {
+  background-color: silver;
+}
+
+#groupe {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  #groupe {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  #fond_fleurs {
     background-color: silver;
     background-position: center;
     display: flex;
@@ -23,77 +102,10 @@ ion-content {
     padding: 10px;
     margin: 1em;
     width: 100%;
-    height: 20%;
+    height: 50%;
     opacity: 0.8;
     color: black;
-    font-size: 1.3em;
+    font-size: 2.5em;
     font-weight: bold;
-    
-}
-
-#fruits{
-    background-image: url('../../assets/images/117981_w1024h1024c1cx2652cy2652.webp');
-    background-repeat: no-repeat;
-    background-position: center center;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    margin-left: auto;
-    align-items: center ;
-}
-
-#fond_fruits{
-    background-color: silver;
-}
-
-#legumes{
-    background-image: url('../../assets/images/content_lg.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    margin-left: auto;
-    align-items: center ;
-}
-
-#fond_legumes{
-    background-color: silver;
-}
-
-#groupe{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-}
-
-
-
-@media screen and (min-width: 500px)
-{
-    #groupe{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-    }
-    #fond_fleurs{
-        background-color: silver;
-        background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        margin: 1em;
-        width: 100%;
-        height: 50%;
-        opacity: 0.8;
-        color: black;
-        font-size: 2.5em;
-        font-weight: bold;
-    }
-    
+  }
 }
