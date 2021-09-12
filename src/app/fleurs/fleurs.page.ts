@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 // base de données
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -37,7 +38,8 @@ export class FleursPage implements OnInit {
     private afSG: AngularFireStorage,
     private alertController: AlertController,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    public navCtrl: NavController
   ) {}
 
   async ngOnInit() {
@@ -45,35 +47,37 @@ export class FleursPage implements OnInit {
     this.planteList = await this.initializeItems();
   }
 
-  doRefresh(event) {
+  async doRefresh(event) {
+    console.log(event);
+    const teste = await this.initializeItems();
     console.log('Begin async operation');
     setTimeout(() => {
-      this.planteList = this.initializeItems();
+      this.planteList = teste;
+      console.log(this.planteList);
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
 
   async initializeItems(): Promise<any> {
-    if (this.tableauPlante.length <= 0) {
-      const planteListe = await this.plantesService.getPlanteList();
-      planteListe.forEach((resulta) => {
-        if (resulta.fleuraison === this.datas) {
-          console.log(resulta.image);
-          this.afSG
-            .ref('/' + resulta.image)
-            .getDownloadURL()
-            .subscribe((imgUrl) => {
-              resulta.image = imgUrl;
-              this.tableauPlante.push(resulta);
-            });
-        }
-      });
-      console.log(this.tableauPlante);
-    }
-
+    this.tableauPlante = [];
+    const planteListe = await this.plantesService.getPlanteList();
+    planteListe.forEach((resulta) => {
+      if (resulta.fleuraison === this.datas) {
+        console.log(resulta.image);
+        this.afSG
+          .ref('/' + resulta.image)
+          .getDownloadURL()
+          .subscribe((imgUrl) => {
+            resulta.image = imgUrl;
+            this.tableauPlante.push(resulta);
+          });
+      }
+    });
+    console.log(this.tableauPlante);
     return this.tableauPlante;
   }
+
   async filterList(ev: any) {
     this.planteList = await this.initializeItems();
     const searchTerm = ev.srcElement.value;
@@ -92,8 +96,7 @@ export class FleursPage implements OnInit {
             -1 ||
           currentPlant.hauteur.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1 ||
-          currentPlant.de.toLowerCase().indexOf(searchTerm.toLowerCase()) >
-            -1
+          currentPlant.de.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
         );
       }
     });
@@ -102,10 +105,12 @@ export class FleursPage implements OnInit {
     this.dataService.setData('id', idPlante);
     this.router.navigateByUrl('/details');
   }
-  delete(idPlante, url) {
+  async delete(idPlante, url) {
     this.afSG.refFromURL(url).delete();
     this.plantesService.deletePlante(idPlante);
-    window.location.assign('/fleurs');
+    this.tableauPlante = [];
+    this.planteList = await this.initializeItems();
+    console.log(this.planteList);
   }
 
   async update(idPlante, anneeFleuraison) {
