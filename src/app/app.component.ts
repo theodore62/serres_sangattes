@@ -14,12 +14,12 @@ export class AppComponent {
       icon: 'home',
     },
     {
-      title: 'Ajouter des plantes',
+      title: 'Ajouter une plante',
       url: './ajouter-fleur',
       icon: 'add-circle-outline',
     },
     {
-      title: 'Ajouter variéters',
+      title: 'Ajouter une Variété',
       url: './ajouter-varieter',
       icon: 'add-circle-outline',
     },

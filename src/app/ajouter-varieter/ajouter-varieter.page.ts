@@ -31,7 +31,7 @@ export class AjouterVarieterPage implements OnInit {
     private formBuilder: FormBuilder,
     private afDB: AngularFireDatabase,
     private firestore: AngularFirestore,
-    private toastCtrl: IonicToastService,
+    private toastCtrl: IonicToastService
   ) {}
 
   ngOnInit() {
@@ -56,16 +56,14 @@ export class AjouterVarieterPage implements OnInit {
         })
         .then((retour) => {
           if (retour.id == null) {
-            this.message = "la variétèe n'a pas pu être enregistré ";
+            this.message = 'la variété n\'a pas pu être enregistré ';
             this.toastCtrl.showToast(this.message);
-            
           } else {
-            this.message ='la variétèe à était enregistré vous pouvez en saisir une autre';
+            this.message =
+              'la variété a été enregistrée, vous pouvez en saisir une nouvelle';
             this.toastCtrl.showToast(this.message);
           }
         });
     }
   }
-
-
 }

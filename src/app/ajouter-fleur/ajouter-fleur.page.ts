@@ -9,7 +9,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController,LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 // base de données
 
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -26,7 +26,7 @@ import { Plante } from '../models/plante.model';
 //camera
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import {IonSelect} from '@ionic/angular';
+import { IonSelect } from '@ionic/angular';
 import { ViewChild } from '@angular/core';
 
 @Component({
@@ -40,8 +40,9 @@ export class AjouterFleurPage implements OnInit {
   public items: Observable<any[]>;
   public message: string;
   public epoque: string;
-
-  public image = '../../assets/images/img.png';
+  //url image à vide pour vérifiaction
+  // ../../assets/images/img.png
+  public image = '';
   public imagePath: string;
   public upload: any;
   public listMois: any;
@@ -59,11 +60,10 @@ export class AjouterFleurPage implements OnInit {
     a: '',
     image: '',
   };
-
- public buttonColor: string;
+  public url: string;
+  public buttonColor: string;
 
   @ViewChild('type') theSelectObject: IonSelect;
-
 
   constructor(
     private router: Router,
@@ -75,13 +75,25 @@ export class AjouterFleurPage implements OnInit {
     private planteList: PlantesService,
     private camera: Camera,
     private afSG: AngularFireStorage,
-    private loadingController: LoadingController,
+    private loadingController: LoadingController
   ) {
     this.items = this.firestore.collection('Variete').valueChanges();
-    this.buttonColor ='#9eb7d2';
-    
+    this.buttonColor = '#9eb7d2';
 
-    this.listMois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'décembre' ]; 
+    this.listMois = [
+      'janvier',
+      'février',
+      'mars',
+      'avril',
+      'mai',
+      'juin',
+      'juillet',
+      'aout',
+      'septembre',
+      'octobre',
+      'novembre',
+      'décembre',
+    ];
   }
 
   get errorControl() {
@@ -89,7 +101,7 @@ export class AjouterFleurPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.epoque == null){
+    if (this.epoque == null) {
       this.epoqueFleuraison();
     }
     this.annonce = this.formBuilder.group({
@@ -103,13 +115,12 @@ export class AjouterFleurPage implements OnInit {
       de: ['', [Validators.required]],
       a: ['', [Validators.required]],
     });
-
   }
 
   ajouter() {
     this.router.navigateByUrl('/ajouter-varieter');
   }
-  optionsfn(){
+  optionsfn() {
     this.epoque = this.theSelectObject.value;
   }
 
@@ -124,7 +135,7 @@ export class AjouterFleurPage implements OnInit {
           label: 'Fleur',
           value: 'Fleur',
           handler: () => {
-            console.log('Radio 1 selected');
+            // console.log('Radio 1 selected');
           },
           checked: true,
         },
@@ -134,7 +145,7 @@ export class AjouterFleurPage implements OnInit {
           label: 'Fruit',
           value: 'Fruit',
           handler: () => {
-            console.log('Radio 2 selected');
+            // console.log('Radio 2 selected');
           },
         },
         {
@@ -143,7 +154,7 @@ export class AjouterFleurPage implements OnInit {
           label: 'Legumes',
           value: 'Legumes',
           handler: () => {
-            console.log('Radio 3 selected');
+            // console.log('Radio 3 selected');
           },
         },
       ],
@@ -153,7 +164,7 @@ export class AjouterFleurPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (value) => {
-            console.log('Confirm Cancel');
+            // console.log('Confirm Cancel');
           },
         },
         {
@@ -170,9 +181,8 @@ export class AjouterFleurPage implements OnInit {
   addAnnonce() {
     console.log(this.annonce);
     if (!this.annonce.valid) {
-      this.message = 'enter une valeur dans le champ';
-      console.log('Please provide all the required values!');
-      return false;
+      this.message = 'Veuillez veuillez compléter le formulaire';
+      this.toastCtrl.showToast(this.message);
     } else {
       this.plante.nom = this.annonce.value.nom;
       this.plante.variete = this.annonce.value.variete;
@@ -183,68 +193,75 @@ export class AjouterFleurPage implements OnInit {
       this.plante.type = this.annonce.value.type;
       this.plante.de = this.annonce.value.de;
       this.plante.a = this.annonce.value.a;
-      this.imagePath = new Date().getTime() + '.jpg';
-      this.uploadFirebase();
-      this.planteList.postPlanteList(this.plante).then((retour) => {
-        if (retour.id == null) {
-          this.message = "la plante n'a pas pu être enregistré ";
-          this.toastCtrl.showToast(this.message);
-        } else {
-          this.firestore.doc(`Plantes/${retour.id}`).set({
-            id: retour.id,
-            nom:  this.plante.nom ,
-            variete:  this.plante.variete,
-            couleur: this.plante.couleur,
-            fleuraison: this.plante.fleuraison,
-            hauteur:  this.plante.hauteur,
-            description:   this.plante.description,
-            type:  this.plante.type,
-            de:  this.plante.de,
-            a:  this.plante.a,
-            image: this.imagePath,
-          });
-          this.message ='la plante à était enregistré vous pouvez en saisir une autre';
-          this.toastCtrl.showToast(this.message);
-        }
-      });
+      this.url = this.image;
+      console.log(this.url);
+      if (this.url !== '') {
+        console.log('ici');
+        this.imagePath = new Date().getTime() + '.jpg';
+        this.uploadFirebase();
+        this.planteList.postPlanteList(this.plante).then((retour) => {
+          if (retour.id == null) {
+            this.message = "les données n'ont pas pu être enregistrées";
+            this.toastCtrl.showToast(this.message);
+          } else {
+            this.firestore.doc(`Plantes/${retour.id}`).set({
+              id: retour.id,
+              nom: this.plante.nom,
+              variete: this.plante.variete,
+              couleur: this.plante.couleur,
+              fleuraison: this.plante.fleuraison,
+              hauteur: this.plante.hauteur,
+              description: this.plante.description,
+              type: this.plante.type,
+              de: this.plante.de,
+              a: this.plante.a,
+              image: this.imagePath,
+            });
+          }
+        });
+      } else {
+        this.message = 'veuilliez rajouter une image';
+        this.toastCtrl.showToast(this.message);
+      }
     }
   }
-
-
 
   async addPhoto() {
     const libraryImage = await this.openLibrary();
     this.image = 'data:image/jpg;base64,' + libraryImage;
-}
-async openLibrary() {
-  const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-    targetWidth: 1000,
-    targetHeight: 1000,
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-  };
-  return await this.camera.getPicture(options);
-}
+  }
+  async openLibrary() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    };
+    return await this.camera.getPicture(options);
+  }
 
-async uploadFirebase() {
-	const loading = await this.loadingController.create({
-		duration: 2000
-	});
-	await loading.present();
-	this.upload = this.afSG.ref(this.imagePath).putString(this.image, 'data_url');
-	this.upload.then(async () => {
-		await loading.onDidDismiss();
-		this.image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
-		const alert = await this.alertController.create({
-			header: 'Félicitation',
-			message: 'L\'envoi de la photo dans Firebase est terminé!',
-			buttons: ['OK']
-		});
-		await alert.present();
-	});
-}
-
+  async uploadFirebase() {
+    const loading = await this.loadingController.create({
+      duration: 2000,
+    });
+    //rajouter une conditions si url est vide de image pour bloquer la validation
+    await loading.present();
+    this.upload = this.afSG
+      .ref(this.imagePath)
+      .putString(this.image, 'data_url');
+    this.upload.then(async () => {
+      await loading.onDidDismiss();
+      this.image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
+      const alert = await this.alertController.create({
+        header: 'Félicitation',
+        cssClass: ['color:white'],
+        message: 'Les données ont bien été enregistrées',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    });
+  }
 }

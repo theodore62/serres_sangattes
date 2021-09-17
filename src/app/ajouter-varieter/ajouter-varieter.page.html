@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button  color="light" ></ion-back-button>
     </ion-buttons>
-    <ion-title  color="light" >ajouter une variétèe</ion-title>
+    <ion-title  color="light" >ajouter une Variété</ion-title>
   </ion-toolbar>
 </ion-header>
   <ion-content > 
       <form (ngSubmit)="addVarieter()" color="light" [formGroup]="varieter" >
         <ion-item > 
-          <ion-label color="light">nom de la fleur:</ion-label>
-          <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
+          <ion-label color="light">nom de la Variété:</ion-label>
+          <ion-input color="light" type="text" placeholder="Variété" formControlName="nom" ></ion-input>
            <!-- Error messages -->
           <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.nom.errors?.required"  class="color">
             champ obligatoire 
