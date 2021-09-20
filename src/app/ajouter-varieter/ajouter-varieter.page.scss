@@ -21,6 +21,25 @@ ion-header {
   ion-button {
     --background: #4070a6;
   }
-ion-item {
+ion-item,ion-list {
     --ion-background-color: transparent !important;
+}
+
+
+.ajouter{
+ font-size: larger;
+  padding: 0.5em;
+  text-align: center;
+
+}
+.bar{
+  border-top: green 25px !important;
+
+}
+.supprimer{
+
+  font-size: larger;
+  padding: 0.5em;
+  margin-top: 2em;
+  text-align: center;
 }

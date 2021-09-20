@@ -11,3 +11,7 @@ export interface Plante {
   a: string;
   image: string;
 }
+export interface Variete {
+  id: any;
+  nom: string;
+}
