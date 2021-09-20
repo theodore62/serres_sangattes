@@ -1,4 +1,4 @@
-#Sun Sep 19 18:15:51 CEST 2021
+#Mon Sep 20 10:23:16 CEST 2021
 base.0=D\:\\cours\\ionic\\test-app-serres-sangattes\\serres_sangattes\\platforms\\android\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
