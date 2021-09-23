@@ -79,6 +79,11 @@ export class AppComponent {
         },
       ],
     },
+    {
+      title: 'Gestion de commandes',
+      url: './gestion-commandes',
+      icon: 'add-circle-outline',
+    },
   ];
 
   constructor(private dataService: DataService, private router: Router) {}

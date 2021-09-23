@@ -45,6 +45,10 @@ const routes: Routes = [
   },  {
     path: 'modal',
     loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'gestion-commandes',
+    loadChildren: () => import('./gestion-commandes/gestion-commandes.module').then( m => m.GestionCommandesPageModule)
   }
 
 ];
