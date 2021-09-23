@@ -20,28 +20,28 @@ import { PlantesService } from './services/plante/plantes.service';
 import { Camera } from '@ionic-native/camera/ngx';
 
 // dev
-// export const firebaseConfig = {
-//   apiKey: 'AIzaSyC6M9FeUa5BavwZorenCX_dq6mPFLJvH4Y',
-//   authDomain: 'serres-sangatte.firebaseapp.com',
-//   databaseURL:
-//     'https://serres-sangatte-default-rtdb.europe-west1.firebasedatabase.app',
-//   projectId: 'serres-sangatte',
-//   storageBucket: 'serres-sangatte.appspot.com',
-//   messagingSenderId: '844932799354',
-//   appId: '1:844932799354:web:f468a96ec971f9357a94c3',
-//   measurementId: 'G-8LZGJY7CX3',
-// };
+export const firebaseConfig = {
+  apiKey: 'AIzaSyC6M9FeUa5BavwZorenCX_dq6mPFLJvH4Y',
+  authDomain: 'serres-sangatte.firebaseapp.com',
+  databaseURL:
+    'https://serres-sangatte-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'serres-sangatte',
+  storageBucket: 'serres-sangatte.appspot.com',
+  messagingSenderId: '844932799354',
+  appId: '1:844932799354:web:f468a96ec971f9357a94c3',
+  measurementId: 'G-8LZGJY7CX3',
+};
 
 // prod
-export const firebaseConfig = {
-  apiKey: 'AIzaSyBzMBgDsa0BVaS3oLJvsOp6ySX32Lc1lw0',
-  authDomain: 'serres-sangatte-prod.firebaseapp.com',
-  projectId: 'serres-sangatte-prod',
-  storageBucket: 'serres-sangatte-prod.appspot.com',
-  messagingSenderId: '927739482526',
-  appId: '1:927739482526:web:12245108a4edd85e22468f',
-  measurementId: 'G-09S69TRKTP',
-};
+// export const firebaseConfig = {
+//   apiKey: 'AIzaSyBzMBgDsa0BVaS3oLJvsOp6ySX32Lc1lw0',
+//   authDomain: 'serres-sangatte-prod.firebaseapp.com',
+//   projectId: 'serres-sangatte-prod',
+//   storageBucket: 'serres-sangatte-prod.appspot.com',
+//   messagingSenderId: '927739482526',
+//   appId: '1:927739482526:web:12245108a4edd85e22468f',
+//   measurementId: 'G-09S69TRKTP',
+// };
 
 @NgModule({
   declarations: [AppComponent],

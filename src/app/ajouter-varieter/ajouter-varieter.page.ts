@@ -70,12 +70,29 @@ export class AjouterVarieterPage implements OnInit {
         } else {
           this.firestore.doc(`Variete/${retour.id}`).set({
             id: retour.id,
-            nom: this.varieterFrom.value.nom
+            nom: this.varieterFrom.value.nom,
           });
         }
       });
     }
   }
+
+  async filterList(ev: any) {
+    this.varieteList = await this.initializeItems();
+    const searchTerm = ev.srcElement.value;
+
+    if (!searchTerm) {
+      return;
+    }
+    this.varieteList = this.varieteList.filter((currentPlant) => {
+      if (currentPlant.nom && searchTerm) {
+        return (
+          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+        );
+      }
+    });
+  }
+
   async doRefresh(event) {
     const teste = await this.initializeItems();
     console.log('Begin async operation');
