@@ -24,6 +24,7 @@ export class GestionCommandesPage implements OnInit {
   public affichage: any;
   public formulaireCommande: FormGroup;
   public message: string;
+  public isSubmitted = false;
   public listCommandes: any;
   public tableauCommandes: any = [];
   // une commande
@@ -49,11 +50,9 @@ export class GestionCommandesPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // this.affichage = this.segmentChanged;
     if (this.affichage == undefined) {
       this.affichage = 'liste';
     }
-
     this.listCommandes = await this.initializeItems();
 
     this.formulaireCommande = this.formBuilder.group({
@@ -106,9 +105,10 @@ export class GestionCommandesPage implements OnInit {
       return;
     }
     this.listCommandes = this.listCommandes.filter((currentPlant) => {
-      if (currentPlant.nom && searchTerm) {
+      if (currentPlant.client && searchTerm) {
         return (
-          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+          currentPlant.client.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ||
+          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 
         );
       }
     });
@@ -131,17 +131,22 @@ export class GestionCommandesPage implements OnInit {
     return this.tableauCommandes;
   }
 
-  async delete(idPlante) {
-    console.log(idPlante);
-    this.commandeService.deleteCommande(idPlante);
+  async delete(idCommande) {
+    console.log(idCommande);
+    this.commandeService.deleteCommande(idCommande);
     this.tableauCommandes = [];
     this.listCommandes = await this.initializeItems();
   }
 
-  async update() {
+  async update(idCommande) {
+    console.log(idCommande);
     const modal = await this.modalController.create({
       component: ModalPage,
-      cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'data': 'commande',
+        'idCommande': idCommande,
+      },
     });
     return await modal.present();
   }

@@ -21,6 +21,16 @@ export class CommandeService {
   postCommande(commande: Commande) {
     return this.commande.add(commande);
   }
+  getDetailCommande(id) {
+    const url = '/' + id;
+    console.log(url);
+    return this.commande.doc(url).valueChanges().pipe(first()).toPromise();
+  }
+  updateCommande(id, values: Commande) {
+    const url = '/' + id;
+    this.commande.doc(url).update(values);
+    return;
+  }
   deleteCommande(id: Commande) {
     const url = '/' + id;
     return this.commande.doc(url).delete();

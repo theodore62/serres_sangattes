@@ -14,15 +14,18 @@ ion-header {
   //--------------//
   //v2
   ion-title,
+  ion-searchbar,
+  ion-toolbar,
+  ion-label,
+  ion-item,
   ion-icon,
-  ion-buttons {
+  ion-back-button  {
     color: #fff;
   }
   ion-button {
-    --background: #9eb7d2;
+    --background: #6c91bb;
   }
-
-  ion-item {
+  ion-item,ion-list,ion-item-options,ion-item-option {
     --ion-background-color: transparent !important;
   }
 
