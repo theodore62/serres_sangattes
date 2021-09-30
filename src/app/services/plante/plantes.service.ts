@@ -16,6 +16,9 @@ export class PlantesService {
     private firestore: AngularFirestore,
     private afSG: AngularFireStorage
   ) {}
+  getListPlantes(){
+    return this.planteList.valueChanges();
+  }
 
   getPlanteList() {
     return this.planteList.valueChanges().pipe(first()).toPromise();

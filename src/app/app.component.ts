@@ -14,13 +14,23 @@ export class AppComponent {
       icon: 'home',
     },
     {
-      title: 'Ajouter une plante',
-      url: './ajouter-fleur',
-      icon: 'add-circle-outline',
+      title: 'Gestion de commandes',
+      url: './gestion-commandes',
+      icon: 'settings-outline',
     },
     {
-      title: 'Ajouter une Variété',
+      title: 'Gestion de clients',
+      url: './getion-de-clients',
+      icon: 'settings-outline',
+    },
+    {
+      title: 'Gestion de Variétés',
       url: './ajouter-varieter',
+      icon: 'settings-outline',
+    },
+    {
+      title: 'Ajouter une plante',
+      url: './ajouter-fleur',
       icon: 'add-circle-outline',
     },
     {
@@ -79,11 +89,7 @@ export class AppComponent {
         },
       ],
     },
-    {
-      title: 'Gestion de commandes',
-      url: './gestion-commandes',
-      icon: 'add-circle-outline',
-    },
+
   ];
 
   constructor(private dataService: DataService, private router: Router) {}

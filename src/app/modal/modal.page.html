@@ -1,14 +1,250 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="data !== 'commande'">modifier la plante</ion-title>
+    <ion-title *ngIf="data === 'plante'">modifier la plante</ion-title>
     <ion-title *ngIf="data === 'commande'">modifier la Commande</ion-title>
+    <ion-title *ngIf="data === 'client'">détail sûr le client</ion-title>
     <ion-buttons slot="end" (click)="closeModal()">
       <ion-icon size="large" name="close-circle-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="data !== 'commande'">
+
+<!-- /***************************************************************************/ -->
+<!-- /*******************************Commandes***********************************/ -->
+<!-- /***************************************************************************/ -->
+
+<ion-content *ngIf="data === 'commande'" class="commande">
+  <ion-label color="light" class="titreAjouter">Ajouter une Commande:</ion-label>
+  <ion-item>
+    <ion-input color="light" type="text" [(ngModel)]="nom" placeholder="nom"></ion-input>
+    <ion-input color="light" type="number" [(ngModel)]="prix" placeholder="prix">
+    </ion-input>
+    <ion-input color="light" type="number" [(ngModel)]="quantite" placeholder="quantité"></ion-input>
+    <ion-item>
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="chevron-down-circle-outline" (click)="addLigne()"></ion-icon>
+    </ion-item>
+
+  </ion-item>
+  <ion-label color="light">Détails de la commande:</ion-label>
+  <form (ngSubmit)="addCommande()" [formGroup]="formulaireCommande">
+    <ion-item>
+      <ion-label color="light">Nom du client :</ion-label>
+      <ion-input color="light" type="text" placeholder="Nom du client" id='client' value='' formControlName="client">
+      </ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.required">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.minlength">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Nom de la plante :</ion-label>
+      <ion-input color="light" type="text" placeholder="Nom de la plante" id='nom' value='' formControlName="nom">
+      </ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Prix :</ion-label>
+      <ion-input color="light" type="number" placeholder="prix" id='prix' value='' formControlName="prix"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.required">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.minlength">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Quantité :</ion-label>
+      <ion-input color="light" type="number" placeholder="quantité" id='quantite' value='' formControlName="quantite">
+      </ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.required">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.minlength">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">info complémentaire :</ion-label>
+      <ion-textarea color="light" rows="6" cols="20" placeholder="info complémentaire" required
+        formControlName="infoComplementaire" id='infoComplementaire' value=''></ion-textarea>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.required">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.minlength">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+
+    <ion-button class="bouttonCommande" type="submit" expand="block">Valider</ion-button>
+  </form>
+</ion-content>
+
+<!-- /***************************************************************************/ -->
+<!-- /****************************client*****************************************/ -->
+<!-- /***************************************************************************/ -->
+<ion-toolbar *ngIf="data === 'client'" class="segement">
+  <!-- Disabled Segment -->
+  <ion-segment (ionChange)="segmentChanged($event)" value="ajouter">
+    <ion-segment-button value="ajouter">
+      <ion-label>
+        <ion-icon  name="person-outline" size="small"></ion-icon>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="liste">
+      <ion-label>
+        <ion-icon name="list-outline" size="small"></ion-icon>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+<ion-content *ngIf="data === 'client' && affichage === 'ajouter'" class="client">
+  <ion-item class="titre">
+    <ion-label color="light">Détails du client:</ion-label>
+  </ion-item>
+  <form (ngSubmit)="addClient()" color="light" [formGroup]="formulaireClient">
+    <ion-item>
+      <ion-label color="light">nom:</ion-label>
+      <ion-input color="light" type="text" placeholder="nom" id="nom" formControlName="nom"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.nom.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.nom.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Prénom:</ion-label>
+      <ion-input color="light" type="text" placeholder="prenom" id="prenom" formControlName="prenom"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.prenom.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.prenom.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Email:</ion-label>
+      <ion-input color="light" type="email" placeholder="email" id="email" formControlName="email"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.email.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.email.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Téléphone fixe:</ion-label>
+      <ion-input color="light" type="number" placeholder="fixe" id="fixe" formControlName="fixe"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.fixe.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.fixe.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Téléphone portable:</ion-label>
+      <ion-input color="light" type="number" placeholder="portable" id="portable" formControlName="portable">
+      </ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.portable.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.portable.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Adresse:</ion-label>
+      <ion-input color="light" type="text" placeholder="adresse" id="adresse" formControlName="adresse"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.adresse.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.adresse.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light">Code postal:</ion-label>
+      <ion-input color="light" type="number" placeholder="postal" id="postal" formControlName="postal"></ion-input>
+      <!-- Error messages -->
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.postal.errors?.required"
+        class="color">
+        champ obligatoire
+      </span>
+      <span class="error ion-padding" color="light" *ngIf="isSubmitted && errorControl.postal.errors?.minlength"
+        class="color">
+        minimun 2 caractéres
+      </span>
+    </ion-item>
+    <ion-button type="submit" expand="block">Valider</ion-button>
+  </form>
+</ion-content>
+<ion-content *ngIf="data === 'client' && affichage === 'liste'" class="client">
+  <ion-item>
+    <ion-label color="light" class="supprimer">Liste des commandes</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-searchbar (ionChange)="filterList($event)" placeholder="recherche"></ion-searchbar>
+  </ion-item>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- *ngFor="let variete of (varieteList)" -->
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item>
+        <!-- <ion-label color="light">{{variete.nom }}</ion-label> -->
+      </ion-item>
+      <ion-item-options side="end">
+        <!-- <ion-item-option (click)="delete(variete.id)" color="red">
+          <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
+        </ion-item-option> -->
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+
+
+<!-- /***************************************************************************/ -->
+<!-- /****************************Plantes****************************************/ -->
+<!-- /***************************************************************************/ -->
+
+<ion-content *ngIf="data === 'plante'">
+
   <ion-list style="background-color: silver;">
     <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
       <ion-item>
@@ -122,73 +358,4 @@
       <ion-button type="submit" expand="block">Valider</ion-button>
     </form>
   </ion-list>
-</ion-content>
-<ion-content *ngIf="data === 'commande'" class="commande">
-
-  <ion-label color="light">Détails de la commande:</ion-label>
-  <form (ngSubmit)="addCommande()" [formGroup]="formulaireCommande">
-    <ion-item>
-      <ion-label color="light">Nom du client :</ion-label>
-      <ion-input color="light" type="text" placeholder="Nom du client" id='client' value='' formControlName="client">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Nom de la plante :</ion-label>
-      <ion-input color="light" type="text" placeholder="Nom de la plante" id='nom' value='' formControlName="nom">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Prix :</ion-label>
-      <ion-input color="light" type="number" placeholder="prix" id='prix' value='' formControlName="prix"></ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Quantité :</ion-label>
-      <ion-input color="light" type="number" placeholder="quantité" id='quantite' value='' formControlName="quantite">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">info complémentaire :</ion-label>
-      <ion-textarea color="light" rows="6" cols="20" placeholder="info complémentaire" required
-        formControlName="infoComplementaire" id='infoComplementaire' value=''></ion-textarea>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-
-    <ion-button class="bouttonCommande" type="submit" expand="block">Valider</ion-button>
-  </form>
-
-
 </ion-content>

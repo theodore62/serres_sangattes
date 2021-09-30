@@ -9,9 +9,11 @@ import {
 // service
 import { PlantesService } from '../services/plante/plantes.service';
 import { CommandeService } from '../services/commande/commande.service';
+import { ClientService } from '../services/client/client.service';
 //model
 import { Plante } from '../models/plante.model';
 import { Commande } from '../models/commande.model';
+import { Client } from '../models/client.model';
 //----//
 import { AngularFireStorage } from '@angular/fire/storage';
 import {
@@ -33,10 +35,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./modal.page.scss'],
 })
 export class ModalPage implements OnInit {
-  // ---------------- //
-  // ---------------------------------------------- //
-  // ---------------------------------------------- //
-  // ---------------------------------------------- //
+  public isSubmitted = false;
+  public message: string;
+  @Input() data: string;
+
+  //---------------------------------------------------------------------------------//
+  //------------------------------detail des plantes---------------------------------//
+  //---------------------------------------------------------------------------------//
   // plante //
   public id: Plante;
   public planteDetail: any = [];
@@ -45,11 +50,9 @@ export class ModalPage implements OnInit {
   public imagePath: string;
   public epoque: string;
   public varieters: Observable<any[]>;
-  public message: string;
   public upload: any;
   public urlImage: any;
   public urlImageUpdate: any;
-  public isSubmitted = false;
   public texte: any = '';
   public listMois: any;
   public plante: Plante = {
@@ -65,23 +68,36 @@ export class ModalPage implements OnInit {
     a: '',
     image: '',
   };
-  // ------------------------------------------------------- //
-  // ---------------------------------------------- //
-  // ---------------------------------------------- //
+
+  //---------------------------------------------------------------------------------//
+  //-------------------------commandes-----------------------------------------------//
+  //---------------------------------------------------------------------------------//
   // commande //
-  // Data passed in by componentProps
-  @Input() data: string;
+
   @Input() idCommande: string;
   public formulaireCommande: FormGroup;
+  nom: string;
+  prix: string;
+  quantite: string;
+
+  //---------------------------------------------------------------------------------//
+  //-------------------------client--------------------------------------------------//
+  //---------------------------------------------------------------------------------//
+  // client //
+  @Input() idClient: string;
+  public formulaireClient: FormGroup;
+  public clientDetail: any = [];
+  public affichage: any;
 
   // ---------------------------------------------- //
   // ---------------------------------------------- //
-  // ---------------------------------------------- //
+
   constructor(
     private alertController: AlertController,
     private afSG: AngularFireStorage,
     private plantesService: PlantesService,
     private commandeService: CommandeService,
+    private clientService: ClientService,
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private camera: Camera,
@@ -92,15 +108,95 @@ export class ModalPage implements OnInit {
   ) {}
 
   get errorControl() {
-    if (this.data !== 'commande') {
-      return this.annonce.controls;
-    } else {
+    if (this.data === 'commande') {
       return this.formulaireCommande.controls;
+    } else if (this.data === 'client') {
+      return this.formulaireClient.controls;
+    } else {
+      return this.annonce.controls;
     }
   }
 
   ngOnInit() {
-    if (this.data !== 'commande') {
+    //---------------------------------------------------------------------------------//
+    //-------------------------commandes-----------------------------------------------//
+    //---------------------------------------------------------------------------------//
+    if (this.data === 'commande') {
+      this.formulaireCommande = this.formBuilder.group({
+        nom: ['', [Validators.required]],
+        client: ['', [Validators.required]],
+        prix: ['', [Validators.required]],
+        quantite: ['', [Validators.required]],
+        infoComplementaire: ['', [Validators.required]],
+      });
+      this.commandeService
+        .getDetailCommande(this.idCommande)
+        .then((detailCommande) => {
+          // document
+          //   .getElementById('nom')
+          //   .setAttribute('value', detailCommande.nom);
+          // document
+          //   .getElementById('client')
+          //   .setAttribute('value', detailCommande.client);
+          // document
+          //   .getElementById('prix')
+          //   .setAttribute('value', detailCommande.prix);
+          // document
+          //   .getElementById('quantite')
+          //   .setAttribute('value', detailCommande.quantite);
+          // document
+          //   .getElementById('infoComplementaire')
+          //   .setAttribute('value', detailCommande.infoComplementaire);
+        });
+    }
+    //---------------------------------------------------------------------------------//
+    //-------------------------client--------------------------------------------------//
+    //---------------------------------------------------------------------------------//
+    else if (this.data === 'client') {
+      if (this.affichage == undefined) {
+        this.affichage = 'ajouter';
+      }
+      this.formulaireClient = this.formBuilder.group({
+        nom: ['', [Validators.required, Validators.minLength(2)]],
+        prenom: ['', [Validators.required, Validators.minLength(2)]],
+        email: [  '',[Validators.required, Validators.minLength(2), Validators.email]],
+        fixe: ['', [Validators.maxLength(10)]],
+        portable: ['', [Validators.required, Validators.maxLength(10)]],
+        adresse: ['', [Validators.required, Validators.minLength(2)]],
+        postal: ['', [Validators.required, Validators.maxLength(5)]],
+      });
+      console.log(this.idClient);
+      this.clientService.getClient(this.idClient).then((detailClient) => {
+        console.log(detailClient)
+        this.clientDetail.push(detailClient);
+        this.clientDetail.forEach((index) => {
+          document.getElementById('nom').setAttribute('value', index.nom);
+          document
+            .getElementById('prenom')
+            .setAttribute('value', index.prenom);
+          document
+            .getElementById('email')
+            .setAttribute('value', index.email);
+          document
+            .getElementById('fixe')
+            .setAttribute('value', index.fixe);
+          document
+            .getElementById('portable')
+            .setAttribute('value', index.portable);
+          document
+            .getElementById('adresse')
+            .setAttribute('value', index.adresse);
+          document
+            .getElementById('postal')
+            .setAttribute('value', index.postal);
+        })
+     
+      });
+    }
+    //---------------------------------------------------------------------------------//
+    //------------------------------detail des plantes---------------------------------//
+    //---------------------------------------------------------------------------------//
+    else {
       this.varieters = this.firestore.collection('Variete').valueChanges();
       this.listMois = [
         'janvier',
@@ -196,39 +292,10 @@ export class ModalPage implements OnInit {
           });
       });
     }
-    //---------------------------------------------------------------------------------//
-    //---------------------------------------------------------------------------------//
-    else {
-      this.formulaireCommande = this.formBuilder.group({
-        nom: ['', [Validators.required]],
-        client: ['', [Validators.required]],
-        prix: ['', [Validators.required]],
-        quantite: ['', [Validators.required]],
-        infoComplementaire: ['', [Validators.required]],
-      });
-
-      this.commandeService
-        .getDetailCommande(this.idCommande)
-        .then((detailCommande) => {
-          console.log(detailCommande);
-          document
-            .getElementById('nom')
-            .setAttribute('value', detailCommande.nom);
-          document
-            .getElementById('client')
-            .setAttribute('value', detailCommande.client);
-          document
-            .getElementById('prix')
-            .setAttribute('value', detailCommande.prix);
-          document
-            .getElementById('quantite')
-            .setAttribute('value', detailCommande.quantite);
-          document
-            .getElementById('infoComplementaire')
-            .setAttribute('value', detailCommande.infoComplementaire);
-        });
-    }
   }
+  //---------------------------------------------------------------------------------//
+  //-------------------------commandes-----------------------------------------------//
+  //---------------------------------------------------------------------------------//
 
   async addCommande() {
     if (!this.formulaireCommande.valid) {
@@ -239,7 +306,10 @@ export class ModalPage implements OnInit {
         duration: 2000,
       });
       await loading.present();
-      this.commandeService.updateCommande(this.idCommande, this.formulaireCommande.value);
+      this.commandeService.updateCommande(
+        this.idCommande,
+        this.formulaireCommande.value
+      );
       await loading.onDidDismiss();
       const alert = await this.alertController.create({
         header: 'Félicitation',
@@ -252,14 +322,10 @@ export class ModalPage implements OnInit {
       });
     }
   }
-  //---------------------------------------------------------------------------------//
-  //---------------------------------------------------------------------------------//
 
-  closeModal() {
-    this.modalController.dismiss({
-      dismissed: true,
-    });
-  }
+  //---------------------------------------------------------------------------------//
+  //------------------------------detail des plantes---------------------------------//
+  //---------------------------------------------------------------------------------//
 
   async addPhoto() {
     const libraryImage = await this.openLibrary();
@@ -277,6 +343,13 @@ export class ModalPage implements OnInit {
     };
     return await this.camera.getPicture(options);
   }
+
+  async uploadFirebase() {
+    this.upload = this.afSG
+      .ref(this.imagePath)
+      .putString(this.image, 'data_url');
+  }
+
   async addAnnonce() {
     if (!this.annonce.valid) {
       this.message = 'enter une valeur dans le champ';
@@ -312,10 +385,18 @@ export class ModalPage implements OnInit {
       });
     }
   }
+  //---------------------------------------------------------------------------------//
+  //-------------------------client--------------------------------------------------//
+  //---------------------------------------------------------------------------------//
+  addClient() {}
 
-  async uploadFirebase() {
-    this.upload = this.afSG
-      .ref(this.imagePath)
-      .putString(this.image, 'data_url');
+  segmentChanged(ev: any) {
+    this.affichage = ev.detail.value;
+  }
+
+  closeModal() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
   }
 }

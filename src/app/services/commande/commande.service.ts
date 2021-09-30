@@ -15,6 +15,10 @@ export class CommandeService {
     private firestore: AngularFirestore,
     private afSG: AngularFireStorage
   ) {}
+  
+  getListCommandes(){
+    return this.commande.valueChanges();
+  }
   getCommandesList() {
     return this.commande.valueChanges().pipe(first()).toPromise();
   }

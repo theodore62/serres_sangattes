@@ -1,8 +1,14 @@
 export interface Commande {
     id: any;
-    nom: string;
+    liste: Liste;
+    date:string;
     client: string;
-    prix: string;
-    quantite: string;
     infoComplementaire: string;
   }
+
+export interface Liste {
+  nom: string;
+  prix: string;
+  quantite: string;
+  unite: string;
+}

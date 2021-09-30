@@ -115,7 +115,7 @@ export class FleursPage implements OnInit {
     const modal = await this.modalController.create({
       component: ModalPage,
       cssClass: 'my-custom-class',
-      componentProps: { id: idPlante, fleuraison: anneeFleuraison },
+      componentProps: { data:'plante', id: idPlante, fleuraison: anneeFleuraison },
     });
     return await modal.present();
   }

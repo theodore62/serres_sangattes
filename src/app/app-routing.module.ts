@@ -49,6 +49,14 @@ const routes: Routes = [
   {
     path: 'gestion-commandes',
     loadChildren: () => import('./gestion-commandes/gestion-commandes.module').then( m => m.GestionCommandesPageModule)
+  },
+  {
+    path: 'getion-de-clients',
+    loadChildren: () => import('./getion-de-clients/getion-de-clients.module').then( m => m.GetionDeClientsPageModule)
+  },
+  {
+    path: 'details-commande',
+    loadChildren: () => import('./details-commande/details-commande.module').then( m => m.DetailsCommandePageModule)
   }
 
 ];

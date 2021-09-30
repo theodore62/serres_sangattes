@@ -1,0 +1,20 @@
+ion-header {
+    //v2
+    --ion-background-color: #3366a0;
+    //v1
+    // --ion-background-color: #f5af19;
+  }
+  ion-content {
+    //v2
+    color: #fff;
+    --ion-background-color: linear-gradient(#3366a0, #9eb7d2);
+    //v1
+    // --ion-background-color: linear-gradient(#f5af19, #f12711);
+  }
+  //--------------//
+  //v2
+  ion-title,
+  ion-icon,
+  ion-back-button {
+    color: #fff;
+  }

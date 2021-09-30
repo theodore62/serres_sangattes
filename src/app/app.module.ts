@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -16,8 +16,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore/';
 import { PlantesService } from './services/plante/plantes.service';
 // import { DBService } from './services/db/db.service';
-
+import { DatePipe } from '@angular/common'
 import { Camera } from '@ionic-native/camera/ngx';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 // dev
 export const firebaseConfig = {
@@ -60,9 +65,11 @@ export const firebaseConfig = {
   ],
   providers: [
     {
-      provide: RouteReuseStrategy,
+      useValue: 'fr-FR',
+      provide: LOCALE_ID,
       useClass: IonicRouteStrategy,
     },
+    DatePipe,
     PlantesService,
     Camera,
   ],

@@ -24,6 +24,7 @@ import { Variete } from '../models/plante.model';
   styleUrls: ['./ajouter-varieter.page.scss'],
 })
 export class AjouterVarieterPage implements OnInit {
+  public affichage: any;
   public varieterFrom: FormGroup;
   public isSubmitted = false;
   public items: Observable<any[]>;
@@ -47,10 +48,16 @@ export class AjouterVarieterPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    if (this.affichage == undefined) {
+      this.affichage = 'liste';
+    }
     this.varieterFrom = this.formBuilder.group({
       nom: ['', [Validators.required, Validators.minLength(2)]],
     });
     this.varieteList = await this.initializeItems();
+  }
+  segmentChanged(ev: any) {
+    this.affichage = ev.detail.value;
   }
 
   get errorControl() {
@@ -59,10 +66,11 @@ export class AjouterVarieterPage implements OnInit {
 
   addVarieter() {
     if (!this.varieterFrom.valid) {
-      this.variete.nom = this.varieterFrom.value.nom;
+      // this.variete.nom = this.varieterFrom.value.nom;
       this.message = 'enter une valeur dans le champ';
       this.toastCtrl.showToast(this.message);
     } else {
+      this.variete.nom = this.varieterFrom.value.nom
       this.varieteService.postPlanteList(this.variete).then((retour) => {
         if (retour.id == null) {
           this.message = "les données n'ont pas pu être enregistrées";

@@ -19,22 +19,15 @@ ion-back-button {
   color: #fff;
 }
 ion-button {
-  --background: #9eb7d2;
+  --background: #7397be;
 }
-#imageB {
-  --background: #7699bf;
-}
-ion-item{
+ion-item,
+ion-list {
   --ion-background-color: transparent !important;
 }
-.segement{
-  --background: #3467a0;
-}
-
-
-.commande{
+.titre {
+  font-size: larger;
+  padding: 0.5em;
+  margin-top: 2em;
   text-align: center;
-}
-.bouttonCommande{
-  --background: #7296be;
 }
