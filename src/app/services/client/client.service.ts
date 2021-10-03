@@ -18,6 +18,7 @@ export class ClientService {
   ) { }
   getListClients(){
     return this.client.valueChanges();
+    // return this.client.valueChanges().pipe(first()).toPromise();
   }
 
   postClient(client: Client) {

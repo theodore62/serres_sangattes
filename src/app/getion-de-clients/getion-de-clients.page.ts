@@ -71,7 +71,6 @@ export class GetionDeClientsPage implements OnInit {
   async initializeItems(): Promise<any> {
     this.tableauClients = [];
     this.tableauClients = await this.clientService.getListClients();
-    console.log(this.tableauClients);
     return this.tableauClients;
   }
 

@@ -24,7 +24,7 @@ import { CommandeService } from '../services/commande/commande.service';
 import { ClientService } from '../services/client/client.service';
 import { PlantesService } from '../services/plante/plantes.service';
 import { DetailsCommandePage } from '../details-commande/details-commande.page';
-;
+
 
 @Component({
   selector: 'app-gestion-commandes',
@@ -172,7 +172,7 @@ export class GestionCommandesPage implements OnInit {
         } else {
           this.firestore.doc(`Commandes/${retour.id}`).set({
             id: retour.id,
-            Liste: this.tableau,
+            liste: this.tableau,
             client: this.formulaireCommande.value.client,
             date: formatDate(this.formulaireCommande.value.date,'dd/MM/yyyy', 'fr-FR'),
             infoComplementaire: this.formulaireCommande.value.infoComplementaire,
@@ -224,9 +224,11 @@ export class GestionCommandesPage implements OnInit {
   }
 
   async update(idCommande,idClient) {
+    console.log(idCommande);
+    console.log(idClient);
     const modal = await this.modalController.create({
       component: DetailsCommandePage,
-      cssClass: 'my-custom-class',
+      // cssClass: 'my-custom-class',
       componentProps: {
         idCommande: idCommande,
         idClient: idClient,

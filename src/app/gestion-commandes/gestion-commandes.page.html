@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>gestion de Commandes</ion-title>
+    <ion-title>Gestion de Commandes</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
@@ -117,7 +117,7 @@
           <ion-item-option (click)="delete(commande.id)" color="red">
             <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
           </ion-item-option>
-          <ion-item-option (click)="update(commande.id)" color='red'>
+          <ion-item-option (click)="update(commande.id,commande.client)" color='red'>
             <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
           </ion-item-option>
         </ion-item-options>
@@ -134,12 +134,33 @@
           <ion-item-option (click)="delete(commande.id)" color="red">
             <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
           </ion-item-option>
-          <ion-item-option (click)="update(commande.id)" color='red'>
+          <ion-item-option (click)="update(commande.id,commande.client)" color='red'>
             <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+        <!-- ******************************************************* -->
+        <ion-label color="light" class="titreAjouter">Liste des commandes à venir:</ion-label>
+        <ion-list *ngFor="let commande of (listCommandes)">
+          <ion-item-sliding *ngIf="commande.date !== dateDeDemain || commande.date !== dateDuJour">
+            <ion-item>
+              <ion-label color="light"> Nom du client: {{commande.client }}</ion-label>
+              <ion-item>
+                <ion-label>Archiver</ion-label>
+                <ion-toggle [(ngModel)]="archiver"></ion-toggle>
+              </ion-item>
+            </ion-item>
+            <ion-item-options side="end">
+              <!-- <ion-item-option (click)="delete(commande.id)" color="red">
+                <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
+              </ion-item-option> -->
+              <ion-item-option (click)="update(commande.id,commande.client)" color='red'>
+                <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
+              </ion-item-option>
+            </ion-item-options>      
+          </ion-item-sliding>
+        </ion-list>
 
 
   </ion-list>

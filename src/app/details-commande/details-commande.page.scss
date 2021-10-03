@@ -13,8 +13,17 @@ ion-header {
   }
   //--------------//
   //v2
-  ion-title,
-  ion-icon,
-  ion-back-button {
+
+  ion-button {
+    --background: #6c91bb;
+  }
+  ion-title, ion-icon{
     color: #fff;
+  }
+  ion-item,ion-list,ion-item-options,ion-item-option {
+    --ion-background-color: transparent !important;
+  }
+  .titreAjouter{
+    text-align: center;
+    size: 40%;
   }
