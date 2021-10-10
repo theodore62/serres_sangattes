@@ -7,7 +7,7 @@
   </ion-toolbar>
   <ion-toolbar>
     <!-- Disabled Segment -->
-    <ion-segment (ionChange)="segmentChanged($event)" value="liste">
+    <ion-segment (ionChange)="segmentChanged($event)" value="ajouter">
       <ion-segment-button value="ajouter">
         <ion-label>
           <ion-icon name="add-circle-outline" size="small"></ion-icon>
@@ -46,7 +46,7 @@
   </ion-item>
   <!-- *********************************************************** -->
   <form (ngSubmit)="update()" [formGroup]="formulaireCommande">
-    <ion-list   *ngFor="let detail of (details)">
+    <ion-list  >
       <ion-item>
         <ion-label color="light">nom du client:</ion-label>
         <ion-select value="detail.client" okText="valider" cancelText="Annuler" required id="client" formControlName="client"
@@ -71,13 +71,11 @@
           minimun 2 caractéres
         </span>
       </ion-item>
-      <ion-item>
+      <ion-item >
         <ion-label color="light">info complémentaire :</ion-label>
-        <ion-textarea color="light" rows="6" cols="20" placeholder="info complémentaire"  id="infoComplementaire"
-          value="" required formControlName="infoComplementaire">
-        </ion-textarea>
+        <ion-textarea color="light" rows="6" cols="20" placeholder="info complémentaire"  id="info" value="" required formControlName="infoComplementaire"></ion-textarea>
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.required">
-          champ obligatoire
+          champ obligatoire 
         </span>
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.minlength">
           minimun 2 caractéres
@@ -102,6 +100,9 @@
   <!-- *********************************************************** -->
 </ion-content>
 <ion-content *ngIf="affichage === 'liste' " class="titreAjouter">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-item class="titreAjouter">
     <ion-label color="light" class="titreAjouter">Information du client:</ion-label>
   </ion-item>

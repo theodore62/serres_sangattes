@@ -25,8 +25,7 @@ export class ClientService {
     return this.client.add(client);
   }
   getClient(id){
-    const url = '/' + id ;
-    console.log(url);
+    const url = '/' + id ;  
     return this.client.doc(url).valueChanges().pipe(first()).toPromise();
   }
   updateClient(id, values) {

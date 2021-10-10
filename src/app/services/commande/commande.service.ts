@@ -27,7 +27,6 @@ export class CommandeService {
   }
   getDetailCommande(id) {
     const url = '/' + id;
-    console.log(url);
     return this.commande.doc(url).valueChanges().pipe(first()).toPromise();
   }
   updateCommande(id, values: Commande) {

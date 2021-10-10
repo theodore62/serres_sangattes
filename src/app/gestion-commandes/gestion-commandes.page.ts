@@ -89,13 +89,6 @@ export class GestionCommandesPage implements OnInit {
     const lendemain =  this.addDaysToDate(demain, 1)
     this.dateDeDemain =  formatDate(lendemain,'dd/MM/yyyy', 'fr-FR');
     this.dateDuJour = formatDate(new Date(),'dd/MM/yyyy', 'fr-FR');
-    console.log(this.dateDeDemain);
-    console.log(this.dateDuJour);
-   
- 
-
-  
-
     this.listeCommande();
     if (this.affichage == undefined) {
       this.affichage = 'liste';
@@ -108,11 +101,9 @@ export class GestionCommandesPage implements OnInit {
       date: ['', [Validators.required]],
       infoComplementaire: ['', [Validators.required]],
     });
-
   }
   async listeCommande(){
-      this.listeTableauCommande = await this.initializeItems();
-   
+      this.listeTableauCommande = await this.initializeItems();   
   }
 
    addDaysToDate(date, days){
@@ -145,7 +136,6 @@ export class GestionCommandesPage implements OnInit {
     this.prix = '';
     this.quantite = '';
     this.unite='';
-    console.log(this.tableau);
   }
   deleteLigne(id) {
     this.tableau.filter((value, index, array) => {
@@ -203,10 +193,8 @@ export class GestionCommandesPage implements OnInit {
 
   async doRefresh(event) {
     const teste = await this.initializeItems();
-    console.log('Begin async operation');
     setTimeout(() => {
       this.listCommandes = teste;
-      console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -224,8 +212,6 @@ export class GestionCommandesPage implements OnInit {
   }
 
   async update(idCommande,idClient) {
-    console.log(idCommande);
-    console.log(idClient);
     const modal = await this.modalController.create({
       component: DetailsCommandePage,
       // cssClass: 'my-custom-class',
