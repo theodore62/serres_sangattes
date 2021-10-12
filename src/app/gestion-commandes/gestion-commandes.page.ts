@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import {formatDate} from '@angular/common';
+import { formatDate } from '@angular/common';
 import { element } from 'protractor';
 // formulaire
 import {
@@ -17,14 +17,13 @@ import {
 
 //model
 import { Commande, Liste } from '../models/commande.model';
-import { Client}  from '../models/client.model';
+import { Client } from '../models/client.model';
 import { Plante } from '../models/plante.model';
 // service
 import { CommandeService } from '../services/commande/commande.service';
 import { ClientService } from '../services/client/client.service';
 import { PlantesService } from '../services/plante/plantes.service';
 import { DetailsCommandePage } from '../details-commande/details-commande.page';
-
 
 @Component({
   selector: 'app-gestion-commandes',
@@ -43,7 +42,6 @@ export class GestionCommandesPage implements OnInit {
   public dateDeDemain: any;
   public dateDuJour: any;
 
-
   public tableauCommandes: any = [];
   public tableau: any = [];
   public ListePlantesCommande: Liste = {
@@ -56,7 +54,7 @@ export class GestionCommandesPage implements OnInit {
   public commande: Commande = {
     id: '',
     liste: this.ListePlantesCommande,
-    date:'',
+    date: '',
     client: '',
     infoComplementaire: '',
   };
@@ -84,13 +82,12 @@ export class GestionCommandesPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-
-    const demain =  new Date();
-    const lendemain =  this.addDaysToDate(demain, 1)
-    this.dateDeDemain =  formatDate(lendemain,'dd/MM/yyyy', 'fr-FR');
-    this.dateDuJour = formatDate(new Date(),'dd/MM/yyyy', 'fr-FR');
+    const demain = new Date();
+    const lendemain = this.addDaysToDate(demain, 1);
+    this.dateDeDemain = formatDate(lendemain, 'dd/MM/yyyy', 'fr-FR');
+    this.dateDuJour = formatDate(new Date(), 'dd/MM/yyyy', 'fr-FR');
     this.listeCommande();
-    if (this.affichage == undefined) {
+    if (this.affichage === undefined) {
       this.affichage = 'liste';
     }
     this.listCommandes = await this.initializeItems();
@@ -102,19 +99,15 @@ export class GestionCommandesPage implements OnInit {
       infoComplementaire: ['', [Validators.required]],
     });
   }
-  async listeCommande(){
-      this.listeTableauCommande = await this.initializeItems();   
+  async listeCommande() {
+    this.listeTableauCommande = await this.initializeItems();
   }
 
-   addDaysToDate(date, days){
+  addDaysToDate(date, days) {
     var res = new Date(date);
     res.setDate(res.getDate() + days);
     return res;
-}
-
-
-
-
+  }
 
   segmentChanged(ev: any) {
     this.affichage = ev.detail.value;
@@ -135,7 +128,7 @@ export class GestionCommandesPage implements OnInit {
     this.nom = '';
     this.prix = '';
     this.quantite = '';
-    this.unite='';
+    this.unite = '';
   }
   deleteLigne(id) {
     this.tableau.filter((value, index, array) => {
@@ -145,16 +138,20 @@ export class GestionCommandesPage implements OnInit {
     });
   }
 
-  ajouter() { 
+  ajouter() {
     if (!this.formulaireCommande.valid) {
       this.message = 'Veuillez compléter le formulaire';
       this.toastCtrl.showToast(this.message);
     } else {
-      
       this.commande.client = this.formulaireCommande.value.client;
       this.commande.liste = this.tableau;
-      this.commande.date = formatDate(this.formulaireCommande.value.date,'dd/MM/yyyy', 'fr-FR');     
-      this.commande.infoComplementaire = this.formulaireCommande.value.infoComplementaire;
+      this.commande.date = formatDate(
+        this.formulaireCommande.value.date,
+        'dd/MM/yyyy',
+        'fr-FR'
+      );
+      this.commande.infoComplementaire =
+        this.formulaireCommande.value.infoComplementaire;
       this.commandeService.postCommande(this.commande).then((retour) => {
         if (retour.id == null) {
           this.message = "les données n'ont pas pu être enregistrées";
@@ -164,10 +161,15 @@ export class GestionCommandesPage implements OnInit {
             id: retour.id,
             liste: this.tableau,
             client: this.formulaireCommande.value.client,
-            date: formatDate(this.formulaireCommande.value.date,'dd/MM/yyyy', 'fr-FR'),
-            infoComplementaire: this.formulaireCommande.value.infoComplementaire,
+            date: formatDate(
+              this.formulaireCommande.value.date,
+              'dd/MM/yyyy',
+              'fr-FR'
+            ),
+            infoComplementaire:
+              this.formulaireCommande.value.infoComplementaire,
           });
-          this.message = "les données ont pu être enregistrées";
+          this.message = 'les données ont pu être enregistrées';
           this.toastCtrl.showToast(this.message);
         }
       });
@@ -201,7 +203,7 @@ export class GestionCommandesPage implements OnInit {
 
   async initializeItems(): Promise<any> {
     this.tableauCommandes = [];
-    this.tableauCommandes = await this.commandeService.getCommandesList();  
+    this.tableauCommandes = await this.commandeService.getCommandesList();
     return this.tableauCommandes;
   }
 
@@ -211,7 +213,7 @@ export class GestionCommandesPage implements OnInit {
     this.listCommandes = await this.initializeItems();
   }
 
-  async update(idCommande,idClient) {
+  async update(idCommande, idClient) {
     const modal = await this.modalController.create({
       component: DetailsCommandePage,
       // cssClass: 'my-custom-class',

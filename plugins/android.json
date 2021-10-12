@@ -29,6 +29,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.serretSangatte.app"
+    },
+    "cordova-plugin-googlemaps": {
+      "PACKAGE_NAME": "com.serretSangatte.app"
     }
   },
   "dependent_plugins": {}

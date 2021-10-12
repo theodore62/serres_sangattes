@@ -24,12 +24,33 @@ import {
   FormControl,
 } from '@angular/forms';
 import { formatDate } from '@angular/common';
+
+// google map
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsMapTypeId,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  Environment,
+} from '@ionic-native/google-maps';
+import { ActionSheetController, Platform } from '@ionic/angular';
+
 @Component({
   selector: 'app-details-commande',
   templateUrl: './details-commande.page.html',
   styleUrls: ['./details-commande.page.scss'],
 })
 export class DetailsCommandePage implements OnInit {
+  // google
+
+  map: GoogleMap;
+
+  /**************/
+
   public tableauCommandes: any = [];
   public isSubmitted = false;
   public date: string;
@@ -83,15 +104,19 @@ export class DetailsCommandePage implements OnInit {
     private firestore: AngularFirestore,
     private toastCtrl: IonicToastService,
     private formBuilder: FormBuilder,
-    private modalController: ModalController
-  ) {}
+    private modalController: ModalController,
+    public alertController: AlertController,
+    public actionCtrl: ActionSheetController,
+    private platform: Platform
+  ) {
+    this.loadMap();
+  }
 
   get errorControl() {
     return this.formulaireCommande.controls;
   }
   ngOnInit() {
-
-    if (this.affichage == undefined) {
+    if (this.affichage === undefined) {
       this.affichage = 'ajouter';
     }
     this.listClients = this.clientService.getListClients();
@@ -105,7 +130,7 @@ export class DetailsCommandePage implements OnInit {
         this.commande.infoComplementaire = valueCommande.infoComplementaire;
         this.tableau = valueCommande.liste;
         this.tableau.forEach((value, index, array) => {
-          if (value.id != undefined || value.id != '') {
+          if (value.id !== undefined || value.id !== '') {
             this.i = value.id + 1;
           } else {
             this.i = 0;
@@ -126,7 +151,7 @@ export class DetailsCommandePage implements OnInit {
           }
         });
       });
-      this.initializeItems();
+    this.initializeItems();
 
     this.formulaireCommande = this.formBuilder.group({
       client: ['', [Validators.required]],
@@ -135,35 +160,56 @@ export class DetailsCommandePage implements OnInit {
     });
   }
 
+  loadMap() {
+    Environment.setEnv({
+      API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
+      API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
+    });
+    this.map = GoogleMaps.create('map_canvas', {
+      camera: {
+        target: {
+          lat: 43.610769,
+          lng: 3.876716,
+        },
+        zoom: 12,
+        tilt: 30,
+      },
+    });
+  }
+
   segmentChanged(ev: any) {
     this.affichage = ev.detail.value;
   }
   async initializeItems(): Promise<any> {
     this.client = {
-    id: '',
-    nom: '',
-    prenom: '',
-    email: '',
-    fixe: '',
-    portable: '',
-    adresse: '',
-    postal: '',
-  };
-  if(this.commande.client == '' || this.commande.client == null ||this.commande.client == undefined ){   
-    this.refecheIdClient = this.idClient;
-  }else{
-    this.refecheIdClient = '';
-    this.refecheIdClient = this.formulaireCommande.value.client;
-  }
+      id: '',
+      nom: '',
+      prenom: '',
+      email: '',
+      fixe: '',
+      portable: '',
+      adresse: '',
+      postal: '',
+    };
+    if (
+      this.commande.client === '' ||
+      this.commande.client == null ||
+      this.commande.client === undefined
+    ) {
+      this.refecheIdClient = this.idClient;
+    } else {
+      this.refecheIdClient = '';
+      this.refecheIdClient = this.formulaireCommande.value.client;
+    }
     this.clientService.getClient(this.refecheIdClient).then((valueClient) => {
-      this.client.nom  = valueClient.nom;
-      this.client.prenom  = valueClient.prenom;
-      this.client.email  = valueClient.email;
-      this.client.fixe  = valueClient.fixe;
-      this.client.portable  = valueClient.portable;
-      this.client.adresse  = valueClient.adresse;
-      this.client.postal  = valueClient.postal;
-    });  
+      this.client.nom = valueClient.nom;
+      this.client.prenom = valueClient.prenom;
+      this.client.email = valueClient.email;
+      this.client.fixe = valueClient.fixe;
+      this.client.portable = valueClient.portable;
+      this.client.adresse = valueClient.adresse;
+      this.client.postal = valueClient.postal;
+    });
   }
 
   doRefresh(event) {
@@ -195,18 +241,21 @@ export class DetailsCommandePage implements OnInit {
     this.firestore.doc(`Commandes/${this.idCommande}`).set({
       id: this.idCommande,
       liste: this.tableau,
-      date: formatDate(this.formulaireCommande.value.date,'dd/MM/yyyy', 'fr-FR'),
+      date: formatDate(
+        this.formulaireCommande.value.date,
+        'dd/MM/yyyy',
+        'fr-FR'
+      ),
       client: this.formulaireCommande.value.client,
       infoComplementaire: this.formulaireCommande.value.infoComplementaire,
     });
     this.message = 'les données ont pu être enregistrées';
     this.toastCtrl.showToast(this.message);
-
   }
 
   deleteLigne(id) {
     this.tableau.filter((value, index) => {
-      if (value.id == id) {
+      if (value.id === id) {
         this.tableau.splice(index, 1);
       }
     });

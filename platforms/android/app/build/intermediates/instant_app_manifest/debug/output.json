@@ -21,7 +21,7 @@
       "properties": {
         "packageId": "com.serretSangatte.app",
         "split": "",
-        "minSdkVersion": "22"
+        "minSdkVersion": "19"
       }
     }
   ]

@@ -18,6 +18,50 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="CordovaGoogleMaps">
+        <param name="android-package" value="plugin.google.maps.CordovaGoogleMaps" />
+        <param name="onload" value="true" />
+        <param name="onreset" value="true" />
+    </feature>
+    <feature name="PluginMap">
+        <param name="android-package" value="plugin.google.maps.PluginMap" />
+    </feature>
+    <feature name="PluginPolyline">
+        <param name="android-package" value="plugin.google.maps.PluginPolyline" />
+    </feature>
+    <feature name="PluginPolygon">
+        <param name="android-package" value="plugin.google.maps.PluginPolygon" />
+    </feature>
+    <feature name="PluginMarker">
+        <param name="android-package" value="plugin.google.maps.PluginMarker" />
+    </feature>
+    <feature name="PluginCircle">
+        <param name="android-package" value="plugin.google.maps.PluginCircle" />
+    </feature>
+    <feature name="PluginTileOverlay">
+        <param name="android-package" value="plugin.google.maps.PluginTileOverlay" />
+    </feature>
+    <feature name="PluginGroundOverlay">
+        <param name="android-package" value="plugin.google.maps.PluginGroundOverlay" />
+    </feature>
+    <feature name="PluginKmlOverlay">
+        <param name="android-package" value="plugin.google.maps.PluginKmlOverlay" />
+    </feature>
+    <feature name="PluginGeocoder">
+        <param name="android-package" value="plugin.google.maps.PluginGeocoder" />
+    </feature>
+    <feature name="PluginLocationService">
+        <param name="android-package" value="plugin.google.maps.PluginLocationService" />
+    </feature>
+    <feature name="PluginEnvironment">
+        <param name="android-package" value="plugin.google.maps.PluginEnvironment" />
+    </feature>
+    <feature name="PluginMarkerCluster">
+        <param name="android-package" value="plugin.google.maps.PluginMarkerCluster" />
+    </feature>
+    <feature name="PluginStreetViewPanorama">
+        <param name="android-package" value="plugin.google.maps.PluginStreetViewPanorama" />
+    </feature>
     <feature name="CDVIonicKeyboard">
         <param name="android-package" onload="true" value="io.ionic.keyboard.CDVIonicKeyboard" />
     </feature>
@@ -30,7 +74,7 @@
     <name>Serre-Sangatte</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://localhost:8101" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -65,6 +109,9 @@
     <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="webView" value="com.ionicframework.cordova.webview.IonicWebViewEngine" />
+    <preference name="xwalkZOrderOnTop" value="true" />
+    <preference name="BackgroundColor" value="0" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
@@ -72,4 +119,6 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8" />
+    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8" />
 </widget>
