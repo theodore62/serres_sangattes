@@ -5,6 +5,7 @@ install du projet :
     - npm install -g @ionic/cli
 
     - npm install
+    - npm install @ionic-native/core
    
 lancer le serveur :
 
