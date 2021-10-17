@@ -29,6 +29,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IonicToastService } from '../services/ionic-toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.page.html',
@@ -39,9 +40,6 @@ export class ModalPage implements OnInit {
   public message: string;
   @Input() data: string;
 
-  //---------------------------------------------------------------------------------//
-  //------------------------------detail des plantes---------------------------------//
-  //---------------------------------------------------------------------------------//
   // plante //
   public id: Plante;
   public planteDetail: any = [];
@@ -69,29 +67,6 @@ export class ModalPage implements OnInit {
     image: '',
   };
 
-  //---------------------------------------------------------------------------------//
-  //-------------------------commandes-----------------------------------------------//
-  //---------------------------------------------------------------------------------//
-  // commande //
-
-  @Input() idCommande: string;
-  public formulaireCommande: FormGroup;
-  nom: string;
-  prix: string;
-  quantite: string;
-
-  //---------------------------------------------------------------------------------//
-  //-------------------------client--------------------------------------------------//
-  //---------------------------------------------------------------------------------//
-  // client //
-  @Input() idClient: string;
-  public formulaireClient: FormGroup;
-  public clientDetail: any = [];
-  public affichage: any;
-
-  // ---------------------------------------------- //
-  // ---------------------------------------------- //
-
   constructor(
     private alertController: AlertController,
     private afSG: AngularFireStorage,
@@ -104,99 +79,16 @@ export class ModalPage implements OnInit {
     private firestore: AngularFirestore,
     private loadingController: LoadingController,
     private toastCtrl: IonicToastService,
-    private router: Router
+    private router: Router,
+    private dataService: DataService,
   ) {}
 
   get errorControl() {
-    if (this.data === 'commande') {
-      return this.formulaireCommande.controls;
-    } else if (this.data === 'client') {
-      return this.formulaireClient.controls;
-    } else {
       return this.annonce.controls;
-    }
   }
 
-  ngOnInit() {
-    //---------------------------------------------------------------------------------//
-    //-------------------------commandes-----------------------------------------------//
-    //---------------------------------------------------------------------------------//
-    if (this.data === 'commande') {
-      this.formulaireCommande = this.formBuilder.group({
-        nom: ['', [Validators.required]],
-        client: ['', [Validators.required]],
-        prix: ['', [Validators.required]],
-        quantite: ['', [Validators.required]],
-        infoComplementaire: ['', [Validators.required]],
-      });
-      this.commandeService
-        .getDetailCommande(this.idCommande)
-        .then((detailCommande) => {
-          // document
-          //   .getElementById('nom')
-          //   .setAttribute('value', detailCommande.nom);
-          // document
-          //   .getElementById('client')
-          //   .setAttribute('value', detailCommande.client);
-          // document
-          //   .getElementById('prix')
-          //   .setAttribute('value', detailCommande.prix);
-          // document
-          //   .getElementById('quantite')
-          //   .setAttribute('value', detailCommande.quantite);
-          // document
-          //   .getElementById('infoComplementaire')
-          //   .setAttribute('value', detailCommande.infoComplementaire);
-        });
-    }
-    //---------------------------------------------------------------------------------//
-    //-------------------------client--------------------------------------------------//
-    //---------------------------------------------------------------------------------//
-    else if (this.data === 'client') {
-      if (this.affichage == undefined) {
-        this.affichage = 'ajouter';
-      }
-      this.formulaireClient = this.formBuilder.group({
-        nom: ['', [Validators.required, Validators.minLength(2)]],
-        prenom: ['', [Validators.required, Validators.minLength(2)]],
-        email: [  '',[Validators.required, Validators.minLength(2), Validators.email]],
-        fixe: ['', [Validators.maxLength(10)]],
-        portable: ['', [Validators.required, Validators.maxLength(10)]],
-        adresse: ['', [Validators.required, Validators.minLength(2)]],
-        postal: ['', [Validators.required, Validators.maxLength(5)]],
-      });
-      console.log(this.idClient);
-      this.clientService.getClient(this.idClient).then((detailClient) => {
-        console.log(detailClient)
-        this.clientDetail.push(detailClient);
-        this.clientDetail.forEach((index) => {
-          document.getElementById('nom').setAttribute('value', index.nom);
-          document
-            .getElementById('prenom')
-            .setAttribute('value', index.prenom);
-          document
-            .getElementById('email')
-            .setAttribute('value', index.email);
-          document
-            .getElementById('fixe')
-            .setAttribute('value', index.fixe);
-          document
-            .getElementById('portable')
-            .setAttribute('value', index.portable);
-          document
-            .getElementById('adresse')
-            .setAttribute('value', index.adresse);
-          document
-            .getElementById('postal')
-            .setAttribute('value', index.postal);
-        })
-     
-      });
-    }
-    //---------------------------------------------------------------------------------//
-    //------------------------------detail des plantes---------------------------------//
-    //---------------------------------------------------------------------------------//
-    else {
+  async ngOnInit() {
+
       this.varieters = this.firestore.collection('Variete').valueChanges();
       this.listMois = [
         'janvier',
@@ -290,42 +182,8 @@ export class ModalPage implements OnInit {
               document.getElementById('a').setAttribute('value', items.a);
             });
           });
-      });
-    }
+      });    
   }
-  //---------------------------------------------------------------------------------//
-  //-------------------------commandes-----------------------------------------------//
-  //---------------------------------------------------------------------------------//
-
-  async addCommande() {
-    if (!this.formulaireCommande.valid) {
-      this.message = 'enter une valeur dans le champ';
-      return false;
-    } else {
-      const loading = await this.loadingController.create({
-        duration: 2000,
-      });
-      await loading.present();
-      this.commandeService.updateCommande(
-        this.idCommande,
-        this.formulaireCommande.value
-      );
-      await loading.onDidDismiss();
-      const alert = await this.alertController.create({
-        header: 'Félicitation',
-        message: 'La ou les modification(s) on ou à bien était éffectuer',
-        buttons: ['OK'],
-      });
-      await alert.present();
-      this.modalController.dismiss({
-        dismissed: true,
-      });
-    }
-  }
-
-  //---------------------------------------------------------------------------------//
-  //------------------------------detail des plantes---------------------------------//
-  //---------------------------------------------------------------------------------//
 
   async addPhoto() {
     const libraryImage = await this.openLibrary();
@@ -355,7 +213,6 @@ export class ModalPage implements OnInit {
       this.message = 'enter une valeur dans le champ';
       return false;
     } else {
-      console.log(this.image);
       if (this.image !== '') {
         this.imagePath = new Date().getTime() + '.jpg';
         this.uploadFirebase();
@@ -384,14 +241,6 @@ export class ModalPage implements OnInit {
         dismissed: true,
       });
     }
-  }
-  //---------------------------------------------------------------------------------//
-  //-------------------------client--------------------------------------------------//
-  //---------------------------------------------------------------------------------//
-  addClient() {}
-
-  segmentChanged(ev: any) {
-    this.affichage = ev.detail.value;
   }
 
   closeModal() {

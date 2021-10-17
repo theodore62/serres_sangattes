@@ -24,11 +24,12 @@ import {
   FormControl,
 } from '@angular/forms';
 import { formatDate } from '@angular/common';
-
+import { ActivatedRoute, Router } from '@angular/router';
 // google map
 import {
   GoogleMaps,
   GoogleMap,
+  LatLng,
   GoogleMapsMapTypeId,
   GoogleMapsEvent,
   GoogleMapOptions,
@@ -38,6 +39,17 @@ import {
   Environment,
 } from '@ionic-native/google-maps';
 import { ActionSheetController, Platform } from '@ionic/angular';
+import { DataService } from '../services/data.service';
+import {
+  NativeGeocoder,
+  NativeGeocoderResult,
+  NativeGeocoderOptions,
+} from '@ionic-native/native-geocoder/ngx';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 
 @Component({
   selector: 'app-details-commande',
@@ -46,9 +58,16 @@ import { ActionSheetController, Platform } from '@ionic/angular';
 })
 export class DetailsCommandePage implements OnInit {
   // google
-
+  public marker: Marker;
+  public address: any;
+  public isRunning = false;
   map: GoogleMap;
-
+  public geometry: {
+    lat: any;
+    lng: any;
+  };
+  public lat: any;
+  public lng: any;
   /**************/
 
   public tableauCommandes: any = [];
@@ -71,11 +90,14 @@ export class DetailsCommandePage implements OnInit {
   public listClients: Observable<any[]>;
   public listPlantes: Observable<any[]>;
   public commande: Commande = {
+    numero: '',
     id: '',
     liste: this.ListePlantesCommande,
     date: '',
+    nom: '',
     client: '',
     infoComplementaire: '',
+    archive: false,
   };
   public client: Client = {
     id: '',
@@ -93,9 +115,7 @@ export class DetailsCommandePage implements OnInit {
   prix: string;
   quantite: string;
   unite: string;
-
-  @Input() idCommande: string;
-  @Input() idClient: string;
+  public id: any;
 
   constructor(
     private commandeService: CommandeService,
@@ -107,9 +127,15 @@ export class DetailsCommandePage implements OnInit {
     private modalController: ModalController,
     public alertController: AlertController,
     public actionCtrl: ActionSheetController,
-    private platform: Platform
+    private platform: Platform,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    private httpClient: HttpClient,
+    private nativeGeocoder: NativeGeocoder
   ) {
     this.loadMap();
+    this.id = this.dataService.getData('id');
   }
 
   get errorControl() {
@@ -121,10 +147,11 @@ export class DetailsCommandePage implements OnInit {
     }
     this.listClients = this.clientService.getListClients();
     this.listPlantes = this.plantesService.getListPlantes();
-
     this.commandeService
-      .getDetailCommande(this.idCommande)
+      .getDetailCommande(this.id.idCommande)
       .then((valueCommande) => {
+        this.commande.numero = valueCommande.numero;
+        this.commande.nom = valueCommande.nom;
         this.commande.client = valueCommande.client;
         this.commande.date = valueCommande.date;
         this.commande.infoComplementaire = valueCommande.infoComplementaire;
@@ -151,34 +178,13 @@ export class DetailsCommandePage implements OnInit {
           }
         });
       });
-    this.initializeItems();
 
+    this.initializeItems();
     this.formulaireCommande = this.formBuilder.group({
       client: ['', [Validators.required]],
       date: ['', [Validators.required]],
       infoComplementaire: ['', [Validators.required]],
     });
-  }
-
-  loadMap() {
-    Environment.setEnv({
-      API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
-      API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
-    });
-    this.map = GoogleMaps.create('map_canvas', {
-      camera: {
-        target: {
-          lat: 43.610769,
-          lng: 3.876716,
-        },
-        zoom: 12,
-        tilt: 30,
-      },
-    });
-  }
-
-  segmentChanged(ev: any) {
-    this.affichage = ev.detail.value;
   }
   async initializeItems(): Promise<any> {
     this.client = {
@@ -196,7 +202,7 @@ export class DetailsCommandePage implements OnInit {
       this.commande.client == null ||
       this.commande.client === undefined
     ) {
-      this.refecheIdClient = this.idClient;
+      this.refecheIdClient = this.id.idClient;
     } else {
       this.refecheIdClient = '';
       this.refecheIdClient = this.formulaireCommande.value.client;
@@ -210,6 +216,74 @@ export class DetailsCommandePage implements OnInit {
       this.client.adresse = valueClient.adresse;
       this.client.postal = valueClient.postal;
     });
+  }
+  loadMap() {
+    Environment.setEnv({
+      API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
+      API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8',
+    });
+    this.map = GoogleMaps.create('map_canvas', {
+      camera: {
+        target: {
+          lat: 50.9581,
+          lng: 1.8521,
+        },
+        zoom: 12,
+        tilt: 30,
+      },
+    });
+
+    const options: NativeGeocoderOptions = {
+      useLocale: true,
+      maxResults: 5,
+    };
+    this.address = this.client.adresse + ',' + this.client.postal;
+    this.nativeGeocoder
+      .forwardGeocode(this.address, options)
+      .then((result: NativeGeocoderResult[]) => {
+        this.lat = parseFloat(result[0].latitude);
+        this.lng = parseFloat(result[0].longitude);
+      })
+      .catch((error: any) => console.log(error));
+
+     // Add a marker
+    const marker: Marker = this.map.addMarkerSync({
+      position: new LatLng(this.lat, this.lng),
+      title: this.address,
+    });
+
+    // Move to the position
+    this.map
+      .animateCamera({
+        target: marker.getPosition(),
+        zoom: 12,
+      })
+      .then(() => {
+        marker.showInfoWindow();
+        this.isRunning = false;
+      });
+  }
+
+  segmentChanged(ev: any) {
+    this.affichage = ev.detail.value;
+    if (this.affichage === 'liste') {
+      this.loadMap();
+    }
+    if (this.affichage === 'ajouter') {
+      this.details.forEach((index) => {
+        const inforComplementaire = window.document.getElementById('info');
+        const date = window.document.getElementById('date');
+        const client = window.document.getElementById('client');
+        if (inforComplementaire != null && date != null && client != null) {
+          inforComplementaire.setAttribute('value', index.infoComplementaire);
+          client.setAttribute('value', index.client);
+          date.setAttribute(
+            'value',
+            formatDate(index.date, 'yyyy-MM-dd', 'en-US')
+          );
+        }
+      });
+    }
   }
 
   doRefresh(event) {
@@ -238,13 +312,16 @@ export class DetailsCommandePage implements OnInit {
     this.unite = '';
   }
   update() {
-    this.firestore.doc(`Commandes/${this.idCommande}`).set({
-      id: this.idCommande,
+    this.firestore.doc(`Commandes/${this.id.idCommande}`).set({
+      archive: this.commande.archive,
+      numero: this.commande.numero,
+      nom: this.commande.nom,
+      id: this.id.idCommande,
       liste: this.tableau,
       date: formatDate(
         this.formulaireCommande.value.date,
-        'dd/MM/yyyy',
-        'fr-FR'
+        'yyyy-MM-dd',
+        'en-US'
       ),
       client: this.formulaireCommande.value.client,
       infoComplementaire: this.formulaireCommande.value.infoComplementaire,
@@ -258,12 +335,6 @@ export class DetailsCommandePage implements OnInit {
       if (value.id === id) {
         this.tableau.splice(index, 1);
       }
-    });
-  }
-
-  closeModal() {
-    this.modalController.dismiss({
-      dismissed: true,
     });
   }
 }

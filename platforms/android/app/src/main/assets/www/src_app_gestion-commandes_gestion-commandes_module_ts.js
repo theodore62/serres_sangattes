@@ -96,16 +96,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 4762);
 /* harmony import */ var _raw_loader_gestion_commandes_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./gestion-commandes.page.html */ 1094);
 /* harmony import */ var _gestion_commandes_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gestion-commandes.page.scss */ 9072);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var _services_ionic_toast_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/ionic-toast.service */ 6086);
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/fire/firestore */ 6717);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/angular */ 476);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/firestore */ 6717);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ 476);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 8583);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var _services_commande_commande_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/commande/commande.service */ 151);
 /* harmony import */ var _services_client_client_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/client/client.service */ 1811);
 /* harmony import */ var _services_plante_plantes_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/plante/plantes.service */ 9842);
-/* harmony import */ var _details_commande_details_commande_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../details-commande/details-commande.page */ 3934);
+/* harmony import */ var _services_data_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/data.service */ 2468);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 9895);
 
 
 
@@ -122,8 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let GestionCommandesPage = class GestionCommandesPage {
-    constructor(formBuilder, toastCtrl, commandeService, clientService, plantesService, firestore, modalController, datePipe) {
+    constructor(dataService, 
+    // private httpClient: HttpClient,
+    router, route, formBuilder, toastCtrl, commandeService, clientService, plantesService, firestore, modalController, datePipe) {
+        this.dataService = dataService;
+        this.router = router;
+        this.route = route;
         this.formBuilder = formBuilder;
         this.toastCtrl = toastCtrl;
         this.commandeService = commandeService;
@@ -135,6 +142,7 @@ let GestionCommandesPage = class GestionCommandesPage {
         this.isSubmitted = false;
         this.tableauCommandes = [];
         this.tableau = [];
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         this.ListePlantesCommande = {
             nom: '',
             prix: '',
@@ -161,7 +169,7 @@ let GestionCommandesPage = class GestionCommandesPage {
             this.dateDeDemain = (0,_angular_common__WEBPACK_IMPORTED_MODULE_8__.formatDate)(lendemain, 'dd/MM/yyyy', 'fr-FR');
             this.dateDuJour = (0,_angular_common__WEBPACK_IMPORTED_MODULE_8__.formatDate)(new Date(), 'dd/MM/yyyy', 'fr-FR');
             this.listeCommande();
-            if (this.affichage == undefined) {
+            if (this.affichage === undefined) {
                 this.affichage = 'liste';
             }
             this.listCommandes = yield this.initializeItems();
@@ -180,7 +188,7 @@ let GestionCommandesPage = class GestionCommandesPage {
         });
     }
     addDaysToDate(date, days) {
-        var res = new Date(date);
+        const res = new Date(date);
         res.setDate(res.getDate() + days);
         return res;
     }
@@ -207,7 +215,7 @@ let GestionCommandesPage = class GestionCommandesPage {
     }
     deleteLigne(id) {
         this.tableau.filter((value, index, array) => {
-            if (value.id == id) {
+            if (value.id === id) {
                 this.tableau.splice(index, 1);
             }
         });
@@ -221,10 +229,11 @@ let GestionCommandesPage = class GestionCommandesPage {
             this.commande.client = this.formulaireCommande.value.client;
             this.commande.liste = this.tableau;
             this.commande.date = (0,_angular_common__WEBPACK_IMPORTED_MODULE_8__.formatDate)(this.formulaireCommande.value.date, 'dd/MM/yyyy', 'fr-FR');
-            this.commande.infoComplementaire = this.formulaireCommande.value.infoComplementaire;
+            this.commande.infoComplementaire =
+                this.formulaireCommande.value.infoComplementaire;
             this.commandeService.postCommande(this.commande).then((retour) => {
                 if (retour.id == null) {
-                    this.message = "les données n'ont pas pu être enregistrées";
+                    this.message = 'les données n\ont pas pu être enregistrées';
                     this.toastCtrl.showToast(this.message);
                 }
                 else {
@@ -235,7 +244,7 @@ let GestionCommandesPage = class GestionCommandesPage {
                         date: (0,_angular_common__WEBPACK_IMPORTED_MODULE_8__.formatDate)(this.formulaireCommande.value.date, 'dd/MM/yyyy', 'fr-FR'),
                         infoComplementaire: this.formulaireCommande.value.infoComplementaire,
                     });
-                    this.message = "les données ont pu être enregistrées";
+                    this.message = 'les données ont pu être enregistrées';
                     this.toastCtrl.showToast(this.message);
                 }
             });
@@ -282,35 +291,222 @@ let GestionCommandesPage = class GestionCommandesPage {
     }
     update(idCommande, idClient) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-            const modal = yield this.modalController.create({
-                component: _details_commande_details_commande_page__WEBPACK_IMPORTED_MODULE_6__.DetailsCommandePage,
-                // cssClass: 'my-custom-class',
-                componentProps: {
-                    idCommande: idCommande,
-                    idClient: idClient,
-                },
-            });
-            return yield modal.present();
+            const id = {
+                'idCommande': idCommande,
+                'idClient': idClient
+            };
+            this.dataService.setData('id', id);
+            this.router.navigateByUrl('details-commande');
+            // this.dataService.setData('idChauffeur', this.idChauffeur);
+            // this.router.navigateByUrl('');
+            // const modal = await this.modalController.create({
+            //   component: DetailsCommandePage,
+            //   // cssClass: 'my-custom-class',
+            //   componentProps: {
+            //     idCommande: idCommande,
+            //     idClient: idClient,
+            //   },
+            // });
+            // return await modal.present();
         });
     }
 };
 GestionCommandesPage.ctorParameters = () => [
+    { type: _services_data_service__WEBPACK_IMPORTED_MODULE_6__.DataService },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_10__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder },
     { type: _services_ionic_toast_service__WEBPACK_IMPORTED_MODULE_2__.IonicToastService },
     { type: _services_commande_commande_service__WEBPACK_IMPORTED_MODULE_3__.CommandeService },
     { type: _services_client_client_service__WEBPACK_IMPORTED_MODULE_4__.ClientService },
     { type: _services_plante_plantes_service__WEBPACK_IMPORTED_MODULE_5__.PlantesService },
-    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_10__.AngularFirestore },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.ModalController },
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__.AngularFirestore },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ModalController },
     { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__.DatePipe }
 ];
 GestionCommandesPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_13__.Component)({
         selector: 'app-gestion-commandes',
         template: _raw_loader_gestion_commandes_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_gestion_commandes_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
     })
 ], GestionCommandesPage);
+
+
+
+/***/ }),
+
+/***/ 1811:
+/*!***************************************************!*\
+  !*** ./src/app/services/client/client.service.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ClientService": () => (/* binding */ ClientService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/fire/firestore */ 6717);
+/* harmony import */ var rxjs_Operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/Operators */ 8049);
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/storage */ 8274);
+
+
+
+
+
+let ClientService = class ClientService {
+    constructor(firestore, afSG) {
+        this.firestore = firestore;
+        this.afSG = afSG;
+        this.ref = 'Client';
+        this.client = this.firestore.collection('Client');
+    }
+    getListClients() {
+        return this.client.valueChanges();
+        // return this.client.valueChanges().pipe(first()).toPromise();
+    }
+    postClient(client) {
+        return this.client.add(client);
+    }
+    getClient(id) {
+        const url = '/' + id;
+        return this.client.doc(url).valueChanges().pipe((0,rxjs_Operators__WEBPACK_IMPORTED_MODULE_0__.first)()).toPromise();
+    }
+    updateClient(id, values) {
+        const url = '/' + id;
+        this.client.doc(url).update(values);
+        return;
+    }
+    deleteClient(id) {
+        const url = '/' + id;
+        return this.client.doc(url).delete();
+    }
+};
+ClientService.ctorParameters = () => [
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__.AngularFirestore },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__.AngularFireStorage }
+];
+ClientService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+        providedIn: 'root'
+    })
+], ClientService);
+
+
+
+/***/ }),
+
+/***/ 151:
+/*!*******************************************************!*\
+  !*** ./src/app/services/commande/commande.service.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CommandeService": () => (/* binding */ CommandeService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/fire/firestore */ 6717);
+/* harmony import */ var rxjs_Operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/Operators */ 8049);
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/storage */ 8274);
+
+
+
+
+
+let CommandeService = class CommandeService {
+    constructor(firestore, afSG) {
+        this.firestore = firestore;
+        this.afSG = afSG;
+        this.ref = 'Commandes';
+        this.commande = this.firestore.collection('Commandes');
+    }
+    getListCommandes() {
+        return this.commande.valueChanges();
+    }
+    getCommandesList() {
+        return this.commande.valueChanges().pipe((0,rxjs_Operators__WEBPACK_IMPORTED_MODULE_0__.first)()).toPromise();
+    }
+    postCommande(commande) {
+        return this.commande.add(commande);
+    }
+    getDetailCommande(id) {
+        const url = '/' + id;
+        return this.commande.doc(url).valueChanges().pipe((0,rxjs_Operators__WEBPACK_IMPORTED_MODULE_0__.first)()).toPromise();
+    }
+    updateCommande(id, values) {
+        const url = '/' + id;
+        this.commande.doc(url).update(values);
+        return;
+    }
+    deleteCommande(id) {
+        const url = '/' + id;
+        return this.commande.doc(url).delete();
+    }
+};
+CommandeService.ctorParameters = () => [
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__.AngularFirestore },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__.AngularFireStorage }
+];
+CommandeService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+        providedIn: 'root',
+    })
+], CommandeService);
+
+
+
+/***/ }),
+
+/***/ 6086:
+/*!*************************************************!*\
+  !*** ./src/app/services/ionic-toast.service.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "IonicToastService": () => (/* binding */ IonicToastService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic/angular */ 476);
+
+
+
+let IonicToastService = class IonicToastService {
+    constructor(toast) {
+        this.toast = toast;
+    }
+    showToast(data) {
+        this.myToast = this.toast
+            .create({
+            message: data,
+            duration: 2000,
+            position: 'top',
+            cssClass: 'message'
+        })
+            .then((toastData) => {
+            console.log(toastData);
+            toastData.present();
+        });
+    }
+};
+IonicToastService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_0__.ToastController }
+];
+IonicToastService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root',
+    })
+], IonicToastService);
 
 
 

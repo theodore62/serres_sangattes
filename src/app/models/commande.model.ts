@@ -1,9 +1,12 @@
 export interface Commande {
     id: any;
+    numero: string;
     liste: Liste;
-    date:string;
+    date: string;
+    nom: string;
     client: string;
     infoComplementaire: string;
+    archive: boolean;
   }
 
 export interface Liste {

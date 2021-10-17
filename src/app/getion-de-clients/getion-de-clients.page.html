@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button  color="light"></ion-menu-button>
+    </ion-buttons>
     <ion-title>Getion  de Clients</ion-title>
   </ion-toolbar>
   <ion-toolbar>
@@ -129,7 +132,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list *ngFor="let client of (clientsList)|async">
+  <ion-list *ngFor="let client of (clientsList)">
     <ion-item-sliding>
       <ion-item>
         <ion-label color="light">{{client.nom }} {{ client.prenom }}</ion-label>

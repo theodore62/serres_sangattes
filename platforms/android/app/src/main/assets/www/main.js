@@ -87,7 +87,7 @@ const routes = [
     },
     {
         path: 'gestion-commandes',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_details-commande_details-commande_page_ts"), __webpack_require__.e("src_app_gestion-commandes_gestion-commandes_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./gestion-commandes/gestion-commandes.module */ 3530)).then(m => m.GestionCommandesPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_gestion-commandes_gestion-commandes_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./gestion-commandes/gestion-commandes.module */ 3530)).then(m => m.GestionCommandesPageModule)
     },
     {
         path: 'getion-de-clients',
@@ -95,7 +95,11 @@ const routes = [
     },
     {
         path: 'details-commande',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_details-commande_details-commande_page_ts"), __webpack_require__.e("src_app_details-commande_details-commande_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./details-commande/details-commande.module */ 8379)).then(m => m.DetailsCommandePageModule)
+        // resolve: {
+        //   special: DataResolverService
+        // },
+        // loadChildren:'./details-commande/details-commande.module#DetailsCommandePageModule'
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_details-commande_details-commande_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./details-commande/details-commande.module */ 8379)).then(m => m.DetailsCommandePageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {

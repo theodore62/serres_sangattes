@@ -32,7 +32,14 @@
     },
     "cordova-plugin-googlemaps": {
       "PACKAGE_NAME": "com.serretSangatte.app"
+    },
+    "cordova-plugin-nativegeocoder": {
+      "PACKAGE_NAME": "com.serretSangatte.app"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "com.serretSangatte.app"
+    }
+  }
 }

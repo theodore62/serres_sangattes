@@ -38,4 +38,8 @@ export class CommandeService {
     const url = '/' + id;
     return this.commande.doc(url).delete();
   }
+  updateArchive(id,values){
+    const url = '/' + id;
+    this.commande.doc(url).set(values);
+  }
 }

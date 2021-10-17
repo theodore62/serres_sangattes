@@ -294,3 +294,6 @@ plugin/google/maps/PluginGeocoder.java
 plugin/google/maps/PluginUtil.java
  plugin.google.maps.PluginUtil
  plugin.google.maps.PluginUtil$MyCallbackContext
+cordova/plugin/nativegeocoder/NativeGeocoder.java
+ cordova.plugin.nativegeocoder.NativeGeocoder
+ cordova.plugin.nativegeocoder.NativeGeocoderOptions

@@ -18,13 +18,17 @@ ion-header {
   ion-button {
     --background: #6c91bb;
   }
-  ion-title, ion-icon{
+  ion-title, ion-icon, ion-back-button{
     color: #fff;
   }
-  ion-item,ion-list,ion-item-options,ion-item-option {
+  ion-item,ion-list,ion-item-options,ion-item-option,#map_canvas,ion-label  {
     --ion-background-color: transparent !important;
   }
   .titreAjouter{
     text-align: center;
-    size: 40%;
+    size: 40%;    
+    --ion-background-color: linear-gradient(#3366a0, #9eb7d2) !important;
+  }
+  #map_canvas{
+    --ion-background-color: linear-gradient(#3366a0, #9eb7d2) !important;
   }

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicToastService } from '../services/ionic-toast.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { formatDate } from '@angular/common';
-import { element } from 'protractor';
 // formulaire
 import {
   Validators,
@@ -18,13 +17,12 @@ import {
 //model
 import { Commande, Liste } from '../models/commande.model';
 import { Client } from '../models/client.model';
-import { Plante } from '../models/plante.model';
 // service
 import { CommandeService } from '../services/commande/commande.service';
 import { ClientService } from '../services/client/client.service';
 import { PlantesService } from '../services/plante/plantes.service';
-import { DetailsCommandePage } from '../details-commande/details-commande.page';
-
+import { DataService } from '../services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-gestion-commandes',
   templateUrl: './gestion-commandes.page.html',
@@ -35,15 +33,18 @@ export class GestionCommandesPage implements OnInit {
   public formulaireCommande: FormGroup;
   public message: string;
   public isSubmitted = false;
+  public checkCommandeListe = [];
   public listCommandes: any;
   public listeTableauCommande: Observable<any[]>;
   public listClients: Observable<any[]>;
   public listPlantes: Observable<any[]>;
   public dateDeDemain: any;
   public dateDuJour: any;
+  public numeroCommande: any;
 
   public tableauCommandes: any = [];
   public tableau: any = [];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   public ListePlantesCommande: Liste = {
     nom: '',
     prix: '',
@@ -52,17 +53,21 @@ export class GestionCommandesPage implements OnInit {
   };
   // une commande
   public commande: Commande = {
+    numero: '',
     id: '',
     liste: this.ListePlantesCommande,
     date: '',
+    nom: '',
     client: '',
     infoComplementaire: '',
+    archive: false,
   };
 
   nom: string;
   prix: string;
   quantite: string;
   unite: string;
+  archiver: boolean;
 
   public i = -30;
 
@@ -71,6 +76,10 @@ export class GestionCommandesPage implements OnInit {
   }
 
   constructor(
+    private dataService: DataService,
+    // private httpClient: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private toastCtrl: IonicToastService,
     private commandeService: CommandeService,
@@ -78,14 +87,15 @@ export class GestionCommandesPage implements OnInit {
     private plantesService: PlantesService,
     private firestore: AngularFirestore,
     public modalController: ModalController,
-    private datePipe: DatePipe
+    public datePipe: DatePipe,
+    public alertController: AlertController
   ) {}
 
   async ngOnInit() {
     const demain = new Date();
     const lendemain = this.addDaysToDate(demain, 1);
-    this.dateDeDemain = formatDate(lendemain, 'dd/MM/yyyy', 'fr-FR');
-    this.dateDuJour = formatDate(new Date(), 'dd/MM/yyyy', 'fr-FR');
+    this.dateDeDemain = formatDate(lendemain, 'yyyy-MM-dd', 'en-US');
+    this.dateDuJour = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     this.listeCommande();
     if (this.affichage === undefined) {
       this.affichage = 'liste';
@@ -104,11 +114,27 @@ export class GestionCommandesPage implements OnInit {
   }
 
   addDaysToDate(date, days) {
-    var res = new Date(date);
+    const res = new Date(date);
     res.setDate(res.getDate() + days);
     return res;
   }
 
+  getTasks() {
+    this.commandeService.getCommandesList().then((retour) => {
+      this.checkCommandeListe = [];
+      retour.forEach((action) => {
+        this.checkCommandeListe.push({
+          numero: action.numero,
+          id: action.id,
+          liste: action.liste,
+          client: action.client,
+          date: action.date,
+          infoComplementaire: action.infoComplementaire,
+          archive: action.archive,
+        });
+      });
+    });
+  }
   segmentChanged(ev: any) {
     this.affichage = ev.detail.value;
   }
@@ -132,7 +158,7 @@ export class GestionCommandesPage implements OnInit {
   }
   deleteLigne(id) {
     this.tableau.filter((value, index, array) => {
-      if (value.id == id) {
+      if (value.id === id) {
         this.tableau.splice(index, 1);
       }
     });
@@ -143,36 +169,32 @@ export class GestionCommandesPage implements OnInit {
       this.message = 'Veuillez compléter le formulaire';
       this.toastCtrl.showToast(this.message);
     } else {
-      this.commande.client = this.formulaireCommande.value.client;
-      this.commande.liste = this.tableau;
-      this.commande.date = formatDate(
-        this.formulaireCommande.value.date,
-        'dd/MM/yyyy',
-        'fr-FR'
-      );
-      this.commande.infoComplementaire =
-        this.formulaireCommande.value.infoComplementaire;
-      this.commandeService.postCommande(this.commande).then((retour) => {
-        if (retour.id == null) {
-          this.message = "les données n'ont pas pu être enregistrées";
-          this.toastCtrl.showToast(this.message);
-        } else {
-          this.firestore.doc(`Commandes/${retour.id}`).set({
-            id: retour.id,
-            liste: this.tableau,
-            client: this.formulaireCommande.value.client,
-            date: formatDate(
-              this.formulaireCommande.value.date,
-              'dd/MM/yyyy',
-              'fr-FR'
-            ),
-            infoComplementaire:
-              this.formulaireCommande.value.infoComplementaire,
-          });
-          this.message = 'les données ont pu être enregistrées';
-          this.toastCtrl.showToast(this.message);
-        }
+      this.numeroCommande = this.strRandom({
+        includeUpperCase: true,
+        includeNumbers: true,
+        length: 10,
+        startsWithLowerCase: true,
       });
+      console.log();
+      if (this.listCommandes.length !== 0) {
+        this.listCommandes.forEach((value, index, array) => {
+          console.log(this.numeroCommande);
+          if (value.numero !== this.numeroCommande) {
+            this.insert();
+          } else {
+            this.numeroCommande = '';
+            this.numeroCommande = this.strRandom({
+              includeUpperCase: true,
+              includeNumbers: true,
+              length: 10,
+              startsWithLowerCase: true,
+            });
+            this.insert();
+          }
+        });
+      } else {
+        this.insert();
+      }
     }
   }
   async filterList(ev: any) {
@@ -183,11 +205,12 @@ export class GestionCommandesPage implements OnInit {
       return;
     }
     this.listCommandes = this.listCommandes.filter((currentPlant) => {
-      if (currentPlant.client && searchTerm) {
+      if (currentPlant.numero && searchTerm) {
         return (
-          currentPlant.client.toLowerCase().indexOf(searchTerm.toLowerCase()) >
+          currentPlant.numero.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1 ||
-          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) >
+            -1
         );
       }
     });
@@ -214,14 +237,105 @@ export class GestionCommandesPage implements OnInit {
   }
 
   async update(idCommande, idClient) {
-    const modal = await this.modalController.create({
-      component: DetailsCommandePage,
-      // cssClass: 'my-custom-class',
-      componentProps: {
-        idCommande: idCommande,
-        idClient: idClient,
-      },
+    const id = {
+      idCommande: idCommande,
+      idClient: idClient,
+    };
+    this.dataService.setData('id', id);
+    this.router.navigateByUrl('details-commande');
+  }
+
+  changeCheckState(id, ev: any) {
+    // console.log(id);
+    // console.log(ev);
+    this.commandeService.getDetailCommande(id).then((retour) => {
+      // console.log(retour.archive);
+      retour.archive = ev;
+      this.firestore.doc(`Commandes/${retour.id}`).set(retour);
     });
-    return await modal.present();
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+  strRandom(o) {
+    let a = 10;
+    const b = 'abcdefghijklmnopqrstuvwxyz';
+    let c = '';
+    let d = 0;
+    let e = '' + b;
+
+    if (o) {
+      if (o.startsWithLowerCase) {
+        c = b[Math.floor(Math.random() * b.length)];
+        d = 1;
+      }
+      if (o.length) {
+        a = o.length;
+      }
+      if (o.includeUpperCase) {
+        e += b.toUpperCase();
+      }
+      if (o.includeNumbers) {
+        e += '1234567890';
+      }
+    }
+    for (; d < a; d++) {
+      c += e[Math.floor(Math.random() * e.length)];
+    }
+    return c;
+  }
+  insert() {
+    this.commande.client = this.formulaireCommande.value.client;
+    this.clientService.getClient(this.commande.client).then((value) => {   
+      this.commande.nom = value.nom;
+    });
+    this.commande.liste = this.tableau;
+    this.commande.date = formatDate(
+      this.formulaireCommande.value.date,
+      'yyyy-MM-dd', 'en-US'
+    );
+    this.commande.infoComplementaire =
+      this.formulaireCommande.value.infoComplementaire;
+    this.commandeService.postCommande(this.commande).then((retour) => {
+      if (retour.id == null) {
+        this.message = 'les données nont pas pu être enregistrées';
+        this.toastCtrl.showToast(this.message);
+      } else {
+        this.firestore.doc(`Commandes/${retour.id}`).set({
+          numero: this.numeroCommande,
+          id: retour.id,
+          liste: this.tableau,
+          client: this.formulaireCommande.value.client,
+          nom: this.commande.nom,
+          date: formatDate(this.formulaireCommande.value.date,'yyyy-MM-dd', 'en-US'),
+          infoComplementaire: this.formulaireCommande.value.infoComplementaire,
+          archive: false,
+        });
+        this.message = 'les données ont pu être enregistrées';
+        this.toastCtrl.showToast(this.message);
+      }
+    });
   }
 }

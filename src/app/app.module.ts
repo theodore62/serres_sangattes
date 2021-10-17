@@ -1,7 +1,7 @@
-import { NgModule,LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
@@ -16,9 +16,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore/';
 import { PlantesService } from './services/plante/plantes.service';
 // import { DBService } from './services/db/db.service';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
 import { Camera } from '@ionic-native/camera/ngx';
-
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
@@ -62,6 +62,7 @@ export const firebaseConfig = {
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -72,6 +73,7 @@ export const firebaseConfig = {
     DatePipe,
     PlantesService,
     Camera,
+    NativeGeocoder
   ],
   bootstrap: [AppComponent],
 })

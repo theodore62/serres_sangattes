@@ -1,0 +1,34 @@
+
+ion-header {
+    //v2
+    --ion-background-color: #3366a0;
+    //v1
+    // --ion-background-color: #f5af19;
+  }
+  ion-content {
+    //v2
+    color: #fff;
+    --ion-background-color: linear-gradient(#3366a0, #9eb7d2);
+    //v1
+    // --ion-background-color: linear-gradient(#f5af19, #f12711);
+  }
+  //--------------//
+  //v2
+
+  ion-button {
+    --background: #6c91bb;
+  }
+  ion-title, ion-icon, ion-back-button{
+    color: #fff;
+  }
+  ion-item,ion-list,ion-item-options,#map_canvas,ion-label  {
+    --ion-background-color: transparent !important;
+  }
+  .titreAjouter{
+    text-align: center;
+    size: 40%;    
+    // --ion-background-color: linear-gradient(#3366a0, #9eb7d2) !important;
+  }
+  #map_canvas{
+    --ion-background-color: linear-gradient(#3366a0, #9eb7d2) !important;
+  }

@@ -1,5 +1,9 @@
 <ion-header>
   <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button  color="light"></ion-menu-button>
+    </ion-buttons>
     <ion-title>Gestion de Commandes</ion-title>
   </ion-toolbar>
 
@@ -25,20 +29,20 @@
   <ion-list *ngIf="affichage === 'ajouter' " class="titreAjouter">
     <ion-label color="light" class="titreAjouter">Ajouter une Commande:</ion-label>
     <ion-item>
-      <ion-label>liste plantes</ion-label>
-      <ion-select placeholder="Selectionner Nom du client" [(ngModel)]="nom">
+      <!-- <ion-label>liste plantes</ion-label> -->
+      <ion-select placeholder="plante" [(ngModel)]="nom">
         <ion-select-option *ngFor="let plante of (listPlantes)|async" value="{{ plante.nom }}">{{ plante.nom }}
         </ion-select-option>
       </ion-select>
       <ion-input color="light" type="number" [(ngModel)]="prix " placeholder="prix"></ion-input>
       <ion-input color="light" type="number" [(ngModel)]="quantite" placeholder="quantité"></ion-input>
-      <ion-select placeholder="Selectionner Nom du client" [(ngModel)]="unite">
+      <ion-select placeholder="unité" [(ngModel)]="unite">
         <ion-select-option value="kg">kg</ion-select-option>
         <ion-select-option value="unité">unité</ion-select-option>
       </ion-select>
-      <ion-item>
+      <!-- <ion-item>
         <ion-icon name="close-circle-outline"></ion-icon>
-      </ion-item>
+      </ion-item> -->
       <ion-item>
         <ion-icon name="chevron-down-circle-outline" (click)="addLigne()"></ion-icon>
       </ion-item>
@@ -107,11 +111,21 @@
       <ion-label color="light" class="titreAjouter">Liste des commandes:</ion-label>
     </ion-item>
     <!-- ******************************************************* -->
-    <ion-label color="light" class="titreAjouter">Liste des commandes Aujourd'hui:</ion-label>
+    <ion-item>
+      <ion-label color="light" class="titreAjouter">Aujourd'hui:</ion-label>
+    </ion-item>
+    <!-- <ion-item> -->
     <ion-list *ngFor="let commande of (listCommandes)">
-      <ion-item-sliding *ngIf="commande.date === dateDuJour">
+      <ion-item-sliding *ngIf="commande.date === dateDuJour ">
         <ion-item>
-          <ion-label color="light"> Nom du client: {{commande.client }}</ion-label>
+          <ion-label color="light" *ngIf="!commande.archive"> N°: {{commande.numero}}</ion-label>
+          <ion-label color="light" *ngIf="!commande.archive"> Client: {{commande.nom}}</ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> N°:
+            {{commande.numero}} </ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> Client:
+            {{commande.nom}} </ion-label>
+          <ion-toggle (ionChange)="changeCheckState(commande.id,commande.archive)" [(ngModel)]="commande.archive"
+            color="danger" slot="start">Archiver</ion-toggle>
         </ion-item>
         <ion-item-options side="end">
           <ion-item-option (click)="delete(commande.id)" color="red">
@@ -123,12 +137,23 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <!-- </ion-item> -->
     <!-- ******************************************************* -->
-    <ion-label color="light" class="titreAjouter">Liste des commandes de demain:</ion-label>
+    <ion-item>
+      <ion-label color="light" class="titreAjouter">Demain:</ion-label>
+    </ion-item>
+    <!-- <ion-item> -->
     <ion-list *ngFor="let commande of (listCommandes)">
-      <ion-item-sliding *ngIf="commande.date === dateDeDemain">
+      <ion-item-sliding *ngIf="commande.date === dateDeDemain ">
         <ion-item>
-          <ion-label color="light"> Nom du client: {{commande.client }}</ion-label>
+          <ion-label color="light" *ngIf="!commande.archive"> N°: {{commande.numero}}</ion-label>
+          <ion-label color="light" *ngIf="!commande.archive"> Client: {{commande.nom}}</ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> N°:
+            {{commande.numero}} </ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> Client:
+            {{commande.nom}} </ion-label>
+          <ion-toggle (ionChange)="changeCheckState(commande.id,commande.archive)" [(ngModel)]="commande.archive"
+            color="danger" slot="start">Archiver</ion-toggle>
         </ion-item>
         <ion-item-options side="end">
           <ion-item-option (click)="delete(commande.id)" color="red">
@@ -140,28 +165,35 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-        <!-- ******************************************************* -->
-        <ion-label color="light" class="titreAjouter">Liste des commandes à venir:</ion-label>
-        <ion-list *ngFor="let commande of (listCommandes)">
-          <ion-item-sliding *ngIf="commande.date !== dateDeDemain || commande.date !== dateDuJour">
-            <ion-item>
-              <ion-label color="light"> Nom du client: {{commande.client }}</ion-label>
-              <ion-item>
-                <ion-label>Archiver</ion-label>
-                <ion-toggle [(ngModel)]="archiver"></ion-toggle>
-              </ion-item>
-            </ion-item>
-            <ion-item-options side="end">
-              <!-- <ion-item-option (click)="delete(commande.id)" color="red">
-                <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
-              </ion-item-option> -->
-              <ion-item-option (click)="update(commande.id,commande.client)" color='red'>
-                <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
-              </ion-item-option>
-            </ion-item-options>      
-          </ion-item-sliding>
-        </ion-list>
-
+    <!-- </ion-item> -->
+    <!-- ******************************************************* -->
+    <ion-item>
+      <ion-label color="light" class="titreAjouter">Liste des commandes à venir:</ion-label>
+    </ion-item>
+    <!-- <ion-item> -->
+    <ion-list *ngFor="let commande of (listCommandes)">
+      <ion-item-sliding *ngIf="commande.date > dateDeDemain && commande.date > dateDuJour">
+        <ion-item>
+          <ion-label color="light" *ngIf="!commande.archive"> N°: {{commande.numero}}</ion-label>
+          <ion-label color="light" *ngIf="!commande.archive"> Client: {{commande.nom}}</ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> N°:
+            {{commande.numero}} </ion-label>
+          <ion-label color="light" *ngIf="commande.archive" style="text-decoration:line-through;"> Client:
+            {{commande.nom}} </ion-label>
+          <ion-toggle (ionChange)="changeCheckState(commande.id,commande.archive)" [(ngModel)]="commande.archive"
+            color="danger" slot="start">Archiver</ion-toggle>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="delete(commande.id)" color="red">
+            <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
+          </ion-item-option>
+          <ion-item-option (click)="update(commande.id,commande.client)" color='red'>
+            <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <!-- </ion-item> -->
 
   </ion-list>
 </ion-content>

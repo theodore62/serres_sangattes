@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { DataResolverService } from './resolver/data-resolver.service';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
   {
     path: 'details',
     loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
-  },  {
+  },
+  {
     path: 'modal',
     loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
   },
@@ -56,8 +58,16 @@ const routes: Routes = [
   },
   {
     path: 'details-commande',
+    // resolve: {
+    //   special: DataResolverService
+    // },
+    // loadChildren:'./details-commande/details-commande.module#DetailsCommandePageModule'
     loadChildren: () => import('./details-commande/details-commande.module').then( m => m.DetailsCommandePageModule)
+  },  {
+    path: 'details-client',
+    loadChildren: () => import('./details-client/details-client.module').then( m => m.DetailsClientPageModule)
   }
+
 
 ];
 

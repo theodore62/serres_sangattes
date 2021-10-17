@@ -9,92 +9,6 @@
   </ion-toolbar>
 </ion-header>
 
-
-<!-- /***************************************************************************/ -->
-<!-- /*******************************Commandes***********************************/ -->
-<!-- /***************************************************************************/ -->
-
-<ion-content *ngIf="data === 'commande'" class="commande">
-  <ion-label color="light" class="titreAjouter">Ajouter une Commande:</ion-label>
-  <ion-item>
-    <ion-input color="light" type="text" [(ngModel)]="nom" placeholder="nom"></ion-input>
-    <ion-input color="light" type="number" [(ngModel)]="prix" placeholder="prix">
-    </ion-input>
-    <ion-input color="light" type="number" [(ngModel)]="quantite" placeholder="quantité"></ion-input>
-    <ion-item>
-      <ion-icon name="close-circle-outline"></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="chevron-down-circle-outline" (click)="addLigne()"></ion-icon>
-    </ion-item>
-
-  </ion-item>
-  <ion-label color="light">Détails de la commande:</ion-label>
-  <form (ngSubmit)="addCommande()" [formGroup]="formulaireCommande">
-    <ion-item>
-      <ion-label color="light">Nom du client :</ion-label>
-      <ion-input color="light" type="text" placeholder="Nom du client" id='client' value='' formControlName="client">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.client.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Nom de la plante :</ion-label>
-      <ion-input color="light" type="text" placeholder="Nom de la plante" id='nom' value='' formControlName="nom">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Prix :</ion-label>
-      <ion-input color="light" type="number" placeholder="prix" id='prix' value='' formControlName="prix"></ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.prix.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">Quantité :</ion-label>
-      <ion-input color="light" type="number" placeholder="quantité" id='quantite' value='' formControlName="quantite">
-      </ion-input>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.quantite.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="light">info complémentaire :</ion-label>
-      <ion-textarea color="light" rows="6" cols="20" placeholder="info complémentaire" required
-        formControlName="infoComplementaire" id='infoComplementaire' value=''></ion-textarea>
-      <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.required">
-        champ obligatoire
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.infoComplementaire.errors?.minlength">
-        minimun 2 caractéres
-      </span>
-    </ion-item>
-
-    <ion-button class="bouttonCommande" type="submit" expand="block">Valider</ion-button>
-  </form>
-</ion-content>
-
 <!-- /***************************************************************************/ -->
 <!-- /****************************client*****************************************/ -->
 <!-- /***************************************************************************/ -->
@@ -214,8 +128,8 @@
   </form>
 </ion-content>
 <ion-content *ngIf="data === 'client' && affichage === 'liste'" class="client">
-  <ion-item>
-    <ion-label color="light" class="supprimer">Liste des commandes</ion-label>
+  <ion-item class="titre">
+    <ion-label color="light" > Liste des commandes</ion-label>
   </ion-item>
   <ion-item>
     <ion-searchbar (ionChange)="filterList($event)" placeholder="recherche"></ion-searchbar>
@@ -223,19 +137,22 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <!-- *ngFor="let variete of (varieteList)" -->
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <!-- <ion-label color="light">{{variete.nom }}</ion-label> -->
+  <ion-list  *ngFor="let commande of (commandesList)">
+    <ion-item-sliding *ngIf="commande.client === idClient ">
+      <ion-item *ngIf="commande.client === idClient ">
+        <ion-label color="light">{{commande.numero }}</ion-label>
       </ion-item>
-      <ion-item-options side="end">
-        <!-- <ion-item-option (click)="delete(variete.id)" color="red">
+      <ion-item-options side="end" *ngIf="commande.client === idClient ">
+        <ion-item-option (click)="delete(commande.id)" color="red">
           <ion-icon name="trash-outline" size="small" color="light"></ion-icon>
-        </ion-item-option> -->
+        </ion-item-option>
+        <ion-item-option  (click)="update(commande.id,commande.client)" color='red'>
+          <img src="https://img.icons8.com/carbon-copy/25/000000/approve-and-update.png" />
+        </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
 </ion-content>
 
 
