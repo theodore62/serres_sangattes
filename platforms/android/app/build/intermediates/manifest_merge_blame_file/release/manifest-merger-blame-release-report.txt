@@ -2,92 +2,142 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.serretSangatte.app"
 4    android:hardwareAccelerated="true"
-5    android:versionCode="7"
-6    android:versionName="0.0.7" >
+5    android:versionCode="8"
+6    android:versionName="0.0.8" >
 7
 8    <uses-sdk
-9        android:minSdkVersion="22"
-9-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml
+9        android:minSdkVersion="19"
+9-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 10        android:targetSdkVersion="29" />
-10-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml
+10-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 11
 12    <supports-screens
-12-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
+12-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
 13        android:anyDensity="true"
-13-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
+13-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
 14        android:largeScreens="true"
-14-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
+14-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
 15        android:normalScreens="true"
-15-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
+15-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
 16        android:resizeable="true"
-16-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
+16-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
 17        android:smallScreens="true"
-17-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
+17-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
 18        android:xlargeScreens="true" />
-18-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
+18-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
 19
 20    <uses-permission android:name="android.permission.INTERNET" />
-20-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
-20-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
+20-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
+20-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
 21    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-21-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:16:5-81
-21-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:16:22-78
-22
-23    <application
-23-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:5-15:19
-24        android:hardwareAccelerated="true"
-24-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
-25        android:icon="@mipmap/ic_launcher"
-25-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:53-87
-26        android:label="@string/app_name"
-26-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:88-120
-27        android:networkSecurityConfig="@xml/network_security_config"
-27-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:121-181
-28        android:supportsRtl="true" >
-28-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:5:182-208
-29        <activity
-29-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
-30            android:name="com.serretSangatte.app.MainActivity"
-30-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:205-232
-31            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-31-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:19-135
-32            android:label="@string/activity_name"
-32-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:136-173
-33            android:launchMode="singleTop"
-33-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:174-204
-34            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
-34-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:233-295
-35            android:windowSoftInputMode="adjustResize" >
-35-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:6:296-338
-36            <intent-filter android:label="@string/launcher_name" >
-36-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
-36-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
-37                <action android:name="android.intent.action.MAIN" />
-37-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
-37-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
-38
-39                <category android:name="android.intent.category.LAUNCHER" />
-39-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
-39-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
-40            </intent-filter>
-41        </activity>
-42
-43        <provider
-44            android:name="org.apache.cordova.camera.FileProvider"
-44-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:12:149-202
-45            android:authorities="com.serretSangatte.app.cordova.plugin.camera.provider"
-45-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:12:19-88
-46            android:exported="false"
-46-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:12:89-113
-47            android:grantUriPermissions="true" >
-47-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:12:114-148
-48            <meta-data
-48-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:13:13-123
-49                android:name="android.support.FILE_PROVIDER_PATHS"
-49-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:13:24-74
-50                android:resource="@xml/camera_provider_paths" />
-50-->D:\cours\ionic\test-app-serres-sangattes\serres_sangattes\platforms\android\app\src\main\AndroidManifest.xml:13:75-120
-51        </provider>
-52    </application>
-53
-54</manifest>
+21-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:19:5-81
+21-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:19:22-78
+22    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+22-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:20:5-79
+22-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:20:22-76
+23    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+23-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:21:5-81
+23-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:21:22-78
+24    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+24-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:22:5-79
+24-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:22:22-76
+25
+26    <uses-feature
+26-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:23:5-78
+27        android:glEsVersion="0x00020000"
+27-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:23:19-51
+28        android:required="true" />
+28-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:23:52-75
+29    <uses-feature android:name="android.hardware.location" />
+29-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:24:5-62
+29-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:24:19-59
+30    <uses-feature android:name="android.hardware.location.gps" />
+30-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:25:5-66
+30-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:25:19-63
+31
+32    <application
+32-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:5-18:19
+33        android:hardwareAccelerated="true"
+33-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
+34        android:icon="@mipmap/ic_launcher"
+34-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:53-87
+35        android:label="@string/app_name"
+35-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:88-120
+36        android:networkSecurityConfig="@xml/network_security_config"
+36-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:121-181
+37        android:supportsRtl="true" >
+37-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:5:182-208
+38        <activity
+38-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
+39            android:name="com.serretSangatte.app.MainActivity"
+39-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:205-232
+40            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+40-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:19-135
+41            android:label="@string/activity_name"
+41-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:136-173
+42            android:launchMode="singleTop"
+42-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:174-204
+43            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+43-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:233-295
+44            android:windowSoftInputMode="adjustResize" >
+44-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:6:296-338
+45            <intent-filter android:label="@string/launcher_name" >
+45-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
+45-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
+46                <action android:name="android.intent.action.MAIN" />
+46-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
+46-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
+47
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
+48-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
+49            </intent-filter>
+50        </activity>
+51
+52        <provider
+53            android:name="org.apache.cordova.camera.FileProvider"
+53-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:12:149-202
+54            android:authorities="com.serretSangatte.app.cordova.plugin.camera.provider"
+54-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:12:19-88
+55            android:exported="false"
+55-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:12:89-113
+56            android:grantUriPermissions="true" >
+56-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:12:114-148
+57            <meta-data
+57-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:13:13-123
+58                android:name="android.support.FILE_PROVIDER_PATHS"
+58-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:13:24-74
+59                android:resource="@xml/camera_provider_paths" />
+59-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:13:75-120
+60        </provider>
+61
+62        <meta-data
+63            android:name="com.google.android.geo.API_KEY"
+63-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:15:20-65
+64            android:value="AIzaSyC47GVvBEShojMwLSD1JK2O6adqaUdaVK8" />
+64-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:15:66-112
+65        <meta-data
+65-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:16:9-122
+66            android:name="com.google.android.gms.version"
+66-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:16:20-65
+67            android:value="@integer/google_play_services_version" />
+67-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:16:66-119
+68
+69        <uses-library
+69-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:17:9-88
+70            android:name="org.apache.http.legacy"
+70-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:17:23-60
+71            android:required="false" />
+71-->D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:17:61-85
+72
+73        <activity
+73-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\punky\.gradle\caches\transforms-2\files-2.1\62effaa7bbc7d9104ffc97563454eb99\play-services-base-16.0.1\AndroidManifest.xml:23:9-26:75
+74            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+74-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\punky\.gradle\caches\transforms-2\files-2.1\62effaa7bbc7d9104ffc97563454eb99\play-services-base-16.0.1\AndroidManifest.xml:24:13-79
+75            android:exported="false"
+75-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\punky\.gradle\caches\transforms-2\files-2.1\62effaa7bbc7d9104ffc97563454eb99\play-services-base-16.0.1\AndroidManifest.xml:25:13-37
+76            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+76-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\punky\.gradle\caches\transforms-2\files-2.1\62effaa7bbc7d9104ffc97563454eb99\play-services-base-16.0.1\AndroidManifest.xml:26:13-72
+77    </application>
+78
+79</manifest>

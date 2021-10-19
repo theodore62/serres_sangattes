@@ -10,8 +10,8 @@
       "apkData": {
         "type": "MAIN",
         "splits": [],
-        "versionCode": 7,
-        "versionName": "0.0.7",
+        "versionCode": 8,
+        "versionName": "0.0.8",
         "outputFile": "app-release-unsigned.apk",
         "fullName": "release",
         "baseName": "release",
@@ -21,7 +21,7 @@
       "properties": {
         "packageId": "com.serretSangatte.app",
         "split": "",
-        "minSdkVersion": "22"
+        "minSdkVersion": "19"
       }
     }
   ]

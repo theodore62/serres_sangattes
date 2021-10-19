@@ -6,19 +6,10 @@ io/ionic/keyboard/CDVIonicKeyboard.java
  io.ionic.keyboard.CDVIonicKeyboard$3$1
 org/apache/cordova/device/Device.java
  org.apache.cordova.device.Device
-org/apache/cordova/whitelist/WhitelistPlugin.java
- org.apache.cordova.whitelist.WhitelistPlugin
- org.apache.cordova.whitelist.WhitelistPlugin$1
- org.apache.cordova.whitelist.WhitelistPlugin$CustomConfigXmlParser
 com/serretSangatte/app/BuildConfig.java
  com.serretSangatte.app.BuildConfig
 org/apache/cordova/camera/ExifHelper.java
  org.apache.cordova.camera.ExifHelper
-org/apache/cordova/camera/FileHelper.java
- org.apache.cordova.camera.FileHelper
-org/apache/cordova/camera/CameraLauncher.java
- org.apache.cordova.camera.CameraLauncher
- org.apache.cordova.camera.CameraLauncher$1
 org/apache/cordova/splashscreen/SplashScreen.java
  org.apache.cordova.splashscreen.SplashScreen
  org.apache.cordova.splashscreen.SplashScreen$1
@@ -31,12 +22,135 @@ org/apache/cordova/splashscreen/SplashScreen.java
  org.apache.cordova.splashscreen.SplashScreen$6
  org.apache.cordova.splashscreen.SplashScreen$6$1
  org.apache.cordova.splashscreen.SplashScreen$7
-org/apache/cordova/camera/FileProvider.java
- org.apache.cordova.camera.FileProvider
-com/serretSangatte/app/MainActivity.java
- com.serretSangatte.app.MainActivity
-com/ionicframework/cordova/webview/AndroidProtocolHandler.java
- com.ionicframework.cordova.webview.AndroidProtocolHandler
+plugin/google/maps/AsyncLoadImageInterface.java
+ plugin.google.maps.AsyncLoadImageInterface
+plugin/google/maps/MyPlugin.java
+ plugin.google.maps.MyPlugin
+ plugin.google.maps.MyPlugin$1
+ plugin.google.maps.MyPlugin$2
+ plugin.google.maps.MyPlugin$3
+plugin/google/maps/PluginStreetViewPanorama.java
+ plugin.google.maps.PluginStreetViewPanorama
+ plugin.google.maps.PluginStreetViewPanorama$1
+ plugin.google.maps.PluginStreetViewPanorama$1$1
+ plugin.google.maps.PluginStreetViewPanorama$10
+ plugin.google.maps.PluginStreetViewPanorama$2
+ plugin.google.maps.PluginStreetViewPanorama$3
+ plugin.google.maps.PluginStreetViewPanorama$4
+ plugin.google.maps.PluginStreetViewPanorama$5
+ plugin.google.maps.PluginStreetViewPanorama$6
+ plugin.google.maps.PluginStreetViewPanorama$7
+ plugin.google.maps.PluginStreetViewPanorama$8
+ plugin.google.maps.PluginStreetViewPanorama$9
+plugin/google/maps/AsyncLoadImage.java
+ plugin.google.maps.AsyncLoadImage
+ plugin.google.maps.AsyncLoadImage$AsyncLoadImageOptions
+ plugin.google.maps.AsyncLoadImage$AsyncLoadImageResult
+plugin/google/maps/PluginMap.java
+ plugin.google.maps.PluginMap
+ plugin.google.maps.PluginMap$1
+ plugin.google.maps.PluginMap$1$1
+ plugin.google.maps.PluginMap$1$1$1
+ plugin.google.maps.PluginMap$1$1$2
+ plugin.google.maps.PluginMap$1$1$2$1
+ plugin.google.maps.PluginMap$1$1$3
+ plugin.google.maps.PluginMap$10
+ plugin.google.maps.PluginMap$11
+ plugin.google.maps.PluginMap$12
+ plugin.google.maps.PluginMap$13
+ plugin.google.maps.PluginMap$14
+ plugin.google.maps.PluginMap$15
+ plugin.google.maps.PluginMap$16
+ plugin.google.maps.PluginMap$17
+ plugin.google.maps.PluginMap$18
+ plugin.google.maps.PluginMap$19
+ plugin.google.maps.PluginMap$2
+ plugin.google.maps.PluginMap$20
+ plugin.google.maps.PluginMap$21
+ plugin.google.maps.PluginMap$22
+ plugin.google.maps.PluginMap$23
+ plugin.google.maps.PluginMap$24
+ plugin.google.maps.PluginMap$25
+ plugin.google.maps.PluginMap$25$1
+ plugin.google.maps.PluginMap$25$1$1
+ plugin.google.maps.PluginMap$26
+ plugin.google.maps.PluginMap$27
+ plugin.google.maps.PluginMap$28
+ plugin.google.maps.PluginMap$29
+ plugin.google.maps.PluginMap$3
+ plugin.google.maps.PluginMap$30
+ plugin.google.maps.PluginMap$31
+ plugin.google.maps.PluginMap$32
+ plugin.google.maps.PluginMap$33
+ plugin.google.maps.PluginMap$33$1
+ plugin.google.maps.PluginMap$34
+ plugin.google.maps.PluginMap$4
+ plugin.google.maps.PluginMap$5
+ plugin.google.maps.PluginMap$5$1
+ plugin.google.maps.PluginMap$6
+ plugin.google.maps.PluginMap$6$1
+ plugin.google.maps.PluginMap$7
+ plugin.google.maps.PluginMap$8
+ plugin.google.maps.PluginMap$9
+ plugin.google.maps.PluginMap$AdjustInitCamera
+ plugin.google.maps.PluginMap$AsyncSetOptionsResult
+ plugin.google.maps.PluginMap$AsyncUpdateCameraPositionResult
+ plugin.google.maps.PluginMap$TEXT_STYLE_ALIGNMENTS
+ plugin.google.maps.PluginMap$UpdateCameraAction
+ plugin.google.maps.PluginMap$UpdateCameraAction$1
+ plugin.google.maps.PluginMap$UpdateCameraAction$1$1
+ plugin.google.maps.PluginMap$UpdateCameraAction$1$2
+plugin/google/maps/PluginLocationService.java
+ plugin.google.maps.PluginLocationService
+ plugin.google.maps.PluginLocationService$1
+ plugin.google.maps.PluginLocationService$2
+ plugin.google.maps.PluginLocationService$3
+ plugin.google.maps.PluginLocationService$4
+ plugin.google.maps.PluginLocationService$5
+ plugin.google.maps.PluginLocationService$6
+ plugin.google.maps.PluginLocationService$7
+ plugin.google.maps.PluginLocationService$8
+plugin/google/maps/PluginKmlOverlay.java
+ plugin.google.maps.PluginKmlOverlay
+ plugin.google.maps.PluginKmlOverlay$1
+ plugin.google.maps.PluginKmlOverlay$1$1
+ plugin.google.maps.PluginKmlOverlay$2
+ plugin.google.maps.PluginKmlOverlay$KML_TAG
+ plugin.google.maps.PluginKmlOverlay$KmlParserClass
+plugin/google/maps/PluginMarkerCluster.java
+ plugin.google.maps.PluginMarkerCluster
+ plugin.google.maps.PluginMarkerCluster$1
+ plugin.google.maps.PluginMarkerCluster$2
+ plugin.google.maps.PluginMarkerCluster$3
+ plugin.google.maps.PluginMarkerCluster$3$1
+ plugin.google.maps.PluginMarkerCluster$3$2
+ plugin.google.maps.PluginMarkerCluster$4
+ plugin.google.maps.PluginMarkerCluster$5
+ plugin.google.maps.PluginMarkerCluster$BoundBox
+ plugin.google.maps.PluginMarkerCluster$STATUS
+plugin/google/maps/PluginPolygon.java
+ plugin.google.maps.PluginPolygon
+ plugin.google.maps.PluginPolygon$1
+ plugin.google.maps.PluginPolygon$10
+ plugin.google.maps.PluginPolygon$11
+ plugin.google.maps.PluginPolygon$12
+ plugin.google.maps.PluginPolygon$13
+ plugin.google.maps.PluginPolygon$14
+ plugin.google.maps.PluginPolygon$15
+ plugin.google.maps.PluginPolygon$2
+ plugin.google.maps.PluginPolygon$3
+ plugin.google.maps.PluginPolygon$4
+ plugin.google.maps.PluginPolygon$5
+ plugin.google.maps.PluginPolygon$6
+ plugin.google.maps.PluginPolygon$7
+ plugin.google.maps.PluginPolygon$8
+ plugin.google.maps.PluginPolygon$9
+plugin/google/maps/PluginEnvironment.java
+ plugin.google.maps.PluginEnvironment
+ plugin.google.maps.PluginEnvironment$1
+ plugin.google.maps.PluginEnvironment$2
+plugin/google/maps/MyPluginInterface.java
+ plugin.google.maps.MyPluginInterface
 org/apache/cordova/statusbar/StatusBar.java
  org.apache.cordova.statusbar.StatusBar
  org.apache.cordova.statusbar.StatusBar$1
@@ -48,6 +162,127 @@ org/apache/cordova/statusbar/StatusBar.java
  org.apache.cordova.statusbar.StatusBar$7
  org.apache.cordova.statusbar.StatusBar$8
  org.apache.cordova.statusbar.StatusBar$9
+plugin/google/maps/MyPluginLayout.java
+ plugin.google.maps.MyPluginLayout
+ plugin.google.maps.MyPluginLayout$1
+ plugin.google.maps.MyPluginLayout$2
+ plugin.google.maps.MyPluginLayout$3
+ plugin.google.maps.MyPluginLayout$4
+ plugin.google.maps.MyPluginLayout$FrontLayerLayout
+ plugin.google.maps.MyPluginLayout$Overflow
+ plugin.google.maps.MyPluginLayout$ResizeTask
+ plugin.google.maps.MyPluginLayout$TouchableWrapper
+plugin/google/maps/PluginPolyline.java
+ plugin.google.maps.PluginPolyline
+ plugin.google.maps.PluginPolyline$1
+ plugin.google.maps.PluginPolyline$2
+ plugin.google.maps.PluginPolyline$3
+ plugin.google.maps.PluginPolyline$4
+ plugin.google.maps.PluginPolyline$5
+ plugin.google.maps.PluginPolyline$6
+ plugin.google.maps.PluginPolyline$7
+com/ionicframework/cordova/webview/UriMatcher.java
+ com.ionicframework.cordova.webview.UriMatcher
+org/apache/cordova/camera/GalleryPathVO.java
+ org.apache.cordova.camera.GalleryPathVO
+com/ionicframework/cordova/webview/IonicWebView.java
+ com.ionicframework.cordova.webview.IonicWebView
+ com.ionicframework.cordova.webview.IonicWebView$1
+plugin/google/maps/CordovaGoogleMaps.java
+ plugin.google.maps.CordovaGoogleMaps
+ plugin.google.maps.CordovaGoogleMaps$1
+ plugin.google.maps.CordovaGoogleMaps$1$1
+ plugin.google.maps.CordovaGoogleMaps$1$2
+ plugin.google.maps.CordovaGoogleMaps$2
+ plugin.google.maps.CordovaGoogleMaps$3
+ plugin.google.maps.CordovaGoogleMaps$4
+ plugin.google.maps.CordovaGoogleMaps$5
+com/ionicframework/cordova/webview/IonicWebViewEngine.java
+ com.ionicframework.cordova.webview.IonicWebViewEngine
+ com.ionicframework.cordova.webview.IonicWebViewEngine$1
+ com.ionicframework.cordova.webview.IonicWebViewEngine$ServerClient
+cordova/plugin/nativegeocoder/NativeGeocoder.java
+ cordova.plugin.nativegeocoder.NativeGeocoder
+ cordova.plugin.nativegeocoder.NativeGeocoderOptions
+org/apache/cordova/whitelist/WhitelistPlugin.java
+ org.apache.cordova.whitelist.WhitelistPlugin
+ org.apache.cordova.whitelist.WhitelistPlugin$1
+ org.apache.cordova.whitelist.WhitelistPlugin$CustomConfigXmlParser
+org/apache/cordova/camera/FileHelper.java
+ org.apache.cordova.camera.FileHelper
+org/apache/cordova/camera/CameraLauncher.java
+ org.apache.cordova.camera.CameraLauncher
+ org.apache.cordova.camera.CameraLauncher$1
+org/apache/cordova/camera/FileProvider.java
+ org.apache.cordova.camera.FileProvider
+plugin/google/maps/PluginGroundOverlay.java
+ plugin.google.maps.PluginGroundOverlay
+ plugin.google.maps.PluginGroundOverlay$1
+ plugin.google.maps.PluginGroundOverlay$2
+ plugin.google.maps.PluginGroundOverlay$3
+ plugin.google.maps.PluginGroundOverlay$4
+ plugin.google.maps.PluginGroundOverlay$5
+ plugin.google.maps.PluginGroundOverlay$6
+ plugin.google.maps.PluginGroundOverlay$7
+ plugin.google.maps.PluginGroundOverlay$8
+ plugin.google.maps.PluginGroundOverlay$9
+plugin/google/maps/ObjectCache.java
+ plugin.google.maps.ObjectCache
+com/serretSangatte/app/MainActivity.java
+ com.serretSangatte.app.MainActivity
+plugin/google/maps/IPluginView.java
+ plugin.google.maps.IPluginView
+plugin/google/maps/PluginMarker.java
+ plugin.google.maps.PluginMarker
+ plugin.google.maps.PluginMarker$1
+ plugin.google.maps.PluginMarker$10
+ plugin.google.maps.PluginMarker$11
+ plugin.google.maps.PluginMarker$12
+ plugin.google.maps.PluginMarker$13
+ plugin.google.maps.PluginMarker$14
+ plugin.google.maps.PluginMarker$15
+ plugin.google.maps.PluginMarker$16
+ plugin.google.maps.PluginMarker$17
+ plugin.google.maps.PluginMarker$18
+ plugin.google.maps.PluginMarker$2
+ plugin.google.maps.PluginMarker$3
+ plugin.google.maps.PluginMarker$4
+ plugin.google.maps.PluginMarker$4$1
+ plugin.google.maps.PluginMarker$4$1$1
+ plugin.google.maps.PluginMarker$4$1$1$1
+ plugin.google.maps.PluginMarker$4$1$1$1$1
+ plugin.google.maps.PluginMarker$4$1$2
+ plugin.google.maps.PluginMarker$5
+ plugin.google.maps.PluginMarker$5$1
+ plugin.google.maps.PluginMarker$6
+ plugin.google.maps.PluginMarker$6$1
+ plugin.google.maps.PluginMarker$7
+ plugin.google.maps.PluginMarker$8
+ plugin.google.maps.PluginMarker$9
+ plugin.google.maps.PluginMarker$Animation
+ plugin.google.maps.PluginMarker$ICreateMarkerCallback
+plugin/google/maps/BitmapCache.java
+ plugin.google.maps.BitmapCache
+plugin/google/maps/PluginAsyncInterface.java
+ plugin.google.maps.PluginAsyncInterface
+plugin/google/maps/PluginTileProvider.java
+ plugin.google.maps.PluginTileProvider
+ plugin.google.maps.PluginTileProvider$1
+ plugin.google.maps.PluginTileProvider$OnCacheClear
+com/ionicframework/cordova/webview/AndroidProtocolHandler.java
+ com.ionicframework.cordova.webview.AndroidProtocolHandler
+plugin/google/maps/PluginCircle.java
+ plugin.google.maps.PluginCircle
+ plugin.google.maps.PluginCircle$1
+ plugin.google.maps.PluginCircle$2
+ plugin.google.maps.PluginCircle$3
+ plugin.google.maps.PluginCircle$4
+ plugin.google.maps.PluginCircle$5
+plugin/google/maps/PluginTileOverlay.java
+ plugin.google.maps.PluginTileOverlay
+ plugin.google.maps.PluginTileOverlay$1
+ plugin.google.maps.PluginTileOverlay$1$1
+ plugin.google.maps.PluginTileOverlay$2
 com/ionicframework/cordova/webview/WebViewLocalServer.java
  com.ionicframework.cordova.webview.WebViewLocalServer
  com.ionicframework.cordova.webview.WebViewLocalServer$1
@@ -56,14 +291,9 @@ com/ionicframework/cordova/webview/WebViewLocalServer.java
  com.ionicframework.cordova.webview.WebViewLocalServer$LazyInputStream
  com.ionicframework.cordova.webview.WebViewLocalServer$LollipopLazyInputStream
  com.ionicframework.cordova.webview.WebViewLocalServer$PathHandler
-com/ionicframework/cordova/webview/UriMatcher.java
- com.ionicframework.cordova.webview.UriMatcher
-org/apache/cordova/camera/GalleryPathVO.java
- org.apache.cordova.camera.GalleryPathVO
-com/ionicframework/cordova/webview/IonicWebView.java
- com.ionicframework.cordova.webview.IonicWebView
- com.ionicframework.cordova.webview.IonicWebView$1
-com/ionicframework/cordova/webview/IonicWebViewEngine.java
- com.ionicframework.cordova.webview.IonicWebViewEngine
- com.ionicframework.cordova.webview.IonicWebViewEngine$1
- com.ionicframework.cordova.webview.IonicWebViewEngine$ServerClient
+plugin/google/maps/PluginGeocoder.java
+ plugin.google.maps.PluginGeocoder
+ plugin.google.maps.PluginGeocoder$1
+plugin/google/maps/PluginUtil.java
+ plugin.google.maps.PluginUtil
+ plugin.google.maps.PluginUtil$MyCallbackContext

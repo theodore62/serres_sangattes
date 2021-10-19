@@ -38,7 +38,7 @@ import { DataService } from '../services/data.service';
 export class ModalPage implements OnInit {
   public isSubmitted = false;
   public message: string;
-  @Input() data: string;
+  // @Input() data: string;
 
   // plante //
   public id: Plante;
@@ -80,109 +80,104 @@ export class ModalPage implements OnInit {
     private loadingController: LoadingController,
     private toastCtrl: IonicToastService,
     private router: Router,
-    private dataService: DataService,
+    private dataService: DataService
   ) {}
 
   get errorControl() {
-      return this.annonce.controls;
+    return this.annonce.controls;
   }
 
   async ngOnInit() {
-
-      this.varieters = this.firestore.collection('Variete').valueChanges();
-      this.listMois = [
-        'janvier',
-        'février',
-        'mars',
-        'avril',
-        'mai',
-        'juin',
-        'juillet',
-        'aout',
-        'septembre',
-        'octobre',
-        'novembre',
-        'décembre',
-      ];
-      this.annonce = this.formBuilder.group({
-        nom: ['', [Validators.required]],
-        variete: ['', [Validators.required]],
-        couleur: ['', [Validators.required]],
-        fleuraison: ['', [Validators.required]],
-        hauteur: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-        type: ['', [Validators.required]],
-        de: ['', [Validators.required]],
-        a: ['', [Validators.required]],
-        image: [''],
-      });
-      this.plantesService.getDetailPlante(this.id).then((detailPlante) => {
-        this.planteDetail.push(detailPlante);
-        this.urlImageUpdate = this.planteDetail[0].image;
-        this.afSG
-          .ref('/' + detailPlante.image)
-          .getDownloadURL()
-          .subscribe((imgUrl) => {
-            this.planteDetail[0].image = imgUrl;
-            this.planteDetail.forEach((items) => {
-              this.urlImage = items.image;
-              this.epoque = items.type;
-              if (this.epoque !== 'Fleur') {
-                this.texte = 'Epoque de récolte:';
-                document.getElementById('fleuraisonLF').style.display = 'block';
-                document.getElementById('nom').setAttribute('value', items.nom);
-                document
-                  .getElementById('couleur')
-                  .setAttribute('value', items.couleur);
-                document
-                  .getElementById('hauteur')
-                  .setAttribute('value', items.hauteur);
-                document
-                  .getElementById('description')
-                  .setAttribute('value', items.description);
-                document
-                  .getElementById('type')
-                  .setAttribute('value', items.type);
-                document
-                  .getElementById('urlimage')
-                  .setAttribute('src', items.image);
-                document
-                  .getElementById('fleuraisonLF')
-                  .setAttribute('value', items.fleuraison);
-                document
-                  .getElementById('variete')
-                  .setAttribute('value', items.variete);
-              } else {
-                this.texte = 'Epoque de fleuraison:';
-                document.getElementById('fleuraison').style.display = 'block';
-                document.getElementById('nom').setAttribute('value', items.nom);
-                document
-                  .getElementById('couleur')
-                  .setAttribute('value', items.couleur);
-                document
-                  .getElementById('hauteur')
-                  .setAttribute('value', items.hauteur);
-                document
-                  .getElementById('description')
-                  .setAttribute('value', items.description);
-                document
-                  .getElementById('type')
-                  .setAttribute('value', items.type);
-                document
-                  .getElementById('urlimage')
-                  .setAttribute('src', items.image);
-                document
-                  .getElementById('fleuraison')
-                  .setAttribute('value', items.fleuraison);
-                document
-                  .getElementById('variete')
-                  .setAttribute('value', items.variete);
-              }
-              document.getElementById('de').setAttribute('value', items.de);
-              document.getElementById('a').setAttribute('value', items.a);
-            });
+    this.varieters = this.firestore.collection('Variete').valueChanges();
+    this.listMois = [
+      'janvier',
+      'février',
+      'mars',
+      'avril',
+      'mai',
+      'juin',
+      'juillet',
+      'aout',
+      'septembre',
+      'octobre',
+      'novembre',
+      'décembre',
+    ];
+    this.annonce = this.formBuilder.group({
+      nom: ['', [Validators.required]],
+      variete: ['', [Validators.required]],
+      couleur: ['', [Validators.required]],
+      fleuraison: ['', [Validators.required]],
+      hauteur: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      de: ['', [Validators.required]],
+      a: ['', [Validators.required]],
+      image: [''],
+    });
+    this.plantesService.getDetailPlante(this.id).then((detailPlante) => {
+      this.planteDetail.push(detailPlante);
+      this.urlImageUpdate = this.planteDetail[0].image;
+      this.afSG
+        .ref('/' + detailPlante.image)
+        .getDownloadURL()
+        .subscribe((imgUrl) => {
+          this.planteDetail[0].image = imgUrl;
+          this.planteDetail.forEach((items) => {
+            this.urlImage = items.image;
+            this.epoque = items.type;
+            if (this.epoque !== 'Fleur') {
+              this.texte = 'Epoque de récolte:';
+              document.getElementById('fleuraisonLF').style.display = 'block';
+              document.getElementById('nom').setAttribute('value', items.nom);
+              document
+                .getElementById('couleur')
+                .setAttribute('value', items.couleur);
+              document
+                .getElementById('hauteur')
+                .setAttribute('value', items.hauteur);
+              document
+                .getElementById('description')
+                .setAttribute('value', items.description);
+              document.getElementById('type').setAttribute('value', items.type);
+              document
+                .getElementById('urlimage')
+                .setAttribute('src', items.image);
+              document
+                .getElementById('fleuraisonLF')
+                .setAttribute('value', items.fleuraison);
+              document
+                .getElementById('variete')
+                .setAttribute('value', items.variete);
+            } else {
+              this.texte = 'Epoque de fleuraison:';
+              document.getElementById('fleuraison').style.display = 'block';
+              document.getElementById('nom').setAttribute('value', items.nom);
+              document
+                .getElementById('couleur')
+                .setAttribute('value', items.couleur);
+              document
+                .getElementById('hauteur')
+                .setAttribute('value', items.hauteur);
+              document
+                .getElementById('description')
+                .setAttribute('value', items.description);
+              document.getElementById('type').setAttribute('value', items.type);
+              document
+                .getElementById('urlimage')
+                .setAttribute('src', items.image);
+              document
+                .getElementById('fleuraison')
+                .setAttribute('value', items.fleuraison);
+              document
+                .getElementById('variete')
+                .setAttribute('value', items.variete);
+            }
+            document.getElementById('de').setAttribute('value', items.de);
+            document.getElementById('a').setAttribute('value', items.a);
           });
-      });    
+        });
+    });
   }
 
   async addPhoto() {

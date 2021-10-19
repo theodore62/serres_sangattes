@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\cours\\ionic\\test-app-serres-sangattes\\serres_sangattes\\platforms\\android\\app\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punky\\.gradle\\caches\\transforms-2\\files-2.1\\f2bad2cd47cd16cf058ade4a8c249970\\support-media-compat-27.1.1\\res\\values-v24\\values-v24.xml",
