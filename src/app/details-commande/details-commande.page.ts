@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IonicToastService } from '../services/ionic-toast.service';
@@ -133,79 +134,92 @@ export class DetailsCommandePage implements OnInit {
     private dataService: DataService,
     private httpClient: HttpClient,
     private nativeGeocoder: NativeGeocoder
-  ) {
-    this.loadMap();
-    this.id = this.dataService.getData('id');
-  }
+  ) {}
 
   get errorControl() {
     return this.formulaireCommande.controls;
   }
   ngOnInit() {
+    this.id = this.dataService.getData('id');
     if (this.affichage === undefined) {
       this.affichage = 'ajouter';
-    }
-    this.listClients = this.clientService.getListClients();
-    this.listPlantes = this.plantesService.getListPlantes();
-    this.commandeService
-      .getDetailCommande(this.id.idCommande)
-      .then((valueCommande) => {
-        this.commande.numero = valueCommande.numero;
-        this.commande.nom = valueCommande.nom;
-        this.commande.client = valueCommande.client;
-        this.commande.date = valueCommande.date;
-        this.commande.infoComplementaire = valueCommande.infoComplementaire;
-        this.tableau = valueCommande.liste;
-        this.tableau.forEach((value, index, array) => {
-          if (value.id !== undefined || value.id !== '') {
-            this.i = value.id + 1;
-          } else {
-            this.i = 0;
-          }
+      this.listClients = this.clientService.getListClients();
+      this.listPlantes = this.plantesService.getListPlantes();
+      this.commandeService
+        .getDetailCommande(this.id.idCommande)
+        .then((valueCommande) => {
+          this.commande.numero = valueCommande.numero;
+          this.commande.nom = valueCommande.nom;
+          this.commande.client = valueCommande.client;
+          this.commande.date = valueCommande.date;
+          this.commande.infoComplementaire = valueCommande.infoComplementaire;
+          this.tableau = valueCommande.liste;
+          this.tableau.forEach((value, index, array) => {
+            if (value.id !== undefined || value.id !== '') {
+              this.i = value.id + 1;
+            } else {
+              this.i = 0;
+            }
+          });
+          this.details.push(valueCommande);
+          this.details.forEach((index) => {
+            const inforComplementaire = window.document.getElementById('info');
+            const date = window.document.getElementById('date');
+            const client = window.document.getElementById('client');
+            if (inforComplementaire != null && date != null && client != null) {
+              inforComplementaire.setAttribute(
+                'value',
+                index.infoComplementaire
+              );
+              client.setAttribute('value', index.client);
+              date.setAttribute(
+                'value',
+                formatDate(index.date, 'yyyy-MM-dd', 'en-US')
+              );
+            }
+          });
         });
-        this.details.push(valueCommande);
-        this.details.forEach((index) => {
-          const inforComplementaire = window.document.getElementById('info');
-          const date = window.document.getElementById('date');
-          const client = window.document.getElementById('client');
-          if (inforComplementaire != null && date != null && client != null) {
-            inforComplementaire.setAttribute('value', index.infoComplementaire);
-            client.setAttribute('value', index.client);
-            date.setAttribute(
-              'value',
-              formatDate(index.date, 'yyyy-MM-dd', 'en-US')
-            );
-          }
-        });
+      this.formulaireCommande = this.formBuilder.group({
+        client: ['', [Validators.required]],
+        date: ['', [Validators.required]],
+        infoComplementaire: ['', [Validators.required]],
       });
-
-    this.initializeItems();
-    this.formulaireCommande = this.formBuilder.group({
-      client: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      infoComplementaire: ['', [Validators.required]],
-    });
+      this.initializeItems();
+    } else {
+      this.initializeItems();
+      this.loadMap();
+    }
   }
   async initializeItems(): Promise<any> {
-    this.client = {
-      id: '',
-      nom: '',
-      prenom: '',
-      email: '',
-      fixe: '',
-      portable: '',
-      adresse: '',
-      postal: '',
-    };
     if (
       this.commande.client === '' ||
       this.commande.client == null ||
       this.commande.client === undefined
     ) {
       this.refecheIdClient = this.id.idClient;
+      this.client = {
+        id: '',
+        nom: '',
+        prenom: '',
+        email: '',
+        fixe: '',
+        portable: '',
+        adresse: '',
+        postal: '',
+      };
     } else {
       this.refecheIdClient = '';
       this.refecheIdClient = this.formulaireCommande.value.client;
+      this.client = {
+        id: '',
+        nom: '',
+        prenom: '',
+        email: '',
+        fixe: '',
+        portable: '',
+        adresse: '',
+        postal: '',
+      };
     }
     this.clientService.getClient(this.refecheIdClient).then((valueClient) => {
       this.client.nom = valueClient.nom;
@@ -238,30 +252,29 @@ export class DetailsCommandePage implements OnInit {
       maxResults: 5,
     };
     this.address = this.client.adresse + ',' + this.client.postal;
+    console.log(this.address);
     this.nativeGeocoder
       .forwardGeocode(this.address, options)
       .then((result: NativeGeocoderResult[]) => {
         this.lat = parseFloat(result[0].latitude);
         this.lng = parseFloat(result[0].longitude);
+        // Add a marker
+        const marker: Marker = this.map.addMarkerSync({
+          position: new LatLng(this.lat, this.lng),
+          title: this.address,
+        });
+        // Move to the position
+        this.map
+          .animateCamera({
+            target: marker.getPosition(),
+            zoom: 12,
+          })
+          .then(() => {
+            marker.showInfoWindow();
+            this.isRunning = false;
+          });
       })
-      .catch((error: any) => console.log(error));
-
-     // Add a marker
-    const marker: Marker = this.map.addMarkerSync({
-      position: new LatLng(this.lat, this.lng),
-      title: this.address,
-    });
-
-    // Move to the position
-    this.map
-      .animateCamera({
-        target: marker.getPosition(),
-        zoom: 12,
-      })
-      .then(() => {
-        marker.showInfoWindow();
-        this.isRunning = false;
-      });
+      .catch((error: any) => console.log('ERREUR = ' + error));
   }
 
   segmentChanged(ev: any) {
