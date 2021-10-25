@@ -4,10 +4,14 @@ ion-menu ion-content {
 ion-content {
   --ion-background-color: linear-gradient(#3366A0, #9EB7D2);
 }
-ion-list {
+ion-list,div,.aromatique{
   --ion-background-color: transparent !important;
 }
-
+ion-header{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #fff;
+}
 ion-menu.md ion-content {
   --padding-start: 8px;
   --padding-end: 8px;

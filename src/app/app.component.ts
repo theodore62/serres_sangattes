@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
@@ -6,13 +6,21 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
-  public appPages = [
+export class AppComponent implements OnInit {
+  public selectedIndex = 0;
+  public acceuil = [
     {
       title: 'accueil',
       url: './accueil',
       icon: 'home',
     },
+  ];
+  public appPages = [
+    // {
+    //   title: 'accueil',
+    //   url: './accueil',
+    //   icon: 'home',
+    // },
     {
       title: 'Gestion de commandes',
       url: './gestion-commandes',
@@ -33,8 +41,18 @@ export class AppComponent {
       url: './ajouter-fleur',
       icon: 'add-circle-outline',
     },
+  ];
+  public plantesAromatiques = [
     {
-      title: 'Fleurs',
+      title: 'Plantes aromatiques',
+      open: false,
+      data: 'Aromatiques',
+      url: '/fleurs',
+    },
+  ];
+  public labels = [
+    {
+      title: 'Plantes ornementales',
       open: false,
       children: [
         {
@@ -52,15 +70,10 @@ export class AppComponent {
           data: 'Vivaces',
           url: '/fleurs',
         },
-        {
-          title: 'Aromatiques',
-          data: 'Vivaces',
-          url: '/fleurs',
-        },
       ],
     },
     {
-      title: 'Fruits',
+      title: 'Plantes fruitier',
       children: [
         {
           title: 'Ete',
@@ -75,7 +88,7 @@ export class AppComponent {
       ],
     },
     {
-      title: 'Légumes',
+      title: 'Plantes potagères',
       children: [
         {
           title: 'Ete',
@@ -89,10 +102,9 @@ export class AppComponent {
         },
       ],
     },
-
   ];
-
   constructor(private dataService: DataService, private router: Router) {}
+  ngOnInit() {}
 
   page(data, url) {
     console.log(url);

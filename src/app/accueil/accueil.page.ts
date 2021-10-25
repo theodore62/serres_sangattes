@@ -27,7 +27,7 @@ export class AccueilPage implements OnInit {
   }
 
   legumes(data) {
-    this.dataService.setData('data',data);
+    this.dataService.setData('data', data);
     this.router.navigateByUrl('/legumes');
   }
 
@@ -69,15 +69,15 @@ export class AccueilPage implements OnInit {
             console.log('Radio 3 selected');
           },
         },
-        {
-          name: 'radio4',
-          type: 'radio',
-          label: 'Aromatiques',
-          value: 'Aromatiques',
-          handler: () => {
-            console.log('Radio 3 selected');
-          },
-        },
+        // {
+        //   name: 'radio4',
+        //   type: 'radio',
+        //   label: 'Aromatiques',
+        //   value: 'Aromatiques',
+        //   handler: () => {
+        //     console.log('Radio 3 selected');
+        //   },
+        // },
       ],
       buttons: [
         {
@@ -99,6 +99,12 @@ export class AccueilPage implements OnInit {
     });
     await alert.present();
   }
+
+
+  async alertRadioFleursAromatique(data) {
+    this.fleurs(data);
+  }
+
 
   async alertRadioFruitLegumes(data) {
     const alert = await this.alertController.create({
@@ -135,7 +141,7 @@ export class AccueilPage implements OnInit {
             console.log('Confirm Cancel');
           },
         },
-        { 
+        {
           text: 'Ok',
           handler: (data2) => {
             console.log(data2);

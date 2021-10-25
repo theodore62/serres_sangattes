@@ -1,31 +1,46 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane when="lx" contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Menu</ion-list-header>
-            <div *ngFor="let p of appPages">
-              <ion-menu-toggle *ngIf="p.url">
-                <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
-                  <ion-icon [name]="p.icon" slot="start" ></ion-icon>
-                  <ion-label>{{  p.title }}</ion-label>
-                </ion-item>
-              </ion-menu-toggle>
-                <ion-item button *ngIf="p.children?.length > 0" (click)="p.open = !p.open" [class.active-parent] ="p.open" detail="false">
-                  <ion-icon name="arrow-forward" slot="start"   *ngIf="!p.open" ></ion-icon>
-                  <ion-icon name="arrow-down" slot="start"  *ngIf="p.open"  ></ion-icon>
-                  <ion-label>{{  p.title }}</ion-label>
-              </ion-item>
-              <ion-list *ngIf="p.open">
-                <ion-menu-toggle >
-                  <ion-item class="sub-item" *ngFor="let sub of p.children"  (click)="page(sub.data,sub.url)"  routerDirection="root" routerLinkActive="active">
-                    <ion-icon  slot="start" ></ion-icon>
-                    <ion-label>{{ sub.title }}</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-              </ion-list>
-          </div>
+          <ion-menu-toggle auto-hide="false" *ngFor="let acc of acceuil; let i = index">
+            <ion-item [routerLink]="acc.url" routerDirection="root" routerLinkActive="active">
+              <ion-icon [name]="acc.icon" slot="start"></ion-icon>
+              <ion-label>{{ acc.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-header>Gestion des clients et des plantes:</ion-header>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
+              <ion-icon [name]="p.icon" slot="start"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
+        <ion-header>Selection des Plantes: </ion-header>
+        <ion-menu-toggle auto-hide="false" *ngFor="let plante of plantesAromatiques; let i = index" class="aromatique">
+          <ion-item [routerLink]="plante.url" routerDirection="root" routerLinkActive="active" (click)="page(plante.data,plante.url)">
+            <ion-icon name="arrow-forward" slot="start" *ngIf="!plante.open"></ion-icon>
+            <ion-label>{{ plante.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <div *ngFor="let label of labels">        
+            <ion-item button *ngIf="label.children?.length > 0" (click)="label.open = !label.open" [class.active-parent]="label.open" detail="false" >
+              <ion-icon name="arrow-forward" slot="start" *ngIf="!label.open"></ion-icon>
+              <ion-icon name="arrow-down" slot="start" *ngIf="label.open"></ion-icon>
+              <ion-label>{{ label.title }}</ion-label>
+            </ion-item>
+          <ion-list *ngIf="label.open">
+            <ion-menu-toggle *ngIf="label.open">
+              <ion-item class="sub-item" *ngFor="let sub of label.children" (click)="page(sub.data,sub.url)"
+                routerDirection="root" routerLinkActive="active">
+                <ion-icon slot="start"></ion-icon>
+                <ion-label>{{ sub.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

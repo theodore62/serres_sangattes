@@ -3,7 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Fleurs</ion-title>
+    <ion-title *ngIf="datas !== 'Aromatiques'  ">Plantes ornementales</ion-title>
+    <ion-title *ngIf="datas === 'Aromatiques' ">Plantes aromatiques</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar (ionChange)="filterList($event)" ></ion-searchbar>

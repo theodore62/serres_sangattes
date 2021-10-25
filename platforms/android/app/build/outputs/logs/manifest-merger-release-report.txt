@@ -44,19 +44,19 @@ INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src
 INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:1-26:12
 INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:1-26:12
 	package
-		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:98-130
+		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:100-132
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:70-97
+		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:71-99
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 	android:hardwareAccelerated
 		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:131-189
+		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:133-191
 	android:versionCode
-		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:46-69
+		ADDED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml:2:46-70
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\cours\ionic\serre-sangattes-googleMap\platforms\android\app\src\main\AndroidManifest.xml
 supports-screens
