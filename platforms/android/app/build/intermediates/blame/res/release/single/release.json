@@ -12,12 +12,12 @@
         "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\xml\\camera_provider_paths.xml"
     },
     {
-        "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
-    },
-    {
         "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\xml_config.xml.flat",
         "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\xml\\config.xml"
+    },
+    {
+        "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
         "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable_dummy_my_location_button.png.flat",
@@ -44,12 +44,12 @@
         "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\drawable-land-xxhdpi\\screen.png"
     },
     {
-        "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-port-xxhdpi_screen.png.flat",
-        "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\drawable-port-xxhdpi\\screen.png"
-    },
-    {
         "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable_dummy_mylocation_button_shadow.xml.flat",
         "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\drawable\\dummy_mylocation_button_shadow.xml"
+    },
+    {
+        "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-port-xxhdpi_screen.png.flat",
+        "source": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\src\\main\\res\\drawable-port-xxhdpi\\screen.png"
     },
     {
         "merged": "D:\\cours\\ionic\\serre-sangattes-googleMap\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-land-xxxhdpi_screen.png.flat",
