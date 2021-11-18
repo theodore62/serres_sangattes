@@ -205,7 +205,8 @@ export class ModalPage implements OnInit {
 
   async addAnnonce() {
     if (!this.annonce.valid) {
-      this.message = 'enter une valeur dans le champ';
+      this.message = 'veuilliez enter une valeure dans le champ';
+      this.toastCtrl.showToast(this.message);
       return false;
     } else {
       if (this.image !== '') {
@@ -219,19 +220,14 @@ export class ModalPage implements OnInit {
       const loading = await this.loadingController.create({
         duration: 2000,
       });
+      this.message = 'La ou les modification(s) a ou on bien était éffectuer';
+      this.toastCtrl.showToast(this.message);
       await loading.present();
       this.plantesService.updatePlante(
         this.id,
         this.urlImage,
         this.annonce.value
       );
-      await loading.onDidDismiss();
-      const alert = await this.alertController.create({
-        header: 'Félicitation',
-        message: 'La ou les modification(s) on ou à bien était éffectuer',
-        buttons: ['OK'],
-      });
-      await alert.present();
       this.modalController.dismiss({
         dismissed: true,
       });

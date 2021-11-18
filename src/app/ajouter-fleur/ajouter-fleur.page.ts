@@ -181,7 +181,7 @@ export class AjouterFleurPage implements OnInit {
   addAnnonce() {
     console.log(this.annonce);
     if (!this.annonce.valid) {
-      this.message = 'Veuillez veuillez compléter le formulaire';
+      this.message = 'Veuillez compléter le formulaire';
       this.toastCtrl.showToast(this.message);
     } else {
       this.plante.nom = this.annonce.value.nom;
@@ -196,12 +196,10 @@ export class AjouterFleurPage implements OnInit {
       this.url = this.image;
       console.log(this.url);
       if (this.url !== '') {
-        console.log('ici');
         this.imagePath = new Date().getTime() + '.jpg';
-        this.uploadFirebase();
         this.planteList.postPlanteList(this.plante).then((retour) => {
           if (retour.id == null) {
-            this.message = "les données n'ont pas pu être enregistrées";
+            this.message = 'les données n\'ont pas pu être enregistrées';
             this.toastCtrl.showToast(this.message);
           } else {
             this.firestore.doc(`Plantes/${retour.id}`).set({
@@ -217,6 +215,7 @@ export class AjouterFleurPage implements OnInit {
               a: this.plante.a,
               image: this.imagePath,
             });
+            this.uploadFirebase();
           }
         });
       } else {
@@ -255,13 +254,8 @@ export class AjouterFleurPage implements OnInit {
     this.upload.then(async () => {
       await loading.onDidDismiss();
       this.image = 'https://www.kasterencultuur.nl/editor/placeholder.jpg';
-      const alert = await this.alertController.create({
-        header: 'Félicitation',
-        cssClass: ['color:white'],
-        message: 'Les données ont bien été enregistrées',
-        buttons: ['OK'],
-      });
-      await alert.present();
+      this.message = 'Les données ont bien été enregistrées';
+      this.toastCtrl.showToast(this.message);
     });
   }
 }

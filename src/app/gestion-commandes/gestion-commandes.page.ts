@@ -209,8 +209,7 @@ export class GestionCommandesPage implements OnInit {
         return (
           currentPlant.numero.toLowerCase().indexOf(searchTerm.toLowerCase()) >
             -1 ||
-          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) >
-            -1
+          currentPlant.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
         );
       }
     });
@@ -234,6 +233,8 @@ export class GestionCommandesPage implements OnInit {
     this.commandeService.deleteCommande(idCommande);
     this.tableauCommandes = [];
     this.listCommandes = await this.initializeItems();
+    this.message = 'les données ont pu être supprimer';
+    this.toastCtrl.showToast(this.message);
   }
 
   async update(idCommande, idClient) {
@@ -246,10 +247,7 @@ export class GestionCommandesPage implements OnInit {
   }
 
   changeCheckState(id, ev: any) {
-    // console.log(id);
-    // console.log(ev);
     this.commandeService.getDetailCommande(id).then((retour) => {
-      // console.log(retour.archive);
       retour.archive = ev;
       this.firestore.doc(`Commandes/${retour.id}`).set(retour);
     });
@@ -308,19 +306,20 @@ export class GestionCommandesPage implements OnInit {
   }
   insert() {
     this.commande.client = this.formulaireCommande.value.client;
-    this.clientService.getClient(this.commande.client).then((value) => {   
+    this.clientService.getClient(this.commande.client).then((value) => {
       this.commande.nom = value.nom;
     });
     this.commande.liste = this.tableau;
     this.commande.date = formatDate(
       this.formulaireCommande.value.date,
-      'yyyy-MM-dd', 'en-US'
+      'yyyy-MM-dd',
+      'en-US'
     );
     this.commande.infoComplementaire =
       this.formulaireCommande.value.infoComplementaire;
     this.commandeService.postCommande(this.commande).then((retour) => {
       if (retour.id == null) {
-        this.message = 'les données nont pas pu être enregistrées';
+        this.message = 'les données n\'ont pas pu être enregistrées';
         this.toastCtrl.showToast(this.message);
       } else {
         this.firestore.doc(`Commandes/${retour.id}`).set({
@@ -329,7 +328,11 @@ export class GestionCommandesPage implements OnInit {
           liste: this.tableau,
           client: this.formulaireCommande.value.client,
           nom: this.commande.nom,
-          date: formatDate(this.formulaireCommande.value.date,'yyyy-MM-dd', 'en-US'),
+          date: formatDate(
+            this.formulaireCommande.value.date,
+            'yyyy-MM-dd',
+            'en-US'
+          ),
           infoComplementaire: this.formulaireCommande.value.infoComplementaire,
           archive: false,
         });

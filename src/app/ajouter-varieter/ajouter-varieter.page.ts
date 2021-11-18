@@ -48,7 +48,7 @@ export class AjouterVarieterPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    if (this.affichage == undefined) {
+    if (this.affichage === undefined) {
       this.affichage = 'liste';
     }
     this.varieterFrom = this.formBuilder.group({
@@ -67,19 +67,21 @@ export class AjouterVarieterPage implements OnInit {
   addVarieter() {
     if (!this.varieterFrom.valid) {
       // this.variete.nom = this.varieterFrom.value.nom;
-      this.message = 'enter une valeur dans le champ';
+      this.message = 'enter une valeure dans le champs';
       this.toastCtrl.showToast(this.message);
     } else {
-      this.variete.nom = this.varieterFrom.value.nom
+      this.variete.nom = this.varieterFrom.value.nom;
       this.varieteService.postPlanteList(this.variete).then((retour) => {
         if (retour.id == null) {
-          this.message = "les données n'ont pas pu être enregistrées";
+          this.message = 'la varietée n\'a pas pu être enregistrée';
           this.toastCtrl.showToast(this.message);
         } else {
           this.firestore.doc(`Variete/${retour.id}`).set({
             id: retour.id,
             nom: this.varieterFrom.value.nom,
           });
+          this.message = 'la varietée à était enregistré';
+          this.toastCtrl.showToast(this.message);
         }
       });
     }
@@ -119,9 +121,10 @@ export class AjouterVarieterPage implements OnInit {
   }
 
   async delete(idPlante) {
-    console.log(idPlante);
     this.varieteService.deleteVariete(idPlante);
     this.tableauVariete = [];
     this.varieteList = await this.initializeItems();
+    this.message = 'la varietée à était supprimer ';
+    this.toastCtrl.showToast(this.message);
   }
 }

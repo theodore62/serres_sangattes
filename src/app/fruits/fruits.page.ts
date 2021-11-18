@@ -27,7 +27,7 @@ export class FruitsPage implements OnInit {
   public datas: any;
   public planteList: any;
   public tableauPlante: any = [];
-
+  public message: string;
   constructor(
     private firestore: AngularFirestore,
     private dataService: DataService,
@@ -36,7 +36,8 @@ export class FruitsPage implements OnInit {
     private afSG: AngularFireStorage,
     private alertController: AlertController,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private toastCtrl: IonicToastService,
   ) {}
 
   async ngOnInit() {
@@ -104,7 +105,8 @@ export class FruitsPage implements OnInit {
     this.plantesService.deletePlante(idPlante);
     this.tableauPlante = [];
     this.planteList = await this.initializeItems();
-    console.log(this.planteList);
+    this.message = 'la plante à bien était supprimer';
+    this.toastCtrl.showToast(this.message);
   }
 
   async update(idPlante, anneeFleuraison) {

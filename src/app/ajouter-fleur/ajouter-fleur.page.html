@@ -1,127 +1,127 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button  color="light" ></ion-back-button>
-    </ion-buttons>
-    <ion-title  color="light">ajouter une plante</ion-title>
-    <ion-buttons slot="end" (click)="ajouter()" >
-      <ion-icon  size="large" name="add-circle-outline"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button color="light"></ion-back-button>
+        </ion-buttons>
+        <ion-title color="light">ajouter une plante</ion-title>
+        <ion-buttons slot="end" (click)="ajouter()">
+            <ion-icon size="large" name="add-circle-outline"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <ion-list style="background-color: silver;">
-    <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
-      <ion-item>
-        <ion-label color="light">Nom commun :</ion-label>
-        <ion-input color="light" type="text" placeholder="nom" formControlName="nom" ></ion-input>
-        
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
-          champ obligatoire 
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
-          minimun 2 caractéres
-        </span>
-      </ion-item>  
-      <ion-item>
-        <ion-label color="light">Variété:</ion-label>
-        <ion-select  color="light" placeholder="Selectioner la varieté" required formControlName="variete"  >
-          <ion-select-option   *ngFor ="let item of items |async" value="{{ item.nom  }}" >{{ item.nom }}</ion-select-option >
-        </ion-select>
-      </ion-item> 
-      <ion-item>
-        <ion-label color="light">Couleur:</ion-label>
-        <ion-input color="light" type="text" placeholder="couleur"  required formControlName="couleur"  ></ion-input>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.required">
-          champ obligatoire 
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.minlength">
-          minimun 2 caractéres
-        </span>
-      </ion-item>  
-      <ion-item *ngIf="epoque === 'Fleur' ">
-        <ion-label color="light" >Epoque de fleuraison:</ion-label>   
-        <ion-select  color="light" placeholder="Selectioner la fleuraison" required formControlName="fleuraison" *ngIf="epoque === 'Fleur' ">
-          <ion-select-option value="Annuelles">Annuelles</ion-select-option>
-          <ion-select-option value="Bisannuelles">Bisannuelles</ion-select-option>
-          <ion-select-option value="Vivaces">Vivaces</ion-select-option>
-          <ion-select-option value="Aromatiques">Aromatiques</ion-select-option>
-        </ion-select>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
-          champ obligatoire 
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.minlength">
-          minimun 2 caractéres
-        </span>
-      </ion-item> 
-      <ion-item *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
-        <ion-label color="light" >Epoque de récolte:</ion-label>   
-        <ion-select  color="light" placeholder="Selectioner la récolte" required formControlName="fleuraison" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
-          <ion-select-option value="Ete">Ete</ion-select-option>
-          <ion-select-option value="Hiver">Hiver</ion-select-option>
-        </ion-select>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
-          champ obligatoire 
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.minlength">
-          minimun 2 caractéres
-        </span>
-      </ion-item> 
-       <ion-item >
-        <ion-label color="light" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' " >période de récolte:</ion-label>   
-        <ion-label color="light" *ngIf="epoque === 'Fleur' " >Mois de fleuraison:</ion-label>  
-        <ion-item>
-          <ion-select  color="light" placeholder="de" required formControlName="de">
-            <ion-select-option  *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
-          </ion-select>      
-      </ion-item>
-      <ion-item>
-        <ion-label color="light" style="width: 2em;" >à</ion-label>   
-      </ion-item>
-      <ion-item>
-        <ion-select  color="light" placeholder="a" required formControlName="a">
-          <ion-select-option  *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      </ion-item>
+<ion-content>
+    <ion-list style="background-color: silver;">
+        <form (ngSubmit)="addAnnonce()" [formGroup]="annonce">
+            <ion-item>
+                <ion-label color="light">Nom commun :</ion-label>
+                <ion-input color="light" type="text" placeholder="nom" formControlName="nom"></ion-input>
 
-      <ion-item>
-        <ion-label color="light">Hauteur:</ion-label>
-        <ion-select  color="light"  placeholder="Selectioner la Hauteur" required formControlName="hauteur"  >
-          <ion-select-option value="basse">basse (5-20cm)</ion-select-option>
-          <ion-select-option value="moyenne">moyenne (30-50cm)</ion-select-option>
-          <ion-select-option value="haute">haute (80cm et +)</ion-select-option>
-        </ion-select>
-      </ion-item> 
-      <ion-item>
-        <ion-label color="light">Description:</ion-label>
-        <ion-textarea color="light" rows="6" cols="20" placeholder="description"  required formControlName="description"  ></ion-textarea>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.required">
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.required">
           champ obligatoire 
         </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.minlength">
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.nom.errors?.minlength">
           minimun 2 caractéres
         </span>
-      </ion-item> 
-      <ion-item>
-        <ion-label  color="light" >Type de plante</ion-label>
-        <ion-select placeholder="Selectioner le Type" required formControlName="type" value="{{ epoque }}" (ionChange)="optionsfn();" #type  class="custom-options">
-          <ion-select-option value="Fleur" color="light" >Fleur</ion-select-option>
-          <ion-select-option value="Fruit" color="light" >Fruit</ion-select-option>
-          <ion-select-option value="Legumes" color="light" >Légume</ion-select-option>
-        </ion-select>
-      </ion-item>  
-      <ion-button (click)="addPhoto()" expand="block" id="imageB">
-        <ion-icon name="image" slot="start"></ion-icon>
-        Ouvrir la bibliothèque
-      </ion-button>
-      <div class="flex">
-        <div class="img-box">
-          <img [src]="image" id="url">
-        </div>
-      </div>
-  <ion-button   type="submit" expand="block">Valider</ion-button>
-  </form>
-</ion-list>
+            </ion-item>
+            <ion-item>
+                <ion-label color="light">Variétées:</ion-label>
+                <ion-select color="light" placeholder="Selectioner la varieté" required formControlName="variete">
+                    <ion-select-option *ngFor="let item of items |async" value="{{ item.nom  }}">{{ item.nom }}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="light">Couleur:</ion-label>
+                <ion-input color="light" type="text" placeholder="couleur" required formControlName="couleur"></ion-input>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.required">
+          champ obligatoire 
+        </span>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.couleur.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+            </ion-item>
+            <ion-item *ngIf="epoque === 'Fleur' ">
+                <ion-label color="light">Epoque de fleuraison:</ion-label>
+                <ion-select color="light" placeholder="Selectioner la fleuraison" required formControlName="fleuraison" *ngIf="epoque === 'Fleur' ">
+                    <ion-select-option value="Annuelles">Annuelles</ion-select-option>
+                    <ion-select-option value="Bisannuelles">Bisannuelles</ion-select-option>
+                    <ion-select-option value="Vivaces">Vivaces</ion-select-option>
+                    <ion-select-option value="Aromatiques">Aromatiques</ion-select-option>
+                </ion-select>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
+          champ obligatoire 
+        </span>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+            </ion-item>
+            <ion-item *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
+                <ion-label color="light">Epoque de récolte:</ion-label>
+                <ion-select color="light" placeholder="Selectioner la récolte" required formControlName="fleuraison" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">
+                    <ion-select-option value="Ete">Ete</ion-select-option>
+                    <ion-select-option value="Hiver">Hiver</ion-select-option>
+                </ion-select>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.required">
+          champ obligatoire 
+        </span>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.fleuraison.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+            </ion-item>
+            <ion-item>
+                <ion-label color="light" *ngIf="epoque === 'Fruit' || epoque === 'Legumes' ">période de récolte:</ion-label>
+                <ion-label color="light" *ngIf="epoque === 'Fleur' ">Mois de fleuraison:</ion-label>
+                <ion-item>
+                    <ion-select color="light" placeholder="de" required formControlName="de">
+                        <ion-select-option *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="light" style="width: 2em;">à</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-select color="light" placeholder="a" required formControlName="a">
+                        <ion-select-option *ngFor="let mois of listMois" value="{{ mois }}">{{ mois }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="light">Hauteur:</ion-label>
+                <ion-select color="light" placeholder="Selectioner la Hauteur" required formControlName="hauteur">
+                    <ion-select-option value="basse">basse (5-20cm)</ion-select-option>
+                    <ion-select-option value="moyenne">moyenne (30-50cm)</ion-select-option>
+                    <ion-select-option value="haute">haute (80cm et +)</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="light">Description:</ion-label>
+                <ion-textarea color="light" rows="6" cols="20" placeholder="description" required formControlName="description"></ion-textarea>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.required">
+          champ obligatoire 
+        </span>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.minlength">
+          minimun 2 caractéres
+        </span>
+            </ion-item>
+            <ion-item>
+                <ion-label color="light">Type de plante</ion-label>
+                <ion-select placeholder="Selectioner le Type" required formControlName="type" value="{{ epoque }}" (ionChange)="optionsfn();" #type class="custom-options">
+                    <ion-select-option value="Fleur" color="light">Fleur</ion-select-option>
+                    <ion-select-option value="Fruit" color="light">Fruit</ion-select-option>
+                    <ion-select-option value="Legumes" color="light">Légume</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="addPhoto()" expand="block" id="imageB">
+                <ion-icon name="image" slot="start"></ion-icon>
+                Ouvrir la bibliothèque
+            </ion-button>
+            <div class="flex">
+                <div class="img-box">
+                    <img [src]="image" id="url">
+                </div>
+            </div>
+            <ion-button type="submit" expand="block">Valider</ion-button>
+        </form>
+    </ion-list>
 </ion-content>

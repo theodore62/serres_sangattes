@@ -101,7 +101,7 @@ export class DetailsClientPage implements OnInit {
   }
   async updateClient() {
     if (!this.formulaireClient.valid) {
-      this.message = 'enter une valeur dans le champ';
+      this.message = 'enter une valeure dans le champs';
       this.toastCtrl.showToast(this.message);
       return false;
     } else {
@@ -109,7 +109,7 @@ export class DetailsClientPage implements OnInit {
         this.idClient,
         this.formulaireClient.value
       );
-      this.message = 'La ou les modification(s) on ou à bien était éffectuer';
+      this.message = 'La ou les modification(s) a ou ont bien été éffectuées';
       this.toastCtrl.showToast(this.message);
     }
   }

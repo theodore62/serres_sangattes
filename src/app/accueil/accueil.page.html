@@ -1,39 +1,39 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Accueil</ion-title>
-    <ion-buttons slot="end" (click)="ajouter()">
-      <ion-icon size="large" name="add-circle-outline"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Accueil</ion-title>
+        <ion-buttons slot="end" (click)="ajouter()">
+            <ion-icon size="large" name="add-circle-outline"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
 
-  <div id="groupe">
-    <div id="planteOrbementales" (click)="alertRadioFleurs()">
-      <div id="fond_fleurs" when="lx">
-        <ion-label>Plantes ornementales</ion-label>
-      </div>
+    <div id="groupe">
+        <div id="planteOrbementales" (click)="alertRadioFleurs()">
+            <div id="fond_fleurs" when="lx">
+                <ion-label>Plantes ornementales</ion-label>
+            </div>
+        </div>
+        <div id="planteAromatiques" (click)="alertRadioFleursAromatique('Aromatiques')">
+            <div id="fond_fleurs" when="lx">
+                <ion-label>Plantes aromatiques</ion-label>
+            </div>
+        </div>
+        <div id="fruits" (click)="alertRadioFruitLegumes('fruits')">
+            <div id="fond_fleurs">
+                <ion-label>Plantes fruitiers</ion-label>
+            </div>
+        </div>
+        <div id="legumes" (click)="alertRadioFruitLegumes('legumes')">
+            <div id="fond_fleurs">
+                <ion-label>Plantes potagères</ion-label>
+            </div>
+        </div>
     </div>
-    <div id="planteAromatiques" (click)="alertRadioFleursAromatique('Aromatiques')">
-      <div id="fond_fleurs" when="lx">
-        <ion-label>Plantes aromatiques</ion-label>
-      </div>
-    </div>
-    <div id="fruits" (click)="alertRadioFruitLegumes('fruits')">
-      <div id="fond_fleurs">
-        <ion-label>Plantes fruitier</ion-label>
-      </div>
-    </div>
-    <div id="legumes" (click)="alertRadioFruitLegumes('legumes')">
-      <div id="fond_fleurs">
-        <ion-label>Plantes potagères</ion-label>
-      </div>
-    </div>
-  </div>
 
 </ion-content>

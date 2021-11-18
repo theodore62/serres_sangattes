@@ -128,7 +128,7 @@ export class GetionDeClientsPage implements OnInit {
       this.client.postal = this.clientFrom.value.postal;
       this.clientService.postClient(this.client).then((retour) => {
         if (retour.id == null) {
-          this.message = "les données n'ont pas pu être enregistrées";
+          this.message = 'les données n\'ont pas pu être enregistrées';
           this.toastCtrl.showToast(this.message);
         } else {
           this.firestore.doc(`Client/${retour.id}`).set({
@@ -148,19 +148,8 @@ export class GetionDeClientsPage implements OnInit {
     }
   }
   async update(idClient) {
-
     this.dataService.setData('idClient', idClient);
     this.router.navigateByUrl('details-client');
-
-    // const modal = await this.modalController.create({
-    //   component: ModalPage,
-    //   cssClass: 'my-custom-class',
-    //   componentProps: {
-    //     data: 'client',
-    //     idClient: idClient,
-    //   },
-    // });
-    // return await modal.present();
   }
 
   async delete(id) {
@@ -168,5 +157,7 @@ export class GetionDeClientsPage implements OnInit {
     this.clientService.deleteClient(id);
     this.tableauClients = [];
     this.clientsList = await this.initializeItems();
+    this.message = 'les données ont pu être supprimer';
+    this.toastCtrl.showToast(this.message);
   }
 }
